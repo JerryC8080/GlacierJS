@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "build/main",
+    "rootDir": "src",
+    "lib": [ "es2017", "webworker" ],
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**"]
+}

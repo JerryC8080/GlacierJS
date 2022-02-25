@@ -1,0 +1,9 @@
+{
+    "entryPoints": [
+        "./packages/core/src/index.ts",
+        "./packages/window/src/index.ts",
+        "./packages/sw/src/index.ts",
+        "./packages/plugin-precache/src/index.ts"
+    ],
+    "out": "docs/api"
+}

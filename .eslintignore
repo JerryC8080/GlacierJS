@@ -1,0 +1,12 @@
+# 构建相关文件
+scripts
+dev
+
+# 依赖
+node_modules
+package.json
+
+# 配置文件
+*.config.[jt]s
+jest.setup.js
+custom_environment.js
