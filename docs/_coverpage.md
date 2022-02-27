@@ -6,4 +6,4 @@
 
 > 👨‍💻‍ Build your PWA app easier !!!
 
-[Get Started](#introduction)
+[Get Started](#介绍)
