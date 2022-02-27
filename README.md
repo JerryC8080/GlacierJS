@@ -68,6 +68,6 @@
 
 # License
 
-This project is licensed under the [MIT license](https://raw.githubusercontent.com/JerryC8080/glacierjs/master/LICENSE).
+This project is licensed under the [MIT license](https://cdn.jsdelivr.net/gh/JerryC8080/glacierjs/LICENSE).
 
 Copyright (c) JerryC Huang (huangjerryc@gmail.com)
