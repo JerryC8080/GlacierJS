@@ -38,7 +38,7 @@
 ## 架构
 
 <p align="center">
-    <img alt="logo" width="700" src="https://bluesun-1252625244.cos.ap-guangzhou.myqcloud.com/jerryc/20220227172033.png?imageView2/2/w/700">
+    <img alt="logo" width="700" src="https://bluesun-1252625244.cos.ap-guangzhou.myqcloud.com/jerryc/20220227172033.png">
 </p>
 
 它由几部分组成：
