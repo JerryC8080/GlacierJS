@@ -2,8 +2,8 @@
 
 
 <p align="center">
-  <a href="https://jerryc8080.github.io/glacierjs/">
-      <img width="320" src="https://bluesun-1252625244.cos.ap-guangzhou.myqcloud.com/jerryc/20220227085816.png?imageView2/2/w/320">
+  <a href="http://beautywejs.com">
+      <img width="620" src="https://raw.githubusercontent.com/beautywe/docs/master/docs/assets/images/logo-V4.png">
   </a>
 </p>
 

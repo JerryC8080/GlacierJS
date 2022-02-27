@@ -1,22 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css" /> -->
+  <link rel="icon"
+    href="https://bluesun-1252625244.cos.ap-guangzhou.myqcloud.com/jerryc/20220227085817.png?imageView2/2/h/20">
+
 </head>
+
 <body>
   <div id="app"></div>
   <script>
     window.$docsify = {
-      name: '',
-      repo: ''
+      coverpage: true,
+      name: 'GlacierJS',
+      logo: 'https://bluesun-1252625244.cos.ap-guangzhou.myqcloud.com/jerryc/20220227085817.png?imageView2/2/h/88',
+      repo: 'https://github.com/JerryC8080/glacierjs',
+      loadSidebar: true,
+      loadNavbar: true,
+      subMaxLevel: 2,
+      pagination: {
+        previousText: '上一章节',
+        nextText: '下一章节',
+        crossChapter: true
+      },
+      themeColor: '#1DD8FE',
+      themeable: {
+          readyTransition : true, // default
+          responsiveTables: true  // default
+      }
     }
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//unpkg.zhimg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="//unpkg.zhimg.com/docsify-remote-markdown/dist/docsify-remote-markdown.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
 </body>
+
 </html>
