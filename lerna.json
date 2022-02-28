@@ -1,10 +1,16 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "version": "independent",
   "command": {
     "bootstrap": {
-      "ignore": ["@glacier/package-template"],
-      "npmClientArgs": ["--no-package-lock"]
+      "ignore": [
+        "@glacier/package-template"
+      ],
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
     }
   }
 }

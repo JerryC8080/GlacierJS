@@ -1,5 +1,5 @@
 {
-  "name": "@glacierjs",
+  "name": "@glacierjs/root",
   "version": "0.0.0",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -21,7 +21,6 @@
     "node": ">=14"
   },
   "devDependencies": {
-    "@glacierjs/plugin-precache": "workspace:^0.1.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.12.0",

@@ -4,7 +4,6 @@ importers:
 
   .:
     specifiers:
-      '@glacierjs/plugin-precache': workspace:^0.1.0
       '@istanbuljs/nyc-config-typescript': ^1.0.2
       '@types/jest': ^27.4.0
       '@typescript-eslint/eslint-plugin': ^5.12.0
@@ -27,7 +26,6 @@ importers:
       typedoc: ^0.22.12
       typescript: ^4.5.5
     devDependencies:
-      '@glacierjs/plugin-precache': link:packages/plugin-precache
       '@istanbuljs/nyc-config-typescript': 1.0.2_nyc@15.1.0
       '@types/jest': 27.4.0
       '@typescript-eslint/eslint-plugin': 5.12.0_c467cf9bb49b295941e83ce479a578b7
