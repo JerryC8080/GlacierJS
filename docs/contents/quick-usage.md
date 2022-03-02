@@ -106,37 +106,4 @@ export class MyPluginSW implements ServiceWorkerPlugin {
 }
 ```
 
-### 原理
-
-GlacierJS 针对传统的 ServiceWorker 生命周期钩子进行了封装，从而支持插件化。    
-插件系统根据洋葱模型，为每一个生命周期都实现了一个「洋葱」，所以我们称这套系统为：    
-> **「多维洋葱插件系统」**
-
-![GlacierJS 多维洋葱插件系统](../assets/plugin-system.drawio.png)
-
-基于洋葱模型，我们可以让事情更加聚焦，例如我们要对一个资源请求情况进行日志收集：
-
-```javascript
-class Log implements ServiceWorkerPlugin {
-    public async onFetch(context: FetchContext, next) {
-        const resourceUrl = context.res?.url;
-
-        console.log(`Request a resource: ${resourceUrl}`)';
-        try {
-            console.log(`request success: ${resourceUrl}`);
-        } catch (err) {
-            console.error(`request failE: ${resourceUrl}`);
-        }
-    }
-}
-```
-
-对传统生命周期进行封装之后，我们为每一个插件提供了更优雅的生命周期钩子函数。    
-最后，我们来总结一下，一个插件的生命周期都是如何工作的：
-
-![GlacierJS 生命周期图示](../assets/lifecycle.drawio.png)
-
-
-## 进程通讯
-
-## 安全卸载
+更多的插件内容，参考：[多维洋葱插件系统](/contents/plugins.md);

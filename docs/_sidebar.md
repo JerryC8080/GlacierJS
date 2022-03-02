@@ -4,8 +4,7 @@
 - 二、使用
 
     - [快速使用](contents/quick-usage.md)
-    - [生命周期](contents/lifecycle.md)
-    - [上下文](contents/context.md)
+    - [多维洋葱插件系统](contents/plugin.md)
 
 - 三、内置插件
 

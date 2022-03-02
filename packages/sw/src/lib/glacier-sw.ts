@@ -101,7 +101,7 @@ export class GlacierSW {
         } else {
           // 2. 处理插件事件
           logger.debug('onMessage: handle message by plugins', event);
-          await this.lifecycleHooks.onMessage.runAll(event);
+          await this.lifecycleHooks.onMessage.runAll({ event });
           logger.debug('onMessage: handle message by plugins done', event);
         }
       } catch (error) {

@@ -14,6 +14,10 @@ export interface FetchContext extends BaseContext {
   res: Response | undefined;
 };
 
+export interface MessageContext extends BaseContext {
+  event: ExtendableMessageEvent;
+};
+
 export interface InstallContext extends BaseContext {
   event: ExtendableEvent;
 };
@@ -31,5 +35,8 @@ export interface ServiceWorkerPlugin {
   [Lifecycle.onInstall]?: HookFn<InstallContext>;
   [Lifecycle.onActivate]?: HookFn<ActivateContext>;
   [Lifecycle.onFetch]?: HookFn<FetchContext>;
-  [Lifecycle.onUninstall]?: HookFn<FetchContext>;
+  [Lifecycle.onMessage]?: HookFn<MessageContext>;
+
+  // TODO 传送空对象
+  [Lifecycle.onUninstall]?: HookFn<void>;
 }
