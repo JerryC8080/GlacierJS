@@ -106,4 +106,4 @@ export class MyPluginSW implements ServiceWorkerPlugin {
 }
 ```
 
-更多的插件内容，参考：[多维洋葱插件系统](/contents/plugins.md);
+更多的插件内容，参考：[多维洋葱插件系统](/contents/plugin.md);
