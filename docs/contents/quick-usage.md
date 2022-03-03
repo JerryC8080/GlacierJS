@@ -67,7 +67,7 @@ glacier.use(new AssetsCacheSW({
 }))
 ```
 这里使用了内置插件：`plugin-assets-cache`，对匹配的资源进行缓存，    
-所使用的缓存策略是 [Stale-While-Revalidate](https://developers.google.com/web/tools/workbox/modules/workbox-strategies#stale-while-revalidate)：
+所使用的缓存策略是 [Stale-While-Revalidate](contents/plugin-assets-cache?id=strategystale_while_revalidate)：
 
 ![](https://developers.google.com/web/tools/workbox/images/modules/workbox-strategies/stale-while-revalidate.png)
 

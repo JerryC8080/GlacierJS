@@ -134,10 +134,14 @@ importers:
       typescript: ^4.5.5
       workbox-core: ^6.4.2
       workbox-precaching: ^6.4.2
+      workbox-routing: ^6.5.0
+      workbox-strategies: ^6.5.0
     dependencies:
       '@glacierjs/core': link:../core
       '@glacierjs/sw': link:../sw
       workbox-precaching: 6.4.2
+      workbox-routing: 6.5.0
+      workbox-strategies: 6.5.0
     devDependencies:
       '@typescript-eslint/eslint-plugin': 5.12.0_c467cf9bb49b295941e83ce479a578b7
       '@typescript-eslint/parser': 5.12.0_eslint@8.9.0+typescript@4.5.5
@@ -8867,6 +8871,10 @@ packages:
   /workbox-core/6.4.2:
     resolution: {integrity: sha512-1U6cdEYPcajRXiboSlpJx6U7TvhIKbxRRerfepAJu2hniKwJ3DHILjpU/zx3yvzSBCWcNJDoFalf7Vgd7ey/rw==}
 
+  /workbox-core/6.5.0:
+    resolution: {integrity: sha512-5SPwNipUzYBhrneLVT02JFA0fw3LG82jFAN/G2NzxkIW10t4MVZuML2nU94bbkgjq25u0fkY8+4JXzMfHgxEWQ==}
+    dev: false
+
   /workbox-precaching/6.4.2:
     resolution: {integrity: sha512-CZ6uwFN/2wb4noHVlALL7UqPFbLfez/9S2GAzGAb0Sk876ul9ukRKPJJ6gtsxfE2HSTwqwuyNVa6xWyeyJ1XSA==}
     dependencies:
@@ -8881,10 +8889,22 @@ packages:
       workbox-core: 6.4.2
     dev: false
 
+  /workbox-routing/6.5.0:
+    resolution: {integrity: sha512-w1A9OVa/yYStu9ds0Dj+TC6zOAoskKlczf+wZI5mrM9nFCt/KOMQiFp1/41DMFPrrN/8KlZTS3Cel/Ttutw93Q==}
+    dependencies:
+      workbox-core: 6.5.0
+    dev: false
+
   /workbox-strategies/6.4.2:
     resolution: {integrity: sha512-YXh9E9dZGEO1EiPC3jPe2CbztO5WT8Ruj8wiYZM56XqEJp5YlGTtqRjghV+JovWOqkWdR+amJpV31KPWQUvn1Q==}
     dependencies:
       workbox-core: 6.4.2
+    dev: false
+
+  /workbox-strategies/6.5.0:
+    resolution: {integrity: sha512-Ngnwo+tfGw4uKSlTz3h1fYKb/lCV7SDI/dtTb8VaJzRl0N9XssloDGYERBmF6BN/DV/x3bnRsshfobnKI/3z0g==}
+    dependencies:
+      workbox-core: 6.5.0
     dev: false
 
   /workbox-window/6.4.2:

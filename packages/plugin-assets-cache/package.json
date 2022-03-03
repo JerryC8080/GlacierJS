@@ -75,7 +75,9 @@
   "dependencies": {
     "@glacierjs/core": "^0.1.1",
     "@glacierjs/sw": "^0.1.1",
-    "workbox-precaching": "^6.4.2"
+    "workbox-precaching": "^6.4.2",
+    "workbox-routing": "^6.5.0",
+    "workbox-strategies": "^6.5.0"
   },
   "gitHead": "83a3acb9dc824a3fa3a9808ccff3f04a5703114e"
 }

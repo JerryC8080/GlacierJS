@@ -8,7 +8,7 @@
 
 - 三、内置插件
 
-    - [资源缓存](contents/todo.md)
+    - [资源缓存](contents/plugin-assets-cache.md)
     - [预缓存](contents/todo.md)
     - [远程控制](contents/todo.md)
     - [数据上报](contents/todo.md)
