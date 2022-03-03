@@ -30,7 +30,7 @@ export type HookFn<ContextType> = (
 ) => Promise<void>;
 
 export interface ServiceWorkerPlugin {
-  name: string;
+  name?: string;
   onUse?: (context: UseContext) => void;
   [Lifecycle.onInstall]?: HookFn<InstallContext>;
   [Lifecycle.onActivate]?: HookFn<ActivateContext>;

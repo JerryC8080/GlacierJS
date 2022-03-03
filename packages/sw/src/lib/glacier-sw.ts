@@ -6,6 +6,9 @@ const {
   addEventListener,
 } = (self as unknown) as ServiceWorkerGlobalScope;
 export class GlacierSW {
+
+  public plugins: Record<string, ServiceWorkerPlugin> = {};
+
   private lifecycleHooks: Record<Lifecycle, MiddlewareQueue> = {
     [Lifecycle.onInstall]: null,
     [Lifecycle.onUninstall]: null,
@@ -22,14 +25,23 @@ export class GlacierSW {
     }
   }
 
-  // 注册插件
   public use(plugin: ServiceWorkerPlugin) {
-    // 传递 context
+
+    // store plugin instance
+    const { name } = plugin;
+    if (name) {
+      if (this.plugins[name]) {
+        logger.error(`The name of "${name}" plugin has used, can't store instance.`);
+      } else {
+        this.plugins[name] = plugin;
+      }
+    }
+
+    // call onUse hook
     plugin.onUse?.({ glacier: this });
+    logger.debug(`"${plugin.name}" plugin onUsed hook called`);
 
-    logger.debug(`"${plugin.name}" plugin onUsed`);
-
-    // 注册定义的生命周期钩子
+    // register lifecycle hooks
     for (const lifecycle in Lifecycle) {
       const handler = plugin[lifecycle];
       if (!handler) continue;

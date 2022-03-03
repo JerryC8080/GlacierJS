@@ -287,7 +287,7 @@ describe('Compose', () => {
       return 2;
     });
 
-    const next = () => 0;
+    const next = () => Promise.resolve(0);
     return compose(stack)({}, next).then((val) => {
       expect(val).toEqual(1);
     });

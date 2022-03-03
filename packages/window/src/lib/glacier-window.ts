@@ -3,6 +3,7 @@ import { MiddlewareQueue, EventNames } from '@glacierjs/core';
 import { logger } from './logger';
 import { WindowPlugin, Lifecycle } from '../type/index';
 export class GlacierWindow {
+  public plugins: Record<string, WindowPlugin> = {};
   private lifecycleHooks: Record<Lifecycle, MiddlewareQueue> | any = {};
   public workbox: Workbox;
 
@@ -17,13 +18,11 @@ export class GlacierWindow {
 
     this.workbox = new Workbox(scriptURL, registerOptions);
 
-    // 为每个生命周期钩子创建异步串行队列
     for (const lifecycle in Lifecycle) {
       this.lifecycleHooks[lifecycle] = new MiddlewareQueue(lifecycle);
     }
   }
 
-  // 注册 SW
   public async register({ immediate = false } = {}): Promise<ServiceWorkerRegistration | undefined> {
     try {
       // 1. 调用插件的事件（如果要完成开关，可以通过插件实现）
@@ -37,7 +36,6 @@ export class GlacierWindow {
     }
   }
 
-  // 注销 SW
   public async unregister() {
     try {
       logger.debug('Service Worker 正在卸载...');
@@ -48,14 +46,23 @@ export class GlacierWindow {
     }
   }
 
-  // 新增插件
   public use(plugin: WindowPlugin) {
-    // 传递 context
+
+    // store plugin instance
+    const { name } = plugin;
+    if (name) {
+      if (this.plugins[name]) {
+        logger.error(`The name of "${name}" plugin has used, can't store instance.`);
+      } else {
+        this.plugins[name] = plugin;
+      }
+    }
+
+    // call onUse hook
     plugin.onUse?.({ workbox: this.workbox, glacier: this });
+    logger.debug(`"${plugin.name}" plugin onUsed hook called`);
 
-    logger.debug(`"${plugin.name}" plugin onUsed`);
-
-    // 注册定义的生命周期钩子
+    // register lifecycle hooks
     for (const lifecycle in Lifecycle) {
       const handler = plugin[lifecycle];
       if (!handler) continue;
