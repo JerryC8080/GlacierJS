@@ -120,4 +120,62 @@ glacierSW.use(new AssetsCacheSW({
 }));
 ```
 
+## API
+
+### registerRoute(route)
+
+动态注册路由
+
+```javascript
+import { GlacierSW } from '@glacierjs/sw';
+import { AssetsCacheSW, Strategy } from '@glacierjs/plugin-assets-cache';
+
+const glacierSW = new GlacierSW();
+
+const assetsCachePlugin = new AssetsCacheSW();
+
+glacierSW.use(assetsCachePlugin);
+
+// you can register route after plugin used.
+assetsCachePlugin.registerRoute({
+    capture: /\.(png|jpg)$/,
+    strategy: Strategy.CACHE_FIRST
+});
+```
+
+### updateRoute(routes)
+
+刷新路由，它首先会清理当前路由，然后再注册新的路由。    
+该接口尤其适合由外部配置来控制路由的场景。
+
+```javascript
+import { GlacierSW } from '@glacierjs/sw';
+import { AssetsCacheSW, Strategy } from '@glacierjs/plugin-assets-cache';
+
+const glacierSW = new GlacierSW();
+const assetsCachePlugin = new AssetsCacheSW();
+
+glacierSW.use(assetsCachePlugin);
+
+assetsCachePlugin.registerRoute({
+    capture: /\.(png|jpg)$/,
+    strategy: Strategy.CACHE_FIRST
+});
+
+// will clean above route, and then register new routes.
+assetsCachePlugin.updateRoute([{
+    capture: 'https://mysite.com/index.html',
+    strategy: Strategy.STALE_WHILE_REVALIDATE,
+}, {
+    capture: /\.(png|jpg)$/,
+    strategy: Strategy.CACHE_FIRST
+}, {
+    capture: ({ request }) => request.destination === 'style',
+    strategy: Strategy.CACHE_FIRST
+}])
+```
+
+
+> 更多 API 参考 [api/modules/plugin_assets_cache](https://jerryc8080.github.io/glacierjs/api/modules/plugin_assets_cache_src.html)
+
 > 该插件由 [workbox-routing](https://developers.google.com/web/tools/workbox/modules/workbox-routing) 和 [workbox-strategy](https://developers.google.com/web/tools/workbox/modules/workbox-strategies#stale-while-revalidate) 提供底层支持
