@@ -1,6 +1,6 @@
 {
   "name": "@glacierjs/window",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
@@ -70,7 +70,7 @@
     ]
   },
   "dependencies": {
-    "@glacierjs/core": "^0.1.1",
+    "@glacierjs/core": "^0.1.2",
     "workbox-window": "^6.4.2"
   },
   "gitHead": "83a3acb9dc824a3fa3a9808ccff3f04a5703114e"

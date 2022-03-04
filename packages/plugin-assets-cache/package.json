@@ -1,6 +1,6 @@
 {
   "name": "@glacierjs/plugin-assets-cache",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -73,8 +73,8 @@
     ]
   },
   "dependencies": {
-    "@glacierjs/core": "^0.1.1",
-    "@glacierjs/sw": "^0.1.1",
+    "@glacierjs/core": "^0.1.2",
+    "@glacierjs/sw": "^0.1.2",
     "workbox-precaching": "^6.4.2",
     "workbox-routing": "^6.5.0",
     "workbox-strategies": "^6.5.0"
