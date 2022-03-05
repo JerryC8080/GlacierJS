@@ -2,13 +2,13 @@
 
 
 <p align="center">
-  <a href="https://jerryc8080.github.io/glacierjs/">
+  <a href="https://jerryc8080.github.io/GlacierJS/">
       <img width="320" src="https://bluesun-1252625244.cos.ap-guangzhou.myqcloud.com/jerryc/20220227085816.png?imageView2/2/w/320">
   </a>
 </p>
 
 <h3 align="center">
-  <a href="https://jerryc8080.github.io/glacierjs/">📖 Document</a>
+  <a href="https://jerryc8080.github.io/GlacierJS/">📖 Document</a>
 </h3>
 
 <p align="center">

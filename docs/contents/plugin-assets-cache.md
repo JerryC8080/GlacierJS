@@ -176,6 +176,6 @@ assetsCachePlugin.updateRoute([{
 ```
 
 
-> 更多 API 参考 [api/modules/plugin_assets_cache](https://jerryc8080.github.io/glacierjs/api/modules/plugin_assets_cache_src.html)
+> 更多 API 参考 [api/modules/plugin_assets_cache](https://jerryc8080.github.io/GlacierJS/api/modules/plugin_assets_cache_src.html)
 
 > 该插件由 [workbox-routing](https://developers.google.com/web/tools/workbox/modules/workbox-routing) 和 [workbox-strategy](https://developers.google.com/web/tools/workbox/modules/workbox-strategies#stale-while-revalidate) 提供底层支持
