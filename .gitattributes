@@ -1,2 +1,2 @@
-docs/**/* linguist-detectable=false
-*.html linguist-detectable=false
+docs/* linguist-vendored
+*.css linguist-detectable=false
