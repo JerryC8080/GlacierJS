@@ -19,9 +19,5 @@
     - [Webpack Plugin](contents/todo.md)
 
 - 五、其他
-    - [API DOC](contents/todo.md)
-    - [Coverage](contents/todo.md)
-    - [Change Log](contents/todo.md)
-
-- 六、文章
-    - [CacheAPI VS DiskCache](contents/todo.md)
+    - [API DOC](https://jerryc8080.github.io/GlacierJS/api/index.html)
+    - [Coverage](https://jerryc8080.github.io/GlacierJS/coverage/lcov-report/index.html)
