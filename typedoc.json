@@ -1,10 +1,12 @@
 {
+    "name": "GlacierJS API Doc",
     "entryPoints": [
         "./packages/core/src/index.ts",
         "./packages/window/src/index.ts",
         "./packages/sw/src/index.ts",
         "./packages/plugin-precache/src/index.ts",
-        "./packages/plugin-assets-cache/src/index.ts"
+        "./packages/plugin-assets-cache/src/index.ts",
+        "./packages/plugin-remote-controller/src/index.ts"
     ],
     "out": "docs/api"
 }

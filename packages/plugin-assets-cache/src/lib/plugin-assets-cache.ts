@@ -36,13 +36,13 @@ export class AssetsCacheSW implements ServiceWorkerPlugin {
     }
 
     public async onUninstall() {
-        logger.debug('onUninstall: clean assets cache')
+        logger.info('onUninstall: clean assets cache')
         const currentCache = await caches.keys();
         currentCache.forEach((name) => {
             if (name !== CACHE_NAME) return;
             const deleteResult = caches.delete(name);
-            if (deleteResult) logger.debug(`clean cache succeed: ${name}`);
-            else logger.debug(`clean cache failed: ${name}`);
+            if (deleteResult) logger.info(`clean cache succeed: ${name}`);
+            else logger.info(`clean cache failed: ${name}`);
         })
     }
 
@@ -80,10 +80,10 @@ export class AssetsCacheSW implements ServiceWorkerPlugin {
         try {
             const currentRoutes = this.router.routes;
             currentRoutes.clear();
-            logger.debug('clear old routes: ', { currentRoutes: this.getCurrentRoutes() });
+            logger.info('clear old routes: ', { currentRoutes: this.getCurrentRoutes() });
 
             if (routes?.[0]) routes.forEach(route => this.registerRoute(route));
-            logger.debug('register new routes: ', { routes, currentRoutes: this.getCurrentRoutes() });
+            logger.info('register new routes: ', { routes, currentRoutes: this.getCurrentRoutes() });
         } catch (error) {
             logger.error('update routes fail: ', error);
         }

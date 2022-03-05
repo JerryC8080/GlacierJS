@@ -3,7 +3,7 @@ import { PrecacheController as preCacheController } from 'workbox-precaching';
 import { WorkboxPlugin } from 'workbox-core/types';
 import { logger } from './logger';
 
-const PLUGIN_NAME = '@glacierjs/plugin-preCache';
+export const PLUGIN_NAME = '@glacierjs/plugin-precache';
 
 interface preCacheControllerOptions {
   cacheName?: string;
