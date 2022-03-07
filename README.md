@@ -49,10 +49,10 @@
     - [x] @glacierjs/window: 运行在主进程的代码，除了支持插件编程外，还负责管理 SW 的注册与卸载。
 
 * **内建插件**
-    - [ ] @glacierjs/plugin-precache：实现静态资源预缓存功能
-    - [ ] @glacierjs/plugin-reporter：实现基本数据上报功能
-    - [ ] @glacierjs/plugin-assets：实现静态资源缓存功能
-    - [ ] @glacierjs/plugin-remote-controller: 实现远程控制功能
+    - [x] @glacierjs/plugin-precache：实现静态资源预缓存功能
+    - [x] @glacierjs/plugin-reporter：实现基本数据上报功能
+    - [x] @glacierjs/plugin-assets：实现静态资源缓存功能
+    - [x] @glacierjs/plugin-remote-controller: 实现远程控制功能
 
 * **配套设施**
     - [ ] @glacierjs/cli：支持快速创建应用与插件
