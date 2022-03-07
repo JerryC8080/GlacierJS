@@ -11,7 +11,7 @@
     - [资源缓存](contents/plugin-assets-cache.md)
     - [预缓存](contents/plugin-precache.md)
     - [远程控制](contents/plugin-remote-controller.md)
-    - [数据上报](contents/todo.md)
+    - [数据收集](contents/plugin-collector.md)
 
 - 四、配套设施
 

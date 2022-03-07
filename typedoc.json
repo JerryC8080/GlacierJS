@@ -6,7 +6,8 @@
         "./packages/sw/src/index.ts",
         "./packages/plugin-precache/src/index.ts",
         "./packages/plugin-assets-cache/src/index.ts",
-        "./packages/plugin-remote-controller/src/index.ts"
+        "./packages/plugin-remote-controller/src/index.ts",
+        "./packages/plugin-collector/src/index.ts"
     ],
     "out": "docs/api"
 }
