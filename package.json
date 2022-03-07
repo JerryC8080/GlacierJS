@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "./node_modules/.bin/lerna bootstrap",
-    "build": "./node_modules/.bin/lerna run build",
+    "build": "npx pnpm run build:main -r && npx pnpm run build:module -r",
     "version": "./node_modules/.bin/lerna version --no-git-tag-version",
     "publish": "./node_modules/.bin/lerna publish from-package",
     "test:unit": "./node_modules/.bin/jest",
