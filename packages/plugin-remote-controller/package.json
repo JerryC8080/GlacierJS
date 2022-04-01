@@ -49,6 +49,7 @@
     "workbox-core": "^6.4.2"
   },
   "files": [
+    "dist",
     "build/main",
     "build/module",
     "!**/*.spec.*",
