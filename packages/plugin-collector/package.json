@@ -1,6 +1,6 @@
 {
   "name": "@glacierjs/plugin-collector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
@@ -72,10 +72,10 @@
     ]
   },
   "dependencies": {
-    "@glacierjs/core": "workspace:^0.1.2",
-    "@glacierjs/plugin-assets-cache": "workspace:^0.1.1",
-    "@glacierjs/sw": "workspace:^0.1.2",
-    "@glacierjs/window": "workspace:^0.1.2"
+    "@glacierjs/core": "workspace:^0.1.3",
+    "@glacierjs/plugin-assets-cache": "workspace:^0.1.2",
+    "@glacierjs/sw": "workspace:^0.1.3",
+    "@glacierjs/window": "workspace:^0.1.3"
   },
   "gitHead": "83a3acb9dc824a3fa3a9808ccff3f04a5703114e"
 }
