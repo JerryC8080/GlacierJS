@@ -2,6 +2,8 @@ import path from 'path';
 import typescript from '@rollup/plugin-typescript';
 import findWorkspacePackages from '@pnpm/find-workspace-packages';
 import findWorkspaceDir from '@pnpm/find-workspace-dir';
+import commonjs from '@rollup/plugin-commonjs';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default async function main() {
   const PACKAGE_ROOT_PATH = process.cwd();
@@ -17,7 +19,6 @@ export default async function main() {
   const INPUT_FILE = path.join(PACKAGE_ROOT_PATH, "src/index.ts");
   const OUTPUT_DIR = path.join(PACKAGE_ROOT_PATH, "dist");
 
-
   const config = {
     input: INPUT_FILE,
     external: ALL_MODULES,
@@ -28,7 +29,7 @@ export default async function main() {
       name: PKG_JSON.name,
       sourcemap: true,
     },
-    plugins: [typescript()]
+    plugins: [commonjs(), nodeResolve(), typescript()]
   }
 
   return config;
