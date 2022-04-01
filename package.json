@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "./node_modules/.bin/lerna bootstrap",
-    "build": "npx pnpm run build:main -r && npx pnpm run build:module -r",
+    "build": "npx pnpm run build:main -r && npx pnpm run build:module -r && node scripts/build-umd-dist.js",
     "version": "./node_modules/.bin/lerna version --no-git-tag-version",
     "publish": "./node_modules/.bin/lerna publish from-package",
     "test:unit": "./node_modules/.bin/jest",
@@ -23,9 +23,12 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@pnpm/exec": "^2.0.0",
     "@pnpm/find-workspace-dir": "^4.0.0",
     "@pnpm/find-workspace-packages": "^4.0.0",
     "@pnpm/logger": "^4.0.0",
+    "@rollup/plugin-commonjs": "^21.0.3",
+    "@rollup/plugin-node-resolve": "^13.1.3",
     "@rollup/plugin-typescript": "^8.3.1",
     "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
