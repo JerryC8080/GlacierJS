@@ -8,10 +8,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "bootstrap": "./node_modules/.bin/lerna bootstrap",
+    "bootstrap": "npx pnpm i",
     "build": "npx pnpm run build:main -r && npx pnpm run build:module -r && node scripts/build-umd-dist.js",
-    "version": "./node_modules/.bin/lerna version --no-git-tag-version",
-    "publish": "./node_modules/.bin/lerna publish from-package",
+    "version": "npx pnpm changeset version && npx pnpm i",
+    "publish": "npx pnpm -r publish",
     "test:unit": "./node_modules/.bin/jest",
     "cov": "./node_modules/.bin/jest --coverage ",
     "doc:api": "./node_modules/.bin/typedoc",
