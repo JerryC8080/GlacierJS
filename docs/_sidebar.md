@@ -5,6 +5,7 @@
 
     - [快速使用](contents/quick-usage.md)
     - [多维洋葱插件系统](contents/plugin.md)
+    - [CDN](contents/cdn.md)
 
 - 三、内置插件
 

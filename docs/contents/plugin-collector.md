@@ -16,13 +16,25 @@ npm i @glacierjs/plugin-collector
 **主线程**
 
 ```html
-<script src="//xxx/glacierjs/plugin-collector.min.js" />
+<script src="//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.min.js" ></script>
+<script src="//cdn.jsdelivr.net/npm/@glacierjs/window/dist/index.min.js" ></script>
+<script src="//cdn.jsdelivr.net/npm/@glacierjs/plugin-collector/dist/index.min.js" ></script>
+<script>
+    const { GlacierWindow } = window['@glacierjs/window'];
+    const { CollectorWindow, CollectedDataType } = window['@glacierjs/plugin-collector'];
+</script>
 ```
 
 **Service Worker 线程**
 
 ```javascript
-importScript('//xxx/glacierjs/plugin-collector.min.js');
+// in service-worker.js
+importScripts("//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.min.js");
+importScripts('//cdn.jsdelivr.net/npm/@glacierjs/sw/dist/index.min.js');
+importScripts('//cdn.jsdelivr.net/npm/@glacierjs/plugin-collector/dist/index.min.js');
+
+const { GlacierSW } = self['@glacierjs/sw'];
+const { CollectorSW } = self['@glacierjs/plugin-collector'];
 ```
 
 ## 使用
@@ -41,6 +53,7 @@ import { CacheFrom } from '@glacierjs/plugin-assets-cache';
 import { GlacierWindow } from '@glacierjs/window';
 
 const glacierWindow = new GlacierWindow('./service-worker.js');
+
 glacierWindow.use(new CollectorWindow({
     send(data: CollectedData) {
       const { type, data } = data;
@@ -84,12 +97,20 @@ CollectedDataType 的类型声明参考：[CollectedDataType](https://jerryc8080
 **ServiceWorker 线程**
 
 ```javascript
+import { AssetsCacheSW } from '@glacierjs/plugin-assets-cache';
 import { CollectorSW } from '@glacierjs/plugin-collector';
 import { GlacierSW } from '@glacierjs/sw';
 
 const glacierSW = new GlacierSW();
+
+// should use plugin-assets-cache first in order to make CollectedDataType.CACHE_HIT work.
+glacierSW.use(new AssetsCacheSW({...}));
+
 glacierSW.use(new CollectorSW());
 ```
+
+> 需要注意的是，如果你需要监听缓存命中事件（CollectedDataType.CACHE_HIT），你必须先注册 `AssetsCacheSW`。    
+因为 `AssetsCacheSW` 要先收集到数据，`CollectorSW` 才能去使用它。
 
 ## 统计
 
