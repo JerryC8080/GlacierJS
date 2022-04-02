@@ -4,6 +4,7 @@ import findWorkspacePackages from '@pnpm/find-workspace-packages';
 import findWorkspaceDir from '@pnpm/find-workspace-dir';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import injectProcessEnv from 'rollup-plugin-inject-process-env';
 
 export default async function main() {
   const PACKAGE_ROOT_PATH = process.cwd();
@@ -29,7 +30,14 @@ export default async function main() {
       name: PKG_JSON.name,
       sourcemap: true,
     },
-    plugins: [commonjs(), nodeResolve(), typescript()]
+    plugins: [
+      typescript(), 
+      commonjs(),
+      injectProcessEnv({
+        NODE_ENV: process.env.NODE_ENV,
+      }),
+      nodeResolve(),
+    ]
   }
 
   return config;
