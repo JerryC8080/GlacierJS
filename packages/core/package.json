@@ -1,6 +1,6 @@
 {
   "name": "@glacierjs/core",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
