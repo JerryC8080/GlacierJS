@@ -2,10 +2,11 @@
 
 我们都知道 Service Worker 工作在独立的进程中，与主进程是相互独立的，它是一种特殊的 Worker 进程。    
 对于双线程的模型，GlacierJS 分别给两个环境提供了对应的类库：
-* @glacierjs/window: 运行在主线程的代码，封装 SW 注册、卸载、通讯等操作
-* @glacierjs/sw: 运行在 ServiceWorker 线程的代码，封装生命周期钩子、卸载等。
+* `@glacierjs/window`: 运行在主线程的代码，封装 SW 注册、卸载、通讯等操作
+* `@glacierjs/sw`: 运行在 ServiceWorker 线程的代码，封装生命周期钩子、卸载等。
 
-它们共同发挥着 GlacierJS 的整体实力。当然，你也可以选择使用其中一个。
+它们共同发挥着 GlacierJS 的整体实力。    
+当然，你也可以选择使用其中一个。
 ## 安装
 
 我们提供了两种安装方式，你可以选择适合的方式安装 Glacier：
@@ -13,47 +14,62 @@
 ### 1. NPM 安装
 
 ```shell
-$ npm install @glacierjs/window @glacierjs/sw
+$ npm install @glacierjs/window @glacierjs/sw --save
+```
+
+```javascript
+import { GlacierWindow } from '@glacierjs/window';
+import { GlacierSW } from '@glacierjs/sw';
 ```
 
 ### 2. CDN 安装
 
 主线程
 ```html
-// 注入到全局对象 window 下：window.GlacierWindow
-<script src="//xxx/glacierjs/window.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.min.js" ></script>
+<script src="//cdn.jsdelivr.net/npm/@glacierjs/window/dist/index.min.js"></script>
+
+<script>
+    const { GlacierWindow } = window['@glacierjs/window'];
+</script>
 ```
 
 ServiceWorker 线程
 ```javascript
-// 注入到全局对象 self 下：self.GlacierSW
-importScript('//xxx/glacierjs/sw.min.js');
+importScripts("//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.min.js");
+importScript('//cdn.jsdelivr.net/npm/@glacierjs/sw/dist/index.min.js');
+
+const { GlacierSW } = self['@glacierjs/sw'];
 ```
 
 ## 使用
 1. 在主线程注册 ServiceWorker
 
 ```javascript
-// 假设你的 ServiceWorker 文件在当前域下。
+// generate glacier with ./service-worker.js which in your host.
 const glacier = new GlacierWindow('./service-worker.js');
 
-// 启动 ServiceWorker 的安装与注册
+// register service worker.
 glacier.register();
 ```
 
 2. 在 Service Worker 线程中启动 Glacier
 
 ```javascript
+// in service-worker.js
+
 const glacier = new GlacierSW();
 
-// 开始监听 onFetch 事件
+// listen all service workers event.
 glacier.listen();
 ```
 
 ## 插件
 
-
 ### 使用内置插件
+
+GlacierJS 拥有一个优秀的「多维洋葱插件系统」，并且提供多个常见的插件。    
+我们用插件 [`@glacierjs/plugin-assets-cache`](/contents/plugin-assets-cache) 举个简单的例子：
 
 ```javascript
 // code in service worker thread
@@ -66,10 +82,8 @@ glacier.use(new AssetsCacheSW({
     }
 }))
 ```
-这里使用了内置插件：`plugin-assets-cache`，对匹配的资源进行缓存，    
-所使用的缓存策略是 [Stale-While-Revalidate](contents/plugin-assets-cache?id=strategystale_while_revalidate)：
 
-![](https://developers.google.com/web/tools/workbox/images/modules/workbox-strategies/stale-while-revalidate.png)
+这里使用了内置插件：`plugin-assets-cache`，对匹配的资源进行缓存，所使用的缓存策略是 [Stale-While-Revalidate](contents/plugin-assets-cache?id=strategystale_while_revalidate)
 
 ### 编写自定义插件
 

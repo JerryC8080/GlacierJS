@@ -10,19 +10,31 @@
 ### NPM
 
 ```shell
-npm i @glacierjs/plugin-remote-controller
+npm i @glacierjs/plugin-remote-controller --save
 ```
 
 ### CDN
 
 **主线程**
 ```html
-<script src="//xxx/glacierjs/plugin-remote-controller.min.js" />
+<script src="//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.min.js" ></script>
+<script src="//cdn.jsdelivr.net/npm/@glacierjs/window/dist/index.min.js" ></script>
+<script src="//cdn.jsdelivr.net/npm/@glacierjs/plugin-remote-controller/dist/index.min.js" ></script>
+<script>
+    const { GlacierWindow } = window['@glacierjs/window'];
+    const { RemoteControllerWindow } = window['@glacierjs/plugin-remote-controller'];
+</script>
 ```
 
 **Service Worker 线程**
 ```javascript
-importScript("//xxx/glacierjs/plugin-remote-controller.min.js");
+// in service-worker.js
+importScripts("//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.min.js");
+importScripts('//cdn.jsdelivr.net/npm/@glacierjs/sw/dist/index.min.js');
+importScripts('//cdn.jsdelivr.net/npm/@glacierjs/plugin-remote-controller/dist/index.min.js');
+
+const { GlacierSW } = self['@glacierjs/sw'];
+const { RemoteControllerSW } = self['@glacierjs/plugin-remote-controller'];
 ```
 
 

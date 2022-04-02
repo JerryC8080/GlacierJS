@@ -5,18 +5,25 @@
 **NPM**
 
 ```shell
-npm i @glacierjs/plugin-assets-cache
+npm i @glacierjs/plugin-assets-cache --save
 ```
 
 **CDN**
 
-```html
-importScript("//xxx/glacierjs/plugin-assets-cache.min.js");
+```javascript
+// in service-worker.js
+importScripts("//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.min.js");
+importScripts('//cdn.jsdelivr.net/npm/@glacierjs/sw/dist/index.min.js');
+importScripts('//cdn.jsdelivr.net/npm/@glacierjs/plugin-assets-cache/dist/index.min.js');
+
+const { GlacierSW } = self['@glacierjs/sw'];
+const { AssetsCacheSW, Strategy } = self['@glacierjs/plugin-assets-cache'];
 ```
 
 ## 使用
 
 ```javascript
+// in service-worker.js
 import { GlacierSW } from '@glacierjs/sw';
 import { AssetsCacheSW, Strategy } from '@glacierjs/plugin-assets-cache';
 

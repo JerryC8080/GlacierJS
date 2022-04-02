@@ -8,18 +8,25 @@
 **NPM**
 
 ```shell
-npm i @glacierjs/plugin-precache
+npm i @glacierjs/plugin-precache --save
 ```
 
 **CDN**
 
-```html
-importScript("//xxx/glacierjs/plugin-precache.min.js");
+```javascript
+// in service-worker.js
+importScripts("//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.min.js");
+importScripts('//cdn.jsdelivr.net/npm/@glacierjs/sw/dist/index.min.js');
+importScripts('//cdn.jsdelivr.net/npm/@glacierjs/plugin-precache/dist/index.min.js');
+
+const { GlacierSW } = self['@glacierjs/sw'];
+const { PluginPreCacheSW } = self['@glacierjs/plugin-precache'];
 ```
 
 ## 使用
 
 ```javascript
+// in service-worker.js
 import { GlacierSW } from '@glacierjs/sw';
 import { PluginPreCacheSW } from '@glacierjs/plugin-precache';
 
