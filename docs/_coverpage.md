@@ -4,6 +4,6 @@
 
 # GlacierJS
 
-> 👨‍💻‍ Build your PWA app easier !!!
+> 🚀 A framework helps you to build PWA app easier !!!
 
-[Get Started](#介绍)
+[Get Started](/#)

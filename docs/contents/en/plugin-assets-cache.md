@@ -1,6 +1,6 @@
-# 资源缓存
+# Assets Cache
 
-## 安装
+## Install
 
 **NPM**
 
@@ -20,7 +20,7 @@ const { GlacierSW } = self['@glacierjs/sw'];
 const { AssetsCacheSW, Strategy } = self['@glacierjs/plugin-assets-cache'];
 ```
 
-## 使用
+## Usage
 
 ```javascript
 // in service-worker.js
@@ -45,14 +45,14 @@ glacierSW.use(new AssetsCacheSW({
     }],
 }));
 ```
-## 多种缓存策略
+## Multiple Caching Strategies
 
 ### stale-while-revalidate
 
-stale-while-revalidate 模式允许您使用缓存（如果可用）尽快响应请求，如果没有缓存则回退到网络请求。    
-然后使用网络请求来更新缓存。
+The **stale-while-revalidate** mode allows you to use the cache (if available) to respond to requests as soon as possible, and fallback to network requests if there is no cache.    
+Then use the network request to update the cache.
 
-![stale-while-revalidate](../assets/cache-strategy/stale-while-revalidate.png)
+![stale-while-revalidate](../../assets/cache-strategy/stale-while-revalidate.png)
 
 ```javascript
 glacierSW.use(new AssetsCacheSW({
@@ -65,11 +65,11 @@ glacierSW.use(new AssetsCacheSW({
 
 ### cache-first
 
-离线 Web 应用程序将严重依赖缓存，但对于非关键且可以逐渐缓存的资源，**「缓存优先」**是最佳选择。    
-如果缓存中有响应，则将使用缓存的响应来满足请求，并且根本不会使用网络。    
-如果没有缓存响应，则请求将由网络请求完成，然后响应会被缓存，以便下次直接从缓存中提供下一个请求。
+Offline web applications will rely heavily on caching, but for non-critical resources that can be cached gradually, **"cache-first"** is the best option.   
+If there is a response in the cache, the cached response will be used to satisfy the request and the network will not be used at all.    
+If the response is not cached, the request will be fulfilled by a network request, and then the response will be cached so that the next request will be served directly from the cache next time.
 
-![cache-first](../assets/cache-strategy/cache-first.png)
+![cache-first](../../assets/cache-strategy/cache-first.png)
 
 ```javascript
 glacierSW.use(new AssetsCacheSW({
@@ -82,10 +82,13 @@ glacierSW.use(new AssetsCacheSW({
 
 ### network-first
 
-对于频繁更新的请求，**「网络优先」**策略是理想的解决方案。    
-默认情况下，它会尝试从网络获取最新响应。如果请求成功，它会将响应放入缓存中。如果网络未能返回响应，则将使用缓存的响应。
 
-![network-first](../assets/cache-strategy/network-first.png)
+For frequently updated requests, the **"network first"** strategy is the ideal solution.    
+By default it will try to get the latest response from the network.    
+If the request is successful, it will put the response into the cache.    
+If the network fails to return a response, the cached response will be used.
+
+![network-first](../../assets/cache-strategy/network-first.png)
 
 ```javascript
 glacierSW.use(new AssetsCacheSW({
@@ -100,9 +103,9 @@ glacierSW.use(new AssetsCacheSW({
 
 ### network-only
 
-如果您需要从网络满足特定请求，network-only 模式会将资源请求进行透传到网络。
+If you need to fulfill a specific request from the network, **network-only** mode will transparently transmit the resource request to the network.
 
-![network-only](../assets/cache-strategy/network-only.png)
+![network-only](../../assets/cache-strategy/network-only.png)
 
 ```javascript
 glacierSW.use(new AssetsCacheSW({
@@ -114,9 +117,10 @@ glacierSW.use(new AssetsCacheSW({
 ```
 ### cache-only
 
-cache-only 策略确保从缓存中获取响应。这种场景不太常见，它一般匹配着「预缓存」策略会比较有用。
+The **cache-only** strategy ensures that responses are fetched from the cache.     
+This scenario is less common, and it is generally useful to match the "pre-cache" strategy.
 
-![cache-only](../assets/cache-strategy/cache-only.png)
+![cache-only](../../assets/cache-strategy/cache-only.png)
 
 ```javascript
 glacierSW.use(new AssetsCacheSW({
@@ -131,7 +135,7 @@ glacierSW.use(new AssetsCacheSW({
 
 ### registerRoute(route)
 
-动态注册路由
+Dynamically register routes
 
 ```javascript
 import { GlacierSW } from '@glacierjs/sw';
@@ -152,8 +156,8 @@ assetsCachePlugin.registerRoute({
 
 ### updateRoute(routes)
 
-刷新路由，它首先会清理当前路由，然后再注册新的路由。    
-该接口尤其适合由外部配置来控制路由的场景。
+Refresh routes, it will first clean up the current route, and then register the new route.    
+This interface is especially suitable for scenarios where routing is controlled by external configuration.
 
 ```javascript
 import { GlacierSW } from '@glacierjs/sw';
@@ -183,6 +187,6 @@ assetsCachePlugin.updateRoute([{
 ```
 
 
-> 更多 API 参考 [api/modules/plugin_assets_cache](https://jerryc8080.github.io/GlacierJS/api/modules/plugin_assets_cache_src.html)
+> More API reference [api/modules/plugin_assets_cache](https://jerryc8080.github.io/GlacierJS/api/modules/plugin_assets_cache_src.html)
 
-> 该插件由 [workbox-routing](https://developers.google.com/web/tools/workbox/modules/workbox-routing) 和 [workbox-strategy](https://developers.google.com/web/tools/workbox/modules/workbox-strategies#stale-while-revalidate) 提供底层支持
+> This plugin is backed by [workbox-routing](https://developers.google.com/web/tools/workbox/modules/workbox-routing) and [workbox-strategy](https://developers.google.com/web/tools/workbox/modules/workbox-strategies#stale-while-revalidate)
