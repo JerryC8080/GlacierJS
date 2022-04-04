@@ -1,1 +1,1 @@
-[remoteMarkdownUrl](https://cdn.jsdelivr.net/gh/JerryC8080/GlacierJS/README.md)
+[remoteMarkdownUrl](https://cdn.jsdelivr.net/gh/JerryC8080/GlacierJS@master/README.md)
