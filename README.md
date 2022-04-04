@@ -1,4 +1,4 @@
-# 介绍
+# Introduction
 
 
 <p align="center">
@@ -8,42 +8,43 @@
 </p>
 
 <h3 align="center">
-  <a href="https://jerryc8080.github.io/GlacierJS/">📖 Document</a>
+  <p><a href="https://jerryc8080.github.io/GlacierJS/zh-cn/">📖 🇨🇳 中文文档</a></p>
+  <p><a href="https://jerryc8080.github.io/GlacierJS/">📖 🇬🇧 Document for English</a></p>
 </h3>
 
 <p align="center">
-  一款致力于让你更轻松构建企业级 PWA 应用的框架
+  A framework dedicated to making it easier for you to build enterprise-grade PWA applications.
 </p>
 
 
-## 功能
+## Features
 
-- 🧳 开箱即用
-- 🗽 基于洋葱模型的多维插件系统，编程更解耦，更自由
-- 🚀 SW 安全的注册与卸载
-- 🎡 静态资源缓存
-- 🎢 资源预缓存
-- 🎠 远程控制
-- ⛲️ 数据指标收集
+- 🧳  Out of the box
+- 🗽  Multi-dimensional plug-in system based on onion model, programming is more decoupled and free
+- 🚀  SW security registration and uninstallation
+- 🎡  Static resource caching
+- 🎢  Resource pre-cache
+- 🎠  Remote control
+- ⛲️  Data metrics collection
 
-## 动机
+## Motivation
 
-由于 Service Worker 技术的复杂性，我们在开发 PWA 应用中，需要了解很多的相关知识。     
-[Google Workbox](https://developers.google.com/web/tools/workbox) 提供了一套方便的 API，简化了诸如 SW 注册和安装、资源缓存等常见的 SW 操作，但它的定位是： **「库 Libs」**。
+Due to the complexity of Service Worker technology, we need to know a lot of related knowledge in the development of PWA applications.    
+[Google Workbox](https://developers.google.com/web/tools/workbox) provides a set of convenient APIs to simplify common SW operations such as SW registration and installation, resource caching, etc., but its positioning is: **"Library"**.    
 
-当我们 SW 程序代码越来越多的时候，会造成代码臃肿，管理混乱，复用困难。    
-同时一些常见的 PWA 实现，如：远程控制、进程通讯、数据上报等，希望能实现按需插拔式的复用。    
-我们需要一个： **「框架 Framework」**。    
+When there are more and more SW program codes, it will cause the code to be bloated, the management is chaotic, and the reuse is difficult.    
+At the same time, some common PWA implementations, such as: remote control, process communication, data reporting, etc., hope to achieve on-demand pluggable reuse.    
+We need : **"Framework"**.
 
-我们是否可以使用 Workbox 作为底层技术，在此之上构建更高一层抽象的框架，来解决这些问题呢？    
-于是，我打造出了一套基础套件：GlacierJS。    
-它基于一个核心「多维洋葱插件系统」，以及多个插件来，让你更快速的构建一个企业级的 PWA 应用。
+Can we use Workbox as the underlying technology and build a higher-level abstraction framework on top of it to solve these problems?    
+So, I built a basic suite: **GlacierJS**.    
+It is based on a core "multi-dimensional onion plug-in system" and multiple plug-ins, allowing you to build an enterprise-level PWA application faster.
 
-> Glacier 译为「冰川」，旨在致敬曾经的 [Lavas](https://github.com/lavas-project/lavas)
+> Glacier is a tribute to the former [Lavas](https://github.com/lavas-project/lavas)
 
-## 最简单的例子
+## Simplest example
 
-在主线程中
+In Main thread
 ```html
 <script src="//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.min.js" ></script>
 <script src="//cdn.jsdelivr.net/npm/@glacierjs/window/dist/index.min.js"></script>
@@ -60,7 +61,7 @@
 </script>
 ```
 
-在 ServiceWorker 线程中
+In ServiceWorker thread
 ```javascript
 importScripts("//cdn.jsdelivr.net/npm/@glacierjs/core/dist/index.js");
 importScripts('//cdn.jsdelivr.net/npm/@glacierjs/sw/dist/index.js');
@@ -70,49 +71,50 @@ const glacierSW = new GlacierSW();
 glacierSW.listen();
 ```
 
-## 设计概览
+## Design overview
 
-### 架构
+### Architecture
 <p align="center">
     <img alt="logo" width="700" src="https://bluesun-1252625244.cos.ap-guangzhou.myqcloud.com/jerryc/20220227172033.png">
 </p>
 
-它由几部分组成：
+It consists of several parts:
 
-* **核心**
-    - [x] @glacierjs/core: 作为 Glacier 的核心，它实现了插件系统、日志系统等功能，一般你不会直接使用这个模块。
-    - [x] @glacierjs/sw: 运行在 SW 进程中的代码，封装了 SW 的生命周期，提供能简单的编程方式。
-    - [x] @glacierjs/window: 运行在主进程的代码，除了支持插件编程外，还负责管理 SW 的注册与卸载。
+* **Core**
+    - [x] `@glacierjs/core`: As the core of Glacier, it implements functions such as plug-in system, log system, etc.Generally, you will not use this module directly.
+    - [x] `@glacierjs/sw`: The code running in the SW process encapsulates the SW life cycle and provides a simple programming method.
+    - [x] `@glacierjs/window`: The code running in the main process, in addition to supporting plug-in programming, is also responsible for managing the registration and uninstallation of SW.
 
-* **内建插件**
-    - [x] @glacierjs/plugin-precache：实现静态资源预缓存功能
-    - [x] @glacierjs/plugin-reporter：实现基本数据上报功能
-    - [x] @glacierjs/plugin-assets：实现静态资源缓存功能
-    - [x] @glacierjs/plugin-remote-controller: 实现远程控制功能
+* **Plugins**
+    - [x] `@glacierjs/plugin-precache`: Implement static resource pre-cache function.
+    - [x] `@glacierjs/plugin-reporter`: Realize basic data reporting function.
+    - [x] `@glacierjs/plugin-assets`: Implement static resource caching.
+    - [x] `@glacierjs/plugin-remote-controller`: Implement remote control function.
 
-* **配套设施**
-    - [ ] @glacierjs/cli：支持快速创建应用与插件
-    - [ ] @glacierjs/webpack-plugin: 支持构建静态资源清单
+* **Related**
+    - [ ] @glacierjs/cli: Supports rapid creation of applications and plugins.
+    - [ ] @glacierjs/webpack-plugin: support building static resource manifests.
 
-### 多维洋葱插件系统
 
-GlacierJS 针对传统的 ServiceWorker 生命周期钩子进行了封装，从而支持插件化。    
-插件系统根据洋葱模型，为每一个原生的生命周期钩子都实现了一个「洋葱」，所以我们称这套系统为：    
-> **「多维洋葱插件系统」**
+### Multidimensional Onion Plugin System
+
+GlacierJS encapsulates traditional ServiceWorker lifecycle hooks to support plug-in.
+The plug-in system implements an "onion" for each native lifecycle hook according to the onion model, so we call this system:
+  
+> **Multidimensional Onion Plugin System**
 
 ![GlacierJS 多维洋葱插件系统](https://cdn.jsdelivr.net/gh/jerryc8080/glacierjs@master/docs/assets/plugin-system.drawio.png)
 
-对传统生命周期进行封装之后，我们为每一个插件提供了更优雅的生命周期钩子函数
+After encapsulating the traditional life cycle, we provide a more elegant life cycle hook function for each plugin
 
 ![GlacierJS 生命周期图示](https://cdn.jsdelivr.net/gh/jerryc8080/glacierjs@master/docs/assets/lifecycle.drawio.png)
 
 
-# 联系与支持
+# Contact & Support
 
-
-* 欢迎通过邮箱来跟我联系: huangjerryc@gmail.com
-* 欢迎通过 [GitHub issue](https://github.com/JerryC8080/glacierjs/issues) 提交 BUG、以及其他问题
-* 欢迎给该项目点个赞 ⭐️ [star on GitHub](https://github.com/beautywe/beautywe) !
+* Welcome to contact me via email: huangjerryc@gmail.com
+* Welcome to submit bugs and other issues through  [GitHub issue](https://github.com/JerryC8080/glacierjs/issues)
+* Please give this project a like ⭐️ [star on GitHub](https://github.com/beautywe/beautywe) !
 
 # License
 

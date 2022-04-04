@@ -40,8 +40,8 @@ const { RemoteControllerSW } = self['@glacierjs/plugin-remote-controller'];
 
 ## 使用
 
-要完全挥发「远程控制」插件的功能，需要在主进程和 ServiceWorker 分别注册 `RemoteControllerWindow` 和 `RemoteControllerSW`。    
-它们接收的参数是一样的，所以你可以把配置文件单独出来，最后通过打包工具(webpack)把代码分别打包到主进程代码和 ServiceWorker 代码中。    
+要完全挥发「远程控制」插件的功能，需要在主线程和 ServiceWorker 分别注册 `RemoteControllerWindow` 和 `RemoteControllerSW`。    
+它们接收的参数是一样的，所以你可以把配置文件单独出来，最后通过打包工具(webpack)把代码分别打包到主线程代码和 ServiceWorker 代码中。    
 
 假如我们有这样的文件结构：
 ```shell

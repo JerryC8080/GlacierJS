@@ -1,9 +1,9 @@
-# 预缓存
+# Pre-Cache
 
-跟 [资源缓存](contents/plugin-assets-cache) 不同，通过预缓存插件，我们能在 Service Worker 安装的时候就进行资源的「预缓存」。    
-这种做法不但能提升缓存的命中率，同时也能用于创建 Web 离线应用。
+Unlike [assets-cache](contents/plugin-assets-cache), through the **pre-cache** plugin, we can "pre-cache" resources when the service worker is installed.    
+This approach can not only improve the cache hit rate, but also can be used to create web offline applications.
 
-## 安装
+## Install
 
 **NPM**
 
@@ -23,7 +23,7 @@ const { GlacierSW } = self['@glacierjs/sw'];
 const { PluginPreCacheSW } = self['@glacierjs/plugin-precache'];
 ```
 
-## 使用
+## Usage
 
 ```javascript
 // in service-worker.js
@@ -43,25 +43,25 @@ glacierSW.use(
 );
 ```
 
-**预缓存清单 assetsManifest**
+**Precache Manifest**
 
-plugin-precache 需要一个具有 `url` 和 `reversion` 属性的对象数组，这个数组称为「预缓存清单」。    
-插件需要知道这两个基本信息，从而决定如何去缓存新资源和删除旧资源。
+`plugin-precache` expects an array of objects with `url` and `reversion` properties, this array is called the **"precache manifest"**.    
+Plugins need to know these two basic information to decide how to cache new resources and delete old resources.
 
-对于上面例子的第一组对象，`reversion` 需要你的程序每次更新资源文件(`index.html`)时，去刷新的值。    
-通常来说 HTML 资源与 JS 和 CSS 资源不同，它不能在 URL 中包含哈希值，这时候你可以根据文件内容生成散列值。    
-当然如何设置该值，取决与你自己。    
+For the first set of objects in the example above, `reversion` requires your program to refresh the values ​​each time the resource file (`index.html`) is updated.    
+Generally speaking, HTML resources, unlike JS and CSS resources, cannot contain hash values ​​in the URL. In this case, you can generate a hash value based on the content of the file.    
+Of course, how to set this value is up to you.
 
-而第二个和第三个对象，`reversion` 属性设置为 `null`，是因为资源本身附带了哈希值，**当然这也是静态资源的最佳方式**。
+For the second and third objects, the `reversion` property is set to `null`, because the resource itself has a hash value attached, which is of course **the best way to static resources**.
 
-## 使用 Workbox 构建预缓存清单
+## Building a precache manifest with Workbox
 
-要维护和生成预缓存清单是一件繁琐的事情，Google Workbox 为此提供了三个工具去生成该清单：
-* [workbox-build](https://developers.google.com/web/tools/workbox/modules/workbox-build)： 是一个构建工具，可以用于 gulp 或者 npm script 中。
-* [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)：如果你是使用 webpack 打包资源的，你可以直接使用这个插件。
-* [workbox-cli](https://developers.google.com/web/tools/workbox/modules/workbox-cli): CLI 也有一个子功能，可以去生成预缓存清单，并注入到 Service Worker 中。
+Maintaining and generating a precache manifest is tedious, and Google Workbox provides three tools for generating the manifest:
+* [workbox-build](https://developers.google.com/web/tools/workbox/modules/workbox-build)： Is a build tool that can be used in gulp or npm script.
+* [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)：If you use webpack to package assets, you can use this plugin directly.
+* [workbox-cli](https://developers.google.com/web/tools/workbox/modules/workbox-cli): The CLI also has a sub-function to generate pre-cache manifests and inject them into service workers.
 
-**以使用 workbox-webpack-plugin为例：**
+Take workbox-webpack-plugin as an example:
 
 ```javascript
 // webpack config
@@ -93,7 +93,7 @@ glacierSW.use(new PluginPreCacheSW({
 }));
 ```
 
-上述脚本经过 webpack 打包编译后，可能会变成这样：
+After the above script is packaged and compiled by webpack, it may become like this:
 ```javascript
 // in ./my-service-worker.ts
 import { GlacierSW } from '@glacierjs/sw';
@@ -111,5 +111,4 @@ glacierSW.use(new PluginPreCacheSW({
 }));
 ```
 
-
-> 该插件由 [workbox-precaching](https://developers.google.com/web/tools/workbox/modules/workbox-precaching) 提供底层支持
+> This plugin is backed by [workbox-precaching](https://developers.google.com/web/tools/workbox/modules/workbox-precaching)

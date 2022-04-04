@@ -6,7 +6,7 @@ GlacierJS 针对传统的 ServiceWorker 生命周期钩子进行了封装，从�
 插件系统根据洋葱模型，为每一个原生的生命周期钩子都实现了一个「洋葱」，所以我们称这套系统为：    
 > **「多维洋葱插件系统」**
 
-![GlacierJS 多维洋葱插件系统](../assets/plugin-system.drawio.png)
+![GlacierJS 多维洋葱插件系统](../../../assets/plugin-system.drawio.png)
 
 基于洋葱模型，我们可以让事情更加聚焦，例如我们要对一个资源请求情况进行日志收集：
 
@@ -33,7 +33,7 @@ class Log implements ServiceWorkerPlugin {
 
 对传统生命周期进行封装之后，我们为每一个插件提供了更优雅的生命周期钩子函数
 
-![GlacierJS 生命周期图示](../assets/lifecycle.drawio.png)
+![GlacierJS 生命周期图示](../../assets/lifecycle.drawio.png)
 
 ## 生命周期
 
@@ -55,7 +55,7 @@ export class MyPluginWindow implements WindowPlugin {
 
 * `context` [\<UseContext\>](https://jerryc8080.github.io/GlacierJS/api/modules/window_src.html#UseContext) 当前上下文，可以获取到 workbox 实例和当前 glacier 实例
 
-当组件被使用的时候，该钩子会被触发：
+当插件被使用的时候，该钩子会被触发：
 ```javascript
 glacierWindow.use(new MyPlugin());
 ```
@@ -72,10 +72,10 @@ public onUse(context: UseContext) {
 
 #### beforeRegister: (context: Object, next?: NextFn) => Promise\<void\>
 
-* `context` 一个空对象，组件们可以以此作为通信手段。
+* `context` 一个空对象，插件们可以以此作为通信手段。
 * `next` [\<HookFn\>](https://jerryc8080.github.io/GlacierJS/api/modules/core_src.html#NextFn) 返回一个Promise，用以监听后面的插件的完成或者失败。
 
-当即将要注册主进程时，该钩子会被触发。    
+当即将要注册主线程时，该钩子会被触发。    
 在此阶段你可以进行一些异步操作，例如我们通过远程配置来决定是否要卸载 ServiceWorker：
 ```javascript
 public async beforeRegister(): Promise<void> {
@@ -114,29 +114,29 @@ export class MyPluginSW implements ServiceWorkerPlugin {
 
 * `context` [\<UseContext\>](https://jerryc8080.github.io/GlacierJS/api/interfaces/sw_src.UseContext.html) 当前上下文，可以获取到当前 glacier 实例
 
-当组件被使用的时候，该钩子会被触发：
+当插件被使用的时候，该钩子会被触发：
 ```javascript
 glacierSW.use(new MyPlugin());
 ```
 
-它的用途与主进程 onUse 类似。
+它的用途与主线程 onUse 类似。
 
 
 #### onInstall: (context: InstallContext, next?: NextFn) => Promise<void>
 
 * `context` [\<InstallContext\>](https://jerryc8080.github.io/GlacierJS/api/interfaces/sw_src.InstallContext.html):
-    * `event` [\<ExtendableEvent\>](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent) 传统 `install` 事件的 `event` 实例
+    * `event` [\<ExtendableEvent\>](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent) 传统的 [`install event`](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/install_event) 事件的实例
 * `next` [\<HookFn\>](https://jerryc8080.github.io/GlacierJS/api/modules/core_src.html#NextFn) 返回一个Promise，用以监听后面的插件的完成或者失败。
 
-当 ServiceWorker [install](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/oninstall) 事件被触发时，该钩子会被触发。
+当 ServiceWorker `install` 事件被触发时，该钩子会被触发。
 
 #### onActivate: (context: ActivateContext, next?: NextFn) => Promise<void>
 
 * `context` [\<ActivateContext\>](https://jerryc8080.github.io/GlacierJS/api/interfaces/sw_src.ActivateContext.html):
-    * `event` [\<ExtendableEvent\>](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent) 传统 `activate` 事件的 `event` 实例
+    * `event` [\<ExtendableEvent\>](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent) 传统 [`activate event`](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/activate_event) 的事件实例
 * `next` [\<HookFn\>](https://jerryc8080.github.io/GlacierJS/api/modules/core_src.html#NextFn) 返回一个Promise，用以监听后面的插件的完成或者失败。
 
-当 ServiceWorker [activate](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/onactivate) 事件被触发时，该钩子会被触发。
+当 ServiceWorker `activate` 事件被触发时，该钩子会被触发。
 
 #### onFetch: (context: FetchContext, next?: NextFn) => Promise<void>
 
@@ -158,5 +158,5 @@ glacierSW.use(new MyPlugin());
 
 #### onUninstall: (context: Object, next?: NextFn) => Promise<void>
 
-* `context` 一个空对象，组件们可以以此作为通信手段。
+* `context` 一个空对象，插件们可以以此作为通信手段。
 * `next` [\<HookFn\>](https://jerryc8080.github.io/GlacierJS/api/modules/core_src.html#NextFn) 返回一个Promise，用以监听后面的插件的完成或者失败。
