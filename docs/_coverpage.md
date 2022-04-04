@@ -6,4 +6,4 @@
 
 > 🚀 A framework helps you to build PWA app easier !!!
 
-[Get Started](/#)
+[Get Started](?id=introduction)
