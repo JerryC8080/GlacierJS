@@ -8,7 +8,7 @@
 </p>
 
 <h3 align="center">
-  <p><a href="https://jerryc8080.github.io/GlacierJS/zh-cn/">📖 🇨🇳 中文文档</a></p>
+  <p><a href="https://jerryc8080.github.io/GlacierJS/#/contents/zh-cn/">📖 🇨🇳 中文文档</a></p>
   <p><a href="https://jerryc8080.github.io/GlacierJS/">📖 🇬🇧 Document for English</a></p>
 </h3>
 
