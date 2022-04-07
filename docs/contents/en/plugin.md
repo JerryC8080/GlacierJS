@@ -7,7 +7,7 @@ The plug-in system implements an "onion" for each native lifecycle hook accordin
 
 > **Multidimensional Onion Plugin System**
 
-![GlacierJS Multidimensional Onion Plugin System](../../../assets/plugin-system.drawio.png)
+![GlacierJS Multidimensional Onion Plugin System](../../assets/plugin-system.drawio.png)
 
 Based on the onion model, we can make things more focused, for example, we want to log a resource request:
 
