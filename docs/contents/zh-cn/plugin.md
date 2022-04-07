@@ -6,7 +6,7 @@ GlacierJS 针对传统的 ServiceWorker 生命周期钩子进行了封装，从�
 插件系统根据洋葱模型，为每一个原生的生命周期钩子都实现了一个「洋葱」，所以我们称这套系统为：    
 > **「多维洋葱插件系统」**
 
-![GlacierJS 多维洋葱插件系统](../../../assets/plugin-system.drawio.png)
+![GlacierJS 多维洋葱插件系统](../../assets/plugin-system.drawio.png)
 
 基于洋葱模型，我们可以让事情更加聚焦，例如我们要对一个资源请求情况进行日志收集：
 
