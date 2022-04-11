@@ -11,6 +11,11 @@ interface preCacheControllerOptions {
   fallbackToNetwork?: boolean;
 }
 
+interface Assets {
+  result: Response;
+  tag: AssetTags
+}
+
 export interface PluginPreCacheOptions extends preCacheControllerOptions {
   // 通过 webpack plugin injectManifest 注入
   assetsManifest?: [];
@@ -56,36 +61,35 @@ export class PluginpreCacheSW implements ServiceWorkerPlugin {
     const request = context?.event?.request;
     const url = request?.url;
 
-    context.res = await Promise.any([
-      this.getFromNetwork(request),
-      this.getFromCache(request),
-    ])
-      .then(({ result, tag }) => {
-        logger.debug(
-          {
-            [AssetTags.network]: 'Network hit',
-            [AssetTags.cache]: 'Cache hit',
-          }[tag],
-          url
-        );
+    try {
+      const { result, tag } = await Promise.any([
+        this.getFromNetwork(request),
+        this.getFromCache(request),
+      ]);
 
-        return result;
-      })
-      .catch((error) => {
-        logger.error('assets request error', url, error);
-        return null;
-      });
+      logger.debug(
+        {
+          [AssetTags.network]: 'Network hit',
+          [AssetTags.cache]: 'Cache hit',
+        }[tag],
+        url
+      );
+
+      context.res = result;
+    } catch (error) {
+      logger.error('assets request error', url, error);
+    }
   }
 
   public async onUninstall() {
     const cache = await caches.open(this.name);
-    if (!cache) Promise.resolve();
+    if (!cache) return;
     const keys = await cache.keys();
     caches.delete(this.name);
     logger.info(`onUninstall, clean cache: '${this.name}', total ${keys.length} assets`);
   }
 
-  private async getFromCache(request: Request): Promise<any> {
+  private async getFromCache(request: Request): Promise<Assets> {
     const url = request?.url;
     const cacheKey = this.preCacheController.getCacheKeyForURL(url);
     const result = await caches.match(cacheKey);
@@ -101,7 +105,7 @@ export class PluginpreCacheSW implements ServiceWorkerPlugin {
     };
   }
 
-  private async getFromNetwork(request: Request): Promise<any> {
+  private async getFromNetwork(request: Request): Promise<Assets> {
     const url = request?.url;
     const result = await fetch(request);
     if (!result) {
