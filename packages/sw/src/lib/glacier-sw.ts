@@ -58,46 +58,41 @@ export class GlacierSW {
   public listen() {
     // 1. listen install
     addEventListener('install', (event: ExtendableEvent) => {
-      event.waitUntil(
-        Promise.resolve().then(async () => {
-          await this.lifecycleHooks.onInstall.runAll({ event });
-          logger.debug('onInstall: all hooks done', event);
-        })
-      );
+      event.waitUntil(async () => {
+        await this.lifecycleHooks.onInstall.runAll({ event });
+        logger.debug('onInstall: all hooks done', event);
+      });
     });
 
     // 2. listen activate
     addEventListener('activate', (event: ExtendableEvent) => {
-      event.waitUntil(
-        Promise.resolve().then(async () => {
-          await this.lifecycleHooks.onActivate.runAll({ event });
-          logger.debug('onActivate: all hooks done', event);
-        })
-      );
+      event.waitUntil(async () => {
+        await this.lifecycleHooks.onActivate.runAll({ event });
+        logger.debug('onActivate: all hooks done', event);
+      });
     });
 
     // 3. listen fetch
     addEventListener('fetch', (event: FetchEvent) => {
-      event.respondWith(
-        Promise.resolve().then(async () => {
-          const context: FetchContext = {
-            event,
-            res: undefined,
-          };
+      // FetchEvent 回调函数接收的是 PromiseLike<Response> 类型，这里需要用 Promise 包一层以防止 TS 报错：https://github.com/microsoft/TypeScript/issues/5911
+      event.respondWith(Promise.resolve().then(async () => {
+        const context: FetchContext = {
+          event,
+          res: undefined,
+        };
 
-          await this.lifecycleHooks.onFetch.runAll(context);
+        await this.lifecycleHooks.onFetch.runAll(context);
 
-          logger.debug(
-            'onFetch: all hooks done',
-            context.event?.request?.url,
-            context
-          );
+        logger.debug(
+          'onFetch: all hooks done',
+          context.event?.request?.url,
+          context
+        );
 
-          // 当没有设置 response 的时候，透传请求网络资源。
-          if (!context.res) return fetch(event.request);
-          return context.res;
-        })
-      );
+        // 当没有设置 response 的时候，透传请求网络资源。
+        if (!context.res) return fetch(event.request);
+        return context.res;
+      }));
     });
 
     // 4. listen message
