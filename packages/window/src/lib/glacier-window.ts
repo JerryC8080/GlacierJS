@@ -2,6 +2,7 @@ import { Workbox } from 'workbox-window';
 import { MiddlewareQueue, EventNames } from '@glacierjs/core';
 import { logger } from './logger';
 import { WindowPlugin, Lifecycle } from '../type/index';
+
 export class GlacierWindow {
   public plugins: Record<string, WindowPlugin> = {};
   private lifecycleHooks: Record<Lifecycle, MiddlewareQueue> | any = {};
