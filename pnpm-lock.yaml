@@ -6,6 +6,7 @@ importers:
     specifiers:
       '@changesets/cli': ^2.22.0
       '@istanbuljs/nyc-config-typescript': ^1.0.2
+      '@knodes/typedoc-plugin-monorepo-readmes': ^0.22.4
       '@pnpm/exec': ^2.0.0
       '@pnpm/find-workspace-dir': ^4.0.0
       '@pnpm/find-workspace-packages': ^4.0.0
@@ -39,6 +40,7 @@ importers:
     devDependencies:
       '@changesets/cli': 2.22.0
       '@istanbuljs/nyc-config-typescript': 1.0.2_nyc@15.1.0
+      '@knodes/typedoc-plugin-monorepo-readmes': 0.22.4_typedoc@0.22.12
       '@pnpm/exec': 2.0.0
       '@pnpm/find-workspace-dir': 4.0.0
       '@pnpm/find-workspace-packages': 4.0.0_@pnpm+logger@4.0.0
@@ -1263,6 +1265,28 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.0.5
       '@jridgewell/sourcemap-codec': 1.4.11
+    dev: true
+
+  /@knodes/typedoc-plugin-monorepo-readmes/0.22.4_typedoc@0.22.12:
+    resolution: {integrity: sha512-3rCKfVCVQhgYBCYNpotmqWqiWmgtjCoNp+pfYcYUkRX2CHlN9DfyEhU+K0+pN5qi7+q05ruxVOeH49tNJ3QmTA==}
+    peerDependencies:
+      lodash: ^4.17.0
+      typedoc: ^0.22.0
+    dependencies:
+      '@knodes/typedoc-pluginutils': 0.22.4_typedoc@0.22.12
+      pkg-up: 3.1.0
+      typedoc: 0.22.12_typescript@4.5.5
+    dev: true
+
+  /@knodes/typedoc-pluginutils/0.22.4_typedoc@0.22.12:
+    resolution: {integrity: sha512-qLkwf14IIoTXKnlNjZPnEz5IupFDfAaa+ggPjQE1ZaiElA0o4PGgq58z0dW8U8WVTVNvD4nSN7jFLqB599jt7Q==}
+    peerDependencies:
+      lodash: ^4.17.0
+      typedoc: ^0.22.0
+    dependencies:
+      pkg-up: 3.1.0
+      semver: 7.3.5
+      typedoc: 0.22.12_typescript@4.5.5
     dev: true
 
   /@lerna/add/4.0.0:
@@ -8118,6 +8142,13 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       find-up: 4.1.0
+    dev: true
+
+  /pkg-up/3.1.0:
+    resolution: {integrity: sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==}
+    engines: {node: '>=8'}
+    dependencies:
+      find-up: 3.0.0
     dev: true
 
   /preferred-pm/3.0.3:

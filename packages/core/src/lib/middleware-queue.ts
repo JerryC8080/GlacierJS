@@ -1,7 +1,8 @@
 import { logger } from './logger';
 import { compose } from './compose';
 import { Middleware } from '../type/index';
-import callNextWhileIgnore from './call-next-while-ignore';
+import { callNextWhileIgnore } from './call-next-while-ignore';
+
 export class MiddlewareQueue {
   private name = 'anonymous';
   private queue: Array<Middleware> = [];

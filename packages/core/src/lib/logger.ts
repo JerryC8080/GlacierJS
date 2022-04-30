@@ -1,3 +1,9 @@
+/**
+ * The Level of Class Logger
+ * Priority: ERROR > WARN > INFO > DEBUG
+ * 
+ * @category Logger
+ */
 export enum Level {
   ERROR = 1,
   WARN = 2,
@@ -5,39 +11,54 @@ export enum Level {
   DEBUG = 4,
 }
 
-export const levelMapper = {
+const levelStrMapper = {
   [`${Level.ERROR}`]: 'error',
   [`${Level.WARN}`]: 'warn',
   [`${Level.INFO}`]: 'info',
   [`${Level.DEBUG}`]: 'debug',
 };
 
+/**
+ * The options type of Class Logger
+ * 
+ * @category Logger
+ */
+export interface Options {
+  prefix?: string | undefined;
+  onLog?: ((level: Level, args: Array<any>) => any) | undefined;
+}
+
+/**
+ * Class Logger
+ * 
+ * **Quick Usage:**
+ * ```typescript
+ * const logger = new Logger({ prefix: 'glacierjs' });
+ * logger.info('hello');  // print: glacierjs [info] hello
+ * logger.debug('hello');  // print: glacierjs [debug] hello
+ * logger.warn('hello');  // print: glacierjs [warn] hello
+ * logger.error('hello');  // print: glacierjs [error] hello
+ * ```
+ * 
+ * @category Logger
+ */
 export class Logger {
-  public level: Level = Level.INFO;
-  public methodToColorMap: { [methodName: string]: string | null } = {
+  public static level: Level = Level.INFO
+
+  private static methodToColorMap: { [methodName: string]: string | null } = {
     [Level.DEBUG]: '#7f8c8d', // Gray
     [Level.INFO]: '#2ecc71', // Green
     [Level.WARN]: '#f39c12', // Yellow
     [Level.ERROR]: '#c0392b', // Red
-  };
+  }
 
-  private prefix: string | undefined;
-  private onLog: ((level: Level, args: Array<any>) => any) | undefined;
+  private prefix: Options['prefix']
 
-  constructor({
-    prefix,
-    level,
-    titleTemplate,
-    onLog,
-  }: {
-    prefix?: typeof Logger.prototype.prefix;
-    level?: typeof Logger.prototype.level;
-    titleTemplate?: typeof Logger.prototype.titleTemplate;
-    onLog?: typeof Logger.prototype.onLog;
-  } = {}) {
+  private onLog: Options['onLog']
+
+  constructor(options: Options = {}) {
+    const { prefix, onLog } = options;
     if (prefix) this.prefix = prefix;
-    if (level) this.level = level;
-    if (titleTemplate) this.titleTemplate = titleTemplate;
     if (onLog) this.onLog = onLog;
   }
 
@@ -57,23 +78,25 @@ export class Logger {
     this.log(Level.DEBUG, args);
   }
 
+  public extends({ prefix }: { prefix: Options['prefix'] }): Logger {
+    return new Logger({
+      prefix: `${this.prefix}-${prefix}`,
+      onLog: this.onLog,
+    });
+  }
+
   private log(runtimeLevel: Level, args) {
-    if (runtimeLevel <= this.level) {
-      const title = this.titleTemplate({
-        prefix: this.prefix,
-        level: runtimeLevel,
-      });
-
+    if (runtimeLevel <= Logger.level) {
       if (this.onLog) this.onLog(runtimeLevel, args);
-
+      const title = `[${levelStrMapper[runtimeLevel]}]`;
       const styles = this.getStyle(runtimeLevel);
-      console[levelMapper[runtimeLevel]](...styles, title, ...args);
+      console[levelStrMapper[runtimeLevel]](...styles, title, ...args);
     }
   }
 
   private getStyle(runtimeLevel: Level): String[] {
     const styles = [
-      `background: ${this.methodToColorMap[runtimeLevel]!}`,
+      `background: ${Logger.methodToColorMap[runtimeLevel]!}`,
       'border-radius: 0.5em',
       'color: white',
       'font-weight: bold',
@@ -82,15 +105,11 @@ export class Logger {
 
     return [`%c${this.prefix}`, styles.join(';')];
   }
-
-  private titleTemplate({
-    level,
-  }: {
-    prefix: typeof Logger.prototype.prefix;
-    level: typeof Logger.prototype.level;
-  }) {
-    return `[${levelMapper[level]}]`;
-  }
 }
 
+/**
+ * The instance of Class Logger in GlacierJS
+ * 
+ * @category Logger
+ */
 export const logger = new Logger({ prefix: 'glacier' });
