@@ -248,20 +248,17 @@ describe('Compose', () => {
       compose([
         // @ts-ignore
         (ctx, next) => {
-          // eslint-disable-next-line no-plusplus
           val++;
           return next();
         },
         // @ts-ignore
         (ctx, next) => {
-          // eslint-disable-next-line no-plusplus
           val++;
           return next();
         },
       ]),
       // @ts-ignore
       (ctx, next) => {
-        // eslint-disable-next-line no-plusplus
         val++;
         return next();
       },
@@ -314,7 +311,6 @@ describe('Compose', () => {
   it('should not get stuck on the passed in next', () => {
     const middleware = [
       (ctx, next) => {
-        // eslint-disable-next-line no-plusplus
         ctx.middleware++;
         return next();
       },
@@ -326,7 +322,6 @@ describe('Compose', () => {
 
     // @ts-ignore
     return compose(middleware)(ctx, (ctx, next) => {
-      // eslint-disable-next-line no-plusplus
       ctx.next++;
       return next();
     }).then(() => {

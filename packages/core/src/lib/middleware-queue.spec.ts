@@ -1,7 +1,7 @@
 import { MiddlewareQueue } from './middleware-queue';
-import { logger, Level } from './logger';
+import { Logger, Level } from './logger';
 
-logger.level = Level.DEBUG;
+Logger.level = Level.DEBUG;
 
 const sleep = () => new Promise((res) => setTimeout(res, 500));
 
@@ -15,14 +15,12 @@ describe('MiddlewareQueue', () => {
       await sleep();
       await next();
       expect(context.count).toBe(1);
-      // eslint-disable-next-line no-param-reassign
       context.count = context.count + 1;
       return 'I am first middleware';
     });
 
     queue.push(async (context, next) => {
       expect(context.count).toBe(0);
-      // eslint-disable-next-line no-param-reassign
       context.count = context.count + 1;
       await sleep();
       await next();
@@ -44,7 +42,6 @@ describe('MiddlewareQueue', () => {
     queue.push(async (context) => {
       expect(context.count).toBe(0);
       await sleep();
-      // eslint-disable-next-line no-param-reassign
       context.count = context.count + 1;
       return 'I am first middleware';
     });
@@ -52,7 +49,6 @@ describe('MiddlewareQueue', () => {
     queue.push(async (context) => {
       expect(context.count).toBe(1);
       await sleep();
-      // eslint-disable-next-line no-param-reassign
       context.count = context.count + 1;
       return 'I am second middleware';
     });
