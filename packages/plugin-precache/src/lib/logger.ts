@@ -1,3 +1,4 @@
 import { Logger } from '@glacierjs/core';
+import { PLUGIN_NAME } from './constants' ;
 
-export const logger = new Logger({ prefix: 'glacier-plugin-precacahe' });
+export const logger = new Logger({ prefix: PLUGIN_NAME });
