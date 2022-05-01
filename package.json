@@ -12,13 +12,16 @@
     "build": "run-p build:*",
     "build:npm": "pnpx nx run-many --target=build --all",
     "build:dist": "node scripts/build-umd-dist.js",
+    "changeset": "npx pnpm changeset",
     "version": "npx pnpm changeset version && npx pnpm i",
     "publish": "npx pnpm -r publish",
     "test:unit": "./node_modules/.bin/jest",
     "cov": "./node_modules/.bin/jest --coverage ",
     "doc:api": "./node_modules/.bin/typedoc",
     "doc:serve": "./node_modules/.bin/docsify serve ./docs",
-    "watch:test": "jest --watch"
+    "watch": "run-p watch:*",
+    "watch:test": "jest --watch",
+    "watch:script": "pnpx nx run-many --target=watch:build --all"
   },
   "engines": {
     "node": ">=16"
