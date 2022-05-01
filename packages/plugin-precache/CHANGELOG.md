@@ -1,5 +1,14 @@
 # @glacierjs/plugin-precache
 
+## 0.1.6
+
+### Patch Changes
+
+- 8b5ae6c: 代码优化\Logger 优化
+- Updated dependencies [8b5ae6c]
+  - @glacierjs/core@0.1.6
+  - @glacierjs/sw@0.1.6
+
 ## 0.1.3
 
 ### Patch Changes
