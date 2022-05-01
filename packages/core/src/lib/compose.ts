@@ -9,21 +9,31 @@
  */
 import { Middleware } from '../type/index';
 
+/**
+ * 组合并执行异步队列
+ * @category MiddlewareQueue
+ */
 export function compose(middleware: Array<Middleware>): Middleware {
   return function (context, next) {
-    // last called middleware #
-    let index = -1;
+    // 记录最大递归数
+    let maxIndex = -1;
+
+    // 从栈顶开始
     return dispatch(0);
-    function dispatch(i) {
-      if (i <= index) {
+
+    function dispatch(curIndex) {
+      if (curIndex <= maxIndex) {
         return Promise.reject(new Error('next() called multiple times'));
       }
-      index = i;
-      let fn = middleware[i];
-      if (i === middleware.length) fn = next;
+      maxIndex = curIndex;
+      let fn = middleware[curIndex];
+
+      // 递归到栈底，执行栈底的 next
+      if (curIndex === middleware.length) fn = next;
       if (!fn) return Promise.resolve();
       try {
-        return Promise.resolve(fn(context, dispatch.bind(null, i + 1)));
+        // 用 resolve 串起下一个异步任务
+        return Promise.resolve(fn(context, dispatch.bind(null, curIndex + 1)));
       } catch (err) {
         return Promise.reject(err);
       }

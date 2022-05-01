@@ -5,6 +5,7 @@ const {
   registration,
   addEventListener,
 } = (self as unknown) as ServiceWorkerGlobalScope;
+
 export class GlacierSW {
 
   public plugins: Record<string, ServiceWorkerPlugin> = {};
@@ -20,9 +21,9 @@ export class GlacierSW {
   };
 
   constructor() {
-    for (const lifecycle in Lifecycle) {
-      this.lifecycleHooks[lifecycle] = new MiddlewareQueue(lifecycle);
-    }
+    Object.keys(Lifecycle).forEach((lifecycle) => {
+      this.lifecycleHooks[lifecycle] = new MiddlewareQueue(lifecycle);        
+    });
   }
 
   public use(plugin: ServiceWorkerPlugin) {
@@ -42,9 +43,9 @@ export class GlacierSW {
     logger.debug(`"${plugin.name}" plugin onUsed hook called`);
 
     // register lifecycle hooks
-    for (const lifecycle in Lifecycle) {
+    Object.keys(Lifecycle).forEach((lifecycle) => {
       const handler = plugin[lifecycle];
-      if (!handler) continue;
+      if (!handler) return;
 
       const queue: MiddlewareQueue = this.lifecycleHooks[lifecycle];
       queue?.push(handler.bind(plugin));
@@ -52,7 +53,7 @@ export class GlacierSW {
       logger.debug(
         `"${plugin.name}" plugin registered lifecycle: ${lifecycle}`
       );
-    }
+    });
   }
 
   public listen() {
@@ -115,10 +116,6 @@ export class GlacierSW {
         logger.error('处理 message 异常', error);
       }
     });
-
-    // TODO
-    // listen sync
-    // listen push
   }
 
   public async uninstall() {

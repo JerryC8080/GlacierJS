@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.31% </span>
+                <span class="strong">77.27% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>29/38</span>
+                <span class='fraction'>34/44</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/15</span>
+                <span class='fraction'>12/18</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.72% </span>
+                <span class="strong">74.35% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/33</span>
+                <span class='fraction'>29/39</span>
             </div>
         
             
@@ -132,9 +132,19 @@
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -150,14 +160,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -171,7 +179,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -182,11 +189,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -205,7 +221,9 @@
 import { MiddlewareQueue, EventNames } from '@glacierjs/core';
 import { logger } from './logger';
 import { WindowPlugin, Lifecycle } from '../type/index';
+&nbsp;
 export class GlacierWindow {
+  public plugins: Record&lt;string, WindowPlugin&gt; = {};
   private lifecycleHooks: Record&lt;Lifecycle, MiddlewareQueue&gt; | any = {};
   public workbox: Workbox;
 &nbsp;
@@ -220,13 +238,11 @@ export class GlacierWindow {
 &nbsp;
     this.workbox = new Workbox(scriptURL, registerOptions);
 &nbsp;
-    // 为每个生命周期钩子创建异步串行队列
     for (const lifecycle in Lifecycle) {
       this.lifecycleHooks[lifecycle] = new MiddlewareQueue(lifecycle);
     }
   }
 &nbsp;
-  // 注册 SW
   public async register({ immediate = false<span class="branch-1 cbranch-no" title="branch not covered" > } = {</span>}<span class="branch-1 cbranch-no" title="branch not covered" >): Promise&lt;ServiceWorkerRegistration | undefined&gt; {</span>
     try {
       // 1. 调用插件的事件（如果要完成开关，可以通过插件实现）
@@ -240,7 +256,6 @@ export class GlacierWindow {
     }
   }
 &nbsp;
-  // 注销 SW
 <span class="fstat-no" title="function not covered" >  public async u</span>nregister() {
     try {
 <span class="cstat-no" title="statement not covered" >      logger.debug('Service Worker 正在卸载...');</span>
@@ -251,14 +266,23 @@ export class GlacierWindow {
     }
   }
 &nbsp;
-  // 新增插件
   public use(plugin: WindowPlugin) {
-    // 传递 context
+&nbsp;
+    // store plugin instance
+    const { name } = plugin;
+    if (name) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (this.plugins[name]) {
+<span class="cstat-no" title="statement not covered" >        logger.error(`The name of "${name}" plugin has used, can't store instance.`);</span>
+      } else {
+        this.plugins[name] = plugin;
+      }
+    }
+&nbsp;
+    // call onUse hook
     plugin.onUse<span class="branch-0 cbranch-no" title="branch not covered" >?.({</span> workbox: this.workbox, glacier: this });
+    logger.debug(`"${plugin.name}" plugin onUsed hook called`);
 &nbsp;
-    logger.debug(`"${plugin.name}" plugin onUsed`);
-&nbsp;
-    // 注册定义的生命周期钩子
+    // register lifecycle hooks
     for (const lifecycle in Lifecycle) {
       const handler = plugin[lifecycle];
       if (!handler) continue;
@@ -277,7 +301,7 @@ export class GlacierWindow {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Mon Feb 28 2022 09:02:11 GMT+0800 (中国标准时间)
+                at Sun May 01 2022 10:18:06 GMT+0800 (中国标准时间)
             </div>
         <script src="../../../prettify.js"></script>
         <script>
