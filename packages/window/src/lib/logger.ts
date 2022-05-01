@@ -1,3 +1,3 @@
-import { Logger } from '@glacierjs/core';
+import { logger as coreLogger } from '@glacierjs/core';
 
-export const logger = new Logger({ prefix: 'glacier-window' });
+export const logger = coreLogger.extends({ prefix: 'window' });
