@@ -21,6 +21,8 @@ export class CollectorWindow implements WindowPlugin {
         // collect window register
         this.send([{ type: CollectedDataType.SW_REGISTER }])
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore 由于 lib DOM 和 WebWorker 有冲突，暂时 disable。
         if (navigator?.serviceWorker?.controller) {
             this.send([{ type: CollectedDataType.SW_CONTROLLED }])
         }

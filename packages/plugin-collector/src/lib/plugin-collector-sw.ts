@@ -1,5 +1,4 @@
 import { ServiceWorkerPlugin, FetchContext } from '@glacierjs/sw';
-import type { CacheHit } from '@glacierjs/plugin-assets-cache';
 
 import { logger } from './logger';
 import { MESSAGE_FIELD, PLUGIN_NAME } from './constants';
@@ -13,7 +12,7 @@ export class CollectorSW implements ServiceWorkerPlugin {
     public async onFetch(context: FetchContext) {
         this.collect({ type: CollectedDataType.SW_FETCH });
 
-        const cacheHit: CacheHit = context?.cacheHit;
+        const cacheHit = context?.cacheHit;
         if (cacheHit) {
             const payload: CollectedData = { type: CollectedDataType.CACHE_HIT, data: cacheHit }
             logger.debug('cache-hit collected: ', { payload });
