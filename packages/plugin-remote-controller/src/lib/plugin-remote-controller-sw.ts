@@ -13,7 +13,7 @@ export class RemoteControllerSW extends RemoteControllerBase implements ServiceW
         this.context = context;
     }
 
-    public async onInstall(): Promise<any> {
+    public async onInstall(): Promise<void> {
         try {
             const { config } = await this.getConfig();
             if (config?.switch !== true) throw new Error('switch closed');
@@ -23,7 +23,7 @@ export class RemoteControllerSW extends RemoteControllerBase implements ServiceW
         }
     }
 
-    public async onFetch(): Promise<any> {
+    public async onFetch(): Promise<void> {
         try {
             const { config: { assetsCacheRoutes }, configUpdated } = await this.getConfig();
 
