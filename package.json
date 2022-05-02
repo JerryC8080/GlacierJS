@@ -8,20 +8,20 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "bootstrap": "npx pnpm i",
+    "bootstrap": "pnpm i",
     "build": "run-p build:*",
-    "build:npm": "pnpx nx run-many --target=build --all",
+    "build:npm": "pnpm nx run-many --target=build --all",
     "build:dist": "node scripts/build-umd-dist.js",
-    "changeset": "npx pnpm changeset",
-    "version": "npx pnpm changeset version && npx pnpm i",
-    "publish": "npx pnpm -r publish",
-    "test:unit": "./node_modules/.bin/jest",
-    "cov": "./node_modules/.bin/jest --coverage ",
-    "doc:api": "./node_modules/.bin/typedoc",
-    "doc:serve": "./node_modules/.bin/docsify serve ./docs",
+    "changeset": "pnpm changeset",
+    "version": "pnpm changeset version && pnpm i",
+    "publish": "pnpm -r publish",
+    "test:unit": "pnpm jest",
+    "cov": "pnpm jest --coverage ",
+    "doc:api": "pnpm typedoc",
+    "doc:serve": "pnpm docsify serve ./docs",
     "watch": "run-p watch:*",
     "watch:test": "jest --watch",
-    "watch:script": "pnpx nx run-many --target=watch:build --all"
+    "watch:script": "pnpm nx run-many --target=watch:build --all"
   },
   "engines": {
     "node": ">=16"
