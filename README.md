@@ -109,6 +109,9 @@ After encapsulating the traditional life cycle, we provide a more elegant life c
 
 ![GlacierJS 生命周期图示](https://cdn.jsdelivr.net/gh/jerryc8080/glacierjs@master/docs/assets/lifecycle.drawio.png)
 
+# Contribute
+
+See [How to contribute](./contribute/README.md)
 
 # Contact & Support
 
