@@ -39,6 +39,6 @@ jobs:
         run: | 
           pnpm run bootstrap
           pwd
-          ls ./packages/window/node_modules
+          ls ./packages/window/node_modules/@glacierjs
           pnpm run lint
           pnpm run test:unit
