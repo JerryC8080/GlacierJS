@@ -32,6 +32,8 @@ jobs:
           
       - name: Setup PNPM
         uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 6.32.6
       
       - name: Bootstrap/Lint/Test
         run: | 
