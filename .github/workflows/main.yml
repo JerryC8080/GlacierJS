@@ -35,7 +35,9 @@ jobs:
         with:
           version: 6.32.6
           
-      - run: ls packages/window/node_modules
+      - run: |
+          pwd
+          ls ./packages/window/node_modules
       
       - name: Bootstrap/Lint/Test
         run: | 
