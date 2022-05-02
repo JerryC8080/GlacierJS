@@ -34,13 +34,11 @@ jobs:
         uses: pnpm/action-setup@v2.2.1
         with:
           version: 6.32.6
-          
-      - run: |
-          pwd
-          ls ./packages/window/node_modules
       
       - name: Bootstrap/Lint/Test
         run: | 
           pnpm run bootstrap
+          pwd
+          ls ./packages/window/node_modules
           pnpm run lint
           pnpm run test:unit
