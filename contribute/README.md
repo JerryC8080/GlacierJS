@@ -1,5 +1,9 @@
 # How to contribute
 
+## Dependency
+1. node >= 16
+2. pnpm >= 6
+
 ## Bootstrap
 
 1. `npm run bootstrap`
