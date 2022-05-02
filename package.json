@@ -16,6 +16,7 @@
     "version": "pnpm changeset version && pnpm i",
     "publish": "pnpm -r publish",
     "test:unit": "pnpm jest",
+    "lint": "pnpm eslint packages/**/*.ts",
     "cov": "pnpm jest --coverage ",
     "doc:api": "pnpm typedoc",
     "doc:serve": "pnpm docsify serve ./docs",

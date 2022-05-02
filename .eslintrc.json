@@ -1,18 +1,22 @@
 {
     "root": true,
     "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 6,
         "ecmaFeatures": {
-            "jsx": true,
             "strict": true
-        },
-        "project": "./tsconfig.json"
+        }
     },
     "env": {
         "browser": true,
-        "mocha": true,
         "node": true
     },
     "rules": {
