@@ -25,7 +25,7 @@ const levelStrMapper = {
  */
 export interface Options {
   prefix?: string | undefined;
-  onLog?: ((level: Level, args: Array<any>) => any) | undefined;
+  onLog?: ((level: Level, args: Array<unknown>) => void) | undefined;
 }
 
 /**
@@ -94,9 +94,9 @@ export class Logger {
     }
   }
 
-  private getStyle(runtimeLevel: Level): String[] {
+  private getStyle(runtimeLevel: Level): string[] {
     const styles = [
-      `background: ${Logger.methodToColorMap[runtimeLevel]!}`,
+      `background: ${Logger.methodToColorMap[runtimeLevel]}`,
       'border-radius: 0.5em',
       'color: white',
       'font-weight: bold',

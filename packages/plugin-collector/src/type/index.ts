@@ -1,5 +1,3 @@
-import type { CacheHit } from '@glacierjs/plugin-assets-cache';
-
 export enum IPCCallingType {
     FETCH_DATA,
 }
@@ -17,12 +15,10 @@ export enum CollectedDataType {
     CACHE_HIT,
 }
 
-export interface CollectedData<Data = any> {
+export interface CollectedData<Data = unknown> {
     type: CollectedDataType,
     data?: Data,
 }
-
-export interface ReportCacheHitMessage extends CollectedData<CacheHit> { }
 
 export interface ReporterWindowOptions {
     send: (data: CollectedData) => void;

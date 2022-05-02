@@ -1,6 +1,8 @@
 # 构建相关文件
 scripts
 dev
+build
+dist
 
 # 依赖
 node_modules

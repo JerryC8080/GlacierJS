@@ -21,7 +21,6 @@ export class CollectorWindow implements WindowPlugin {
         // collect window register
         this.send([{ type: CollectedDataType.SW_REGISTER }])
 
-        // @ts-ignore collect service worker controlled
         if (navigator?.serviceWorker?.controller) {
             this.send([{ type: CollectedDataType.SW_CONTROLLED }])
         }

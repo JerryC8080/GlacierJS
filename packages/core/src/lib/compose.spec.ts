@@ -87,15 +87,16 @@ describe('Compose', () => {
 
   it('should work when yielding at the end of the stack', async () => {
     const stack = [];
+    const context = {};
     let called = false;
 
-    // @ts-ignore
     stack.push(async (ctx, next) => {
+      expect(ctx).toEqual(context)
       await next();
       called = true;
     });
 
-    await compose(stack)({});
+    await compose(stack)(context);
     expect(called).toBeTruthy();
   });
 
@@ -117,13 +118,14 @@ describe('Compose', () => {
 
   it('should work when yielding at the end of the stack with yield*', () => {
     const stack = [];
+    const context = {};
 
-    // @ts-ignore
     stack.push(async (ctx, next) => {
+      expect(ctx).toEqual(context);
       await next;
     });
 
-    return compose(stack)({});
+    return compose(stack)(context);
   });
 
   it('should keep the context', () => {
@@ -152,9 +154,10 @@ describe('Compose', () => {
   it('should catch downstream errors', async () => {
     const arr = [];
     const stack = [];
+    const context = {};
 
-    // @ts-ignore
     stack.push(async (ctx, next) => {
+      expect(ctx).toEqual(context);
       arr.push(1);
       try {
         arr.push(6);
@@ -171,7 +174,7 @@ describe('Compose', () => {
       throw new Error();
     });
 
-    await compose(stack)({});
+    await compose(stack)(context);
     expect(arr).toEqual([1, 6, 4, 2, 3]);
   });
 
@@ -226,59 +229,63 @@ describe('Compose', () => {
     ])(globalContext).then(() => expect(called).toEqual([1, 2, 3]));
   });
 
-  it('should throw if next() is called multiple times', () =>
+  it('should throw if next() is called multiple times', () => {
+    const context = {};
     compose([
-      // @ts-ignore
       async (ctx, next) => {
+        expect(ctx).toEqual(context);
         await next();
         await next();
       },
-    ])({}).then(
+    ])(context).then(
       () => {
         throw new Error('boom');
       },
       (err) => {
         expect(/multiple times/.test(err.message)).toBeTruthy();
       }
-    ));
+    )
+  });
 
   it('should return a valid middleware', () => {
     let val = 0;
+    const context = {};
     return compose([
       compose([
-        // @ts-ignore
         (ctx, next) => {
+          expect(ctx).toEqual(context);
           val++;
           return next();
         },
-        // @ts-ignore
         (ctx, next) => {
+          expect(ctx).toEqual(context);
           val++;
           return next();
         },
       ]),
-      // @ts-ignore
       (ctx, next) => {
+        expect(ctx).toEqual(context);
         val++;
         return next();
       },
-    ])({}).then(() => {
+    ])(context).then(() => {
       expect(val).toEqual(3);
     });
   });
 
   it('should return last return value', () => {
     const stack = [];
+    const context = {};
 
-    // @ts-ignore
-    stack.push(async (context, next) => {
+    stack.push(async (ctx, next) => {
+      expect(ctx).toEqual(context);
       const val = await next();
       expect(val).toEqual(2);
       return 1;
     });
 
-    // @ts-ignore
-    stack.push(async (context, next) => {
+    stack.push(async (ctx, next) => {
+      expect(ctx).toEqual(context);
       const val = await next();
       expect(val).toEqual(0);
       return 2;
@@ -292,20 +299,17 @@ describe('Compose', () => {
 
   it('should not affect the original middleware array', () => {
     const middleware = [];
+    const context = {};
 
-    // @ts-ignore
-    const fn1 = (ctx, next) => next();
+    const fn1 = (ctx, next) => {
+      expect(ctx).toEqual(context);
+      return next();
+    };
+
     middleware.push(fn1);
-
-    for (const fn of middleware) {
-      expect(fn).toEqual(fn1);
-    }
-
+    middleware.forEach(fn => expect(fn).toEqual(fn1));
     compose(middleware);
-
-    for (const fn of middleware) {
-      expect(fn).toEqual(fn1);
-    }
+    middleware.forEach(fn => expect(fn).toEqual(fn1));
   });
 
   it('should not get stuck on the passed in next', () => {
@@ -320,7 +324,6 @@ describe('Compose', () => {
       next: 0,
     };
 
-    // @ts-ignore
     return compose(middleware)(ctx, (ctx, next) => {
       ctx.next++;
       return next();

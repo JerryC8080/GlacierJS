@@ -13,6 +13,6 @@ export class RemoteControllerBase {
 
     constructor(options: Options) {
         if (options) this.options = options;
-        (this.fetchConfigThrottle as any) = throttle(this.options.fetchConfig, this.options.configCacheDuration)
+        this.fetchConfigThrottle = throttle(this.options.fetchConfig, this.options.configCacheDuration)
     }
 }

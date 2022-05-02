@@ -21,16 +21,10 @@ describe('Glacier Window', () => {
     }
 
     const myPlugin = new MyPlugin();
-
     glacierWindow.use(myPlugin);
 
     expect(myPlugin.onUse).toBeCalled();
-
-    try {
-      await glacierWindow.register();
-    } catch (error) {
-    }
-
+    await expect(glacierWindow.register()).rejects.toThrow();
     expect(myPlugin.beforeRegister).toBeCalled();
   });
 });

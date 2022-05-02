@@ -3,26 +3,28 @@ import { GlacierSW } from '../lib/glacier-sw';
 import { NextFn } from '@glacierjs/core';
 
 interface BaseContext {
-  [propName: string]: any;
+  [propName: string]: unknown;
 }
 export interface UseContext extends BaseContext {
   glacier: GlacierSW;
-};
+}
 
 export interface FetchContext extends BaseContext {
   event: FetchEvent;
   res: Response | undefined;
-};
+}
 
 export interface MessageContext extends BaseContext {
   event: ExtendableMessageEvent;
-};
+}
 
 export interface InstallContext extends BaseContext {
   event: ExtendableEvent;
-};
+}
 
-export interface ActivateContext extends InstallContext { }
+export interface ActivateContext extends BaseContext {
+  event: ExtendableEvent;
+}
 
 export type HookFn<ContextType> = (
   context: ContextType,
