@@ -50,6 +50,7 @@ jobs:
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
       - name: Setup npmrc
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+      - run: cat .npmrc
       - name: Create and publish versions
         uses: changesets/action@master
         with:
