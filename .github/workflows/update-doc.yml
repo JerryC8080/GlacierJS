@@ -1,7 +1,7 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-name: release-packages
+name: update-doc
 
 on:
   push:
@@ -13,8 +13,6 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 env:
   CI: true
   PNPM_CACHE_FOLDER: .pnpm-store
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:
@@ -36,7 +34,7 @@ jobs:
           pnpm run lint
           pnpm run test:unit
 
-  publish-npm:
+  publish-doc:
     needs: build
     timeout-minutes: 15
     runs-on: ubuntu-latest
@@ -50,13 +48,13 @@ jobs:
           version: 6.32.6
       - name: Setup pnpm config
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-      - name: Setup npmrc
-        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-      - run: cat .npmrc
-      - name: Create and publish versions
-        uses: changesets/action@v1
-        with:
-          version: pnpm run version
-          commit: "chore: update versions"
-          title: "chore: update versions"
-          publish: pnpm run publish
+      - name: Build docs
+        run: |
+          pnpm run cov
+          pnpm run doc:api
+      - name: Publish docs
+        run: |
+          git add .
+          git commit -m "docs: update docs"
+          git push
+          
