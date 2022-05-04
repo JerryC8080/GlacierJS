@@ -30,6 +30,8 @@ jobs:
           pnpm run doc:api
       - name: Publish docs
         run: |
+          git config --global user.email "robot@glacierjs.com"
+          git config --global user.name "glacierjs robot"
           git add .
           git commit -m "docs: update docs"
           git push
