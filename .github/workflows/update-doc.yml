@@ -50,6 +50,7 @@ jobs:
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
       - name: Build docs
         run: |
+          pnpm run bootstrap
           pnpm run cov
           pnpm run doc:api
       - name: Publish docs
