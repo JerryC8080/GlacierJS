@@ -33,5 +33,5 @@ jobs:
           git config --global user.email "robot@glacierjs.com"
           git config --global user.name "glacierjs robot"
           git add .
-          git commit -m "docs: update docs"
+          git commit -m "docs: ✏️ update docs by robot"
           git push
