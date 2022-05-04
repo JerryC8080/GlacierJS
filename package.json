@@ -14,7 +14,7 @@
     "build:dist": "node scripts/build-umd-dist.js",
     "changeset": "pnpm changeset",
     "version": "pnpm changeset version && pnpm i",
-    "publish": "pnpm -r publish",
+    "publish": "pnpm -r publish --no-git-checks",
     "test:unit": "pnpm jest",
     "lint": "pnpm eslint packages/**/*.ts",
     "cov": "pnpm jest --coverage ",
