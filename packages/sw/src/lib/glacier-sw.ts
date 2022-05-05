@@ -1,33 +1,30 @@
 import { MiddlewareQueue, EventNames } from '@glacierjs/core';
 import { Lifecycle, ServiceWorkerPlugin, FetchContext } from '../type/index';
 import { logger } from './logger';
+
 const {
   registration,
   addEventListener,
 } = (self as unknown) as ServiceWorkerGlobalScope;
 
 export class GlacierSW {
-
-  public plugins: Record<string, ServiceWorkerPlugin> = {};
-
   private lifecycleHooks: Record<Lifecycle, MiddlewareQueue> = {
     [Lifecycle.onInstall]: null,
     [Lifecycle.onUninstall]: null,
     [Lifecycle.onActivate]: null,
     [Lifecycle.onMessage]: null,
     [Lifecycle.onFetch]: null,
-    [Lifecycle.onSync]: null,
-    [Lifecycle.onPush]: null,
   };
+
+  public plugins: Record<string, ServiceWorkerPlugin> = {};
 
   constructor() {
     Object.keys(Lifecycle).forEach((lifecycle) => {
-      this.lifecycleHooks[lifecycle] = new MiddlewareQueue(lifecycle);        
+      this.lifecycleHooks[lifecycle] = new MiddlewareQueue(lifecycle);
     });
   }
 
   public use(plugin: ServiceWorkerPlugin) {
-
     // store plugin instance
     const { name } = plugin;
     if (name) {
@@ -57,7 +54,6 @@ export class GlacierSW {
   }
 
   public listen() {
-    // 1. listen install
     addEventListener('install', (event: ExtendableEvent) => {
       event.waitUntil(async () => {
         await this.lifecycleHooks.onInstall.runAll({ event });
@@ -65,7 +61,6 @@ export class GlacierSW {
       });
     });
 
-    // 2. listen activate
     addEventListener('activate', (event: ExtendableEvent) => {
       event.waitUntil(async () => {
         await this.lifecycleHooks.onActivate.runAll({ event });
@@ -73,9 +68,8 @@ export class GlacierSW {
       });
     });
 
-    // 3. listen fetch
     addEventListener('fetch', (event: FetchEvent) => {
-      // FetchEvent 回调函数接收的是 PromiseLike<Response> 类型，这里需要用 Promise 包一层以防止 TS 报错：https://github.com/microsoft/TypeScript/issues/5911
+      // FetchEvent 回调函数接收的是 PromiseLike<Response> 类型，这里需要用 Promise.resolve 包一层以防止 TS 报错：https://github.com/microsoft/TypeScript/issues/5911
       event.respondWith(Promise.resolve().then(async () => {
         const context: FetchContext = {
           event,
@@ -96,18 +90,18 @@ export class GlacierSW {
       }));
     });
 
-    // 4. listen message
     addEventListener('message', async (event: ExtendableMessageEvent) => {
       logger.debug('onMessage: get a message', event);
       try {
+        // TODO 目前只有一个内部通讯事件实现，未来将实现一个 IPC 模块，以内部插件的形式来提供更完善的服务 @JC
         if (event?.data?.type === EventNames.UN_INSTALL) {
+          // 处理 GlacierJS 系统内部通讯事件
           logger.debug('onMessage: handle message by native', event);
-          // 1. 处理内部事件
           await this.uninstall();
           logger.debug('onMessage: handle message by native done', event);
           event?.ports?.[0]?.postMessage(undefined);
         } else {
-          // 2. 处理插件事件
+          // 处理插件定义的通讯事件
           logger.debug('onMessage: handle message by plugins', event);
           await this.lifecycleHooks.onMessage.runAll({ event });
           logger.debug('onMessage: handle message by plugins done', event);
@@ -122,7 +116,7 @@ export class GlacierSW {
     // 执行所有生命周期函数
     await this.lifecycleHooks.onUninstall.runAll();
 
-    // 注销 SW
+    // 注销 ServiceWorker
     await registration.unregister();
   }
 }
