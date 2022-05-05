@@ -16,7 +16,5 @@ export type HookFn<ContextType> = (
 export interface WindowPlugin {
   name: string;
   onUse?: (context: UseContext) => void;
-
-  // TODO HookFn(empty object)，给组件们进行通信所用。
-  [Lifecycle.beforeRegister]?: HookFn<void>;
+  [Lifecycle.beforeRegister]?: HookFn<object>;
 }

@@ -5,6 +5,7 @@ import { NextFn } from '@glacierjs/core';
 interface BaseContext {
   [propName: string]: unknown;
 }
+
 export interface UseContext extends BaseContext {
   glacier: GlacierSW;
 }
@@ -38,7 +39,5 @@ export interface ServiceWorkerPlugin {
   [Lifecycle.onActivate]?: HookFn<ActivateContext>;
   [Lifecycle.onFetch]?: HookFn<FetchContext>;
   [Lifecycle.onMessage]?: HookFn<MessageContext>;
-
-  // TODO 传送空对象
-  [Lifecycle.onUninstall]?: HookFn<void>;
+  [Lifecycle.onUninstall]?: HookFn<object>;
 }
