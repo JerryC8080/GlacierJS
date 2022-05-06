@@ -81,7 +81,6 @@ export class AssetsCacheSW implements ServiceWorkerPlugin {
       const currentRoutes = this.router.routes;
       currentRoutes.clear();
       logger.info('clear old routes: ', { currentRoutes: this.getCurrentRoutes() });
-
       if (routes?.[0]) routes.forEach(route => this.registerRoute(route));
       logger.info('register new routes: ', { routes, currentRoutes: this.getCurrentRoutes() });
     } catch (error) {
