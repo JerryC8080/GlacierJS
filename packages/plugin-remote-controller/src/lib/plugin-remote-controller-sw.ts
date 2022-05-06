@@ -1,13 +1,10 @@
 import { ServiceWorkerPlugin, UseContext } from '@glacierjs/sw';
 import { AssetsCacheSW, PLUGIN_NAME as PLUGIN_NAME_OF_ASSETS_CACHE } from '@glacierjs/plugin-assets-cache';
 import { logger } from './logger';
-import { PLUGIN_NAME } from './constants';
 import { RemoteControllerBase } from './plugin-remote-controller-base';
 
 export class RemoteControllerSW extends RemoteControllerBase implements ServiceWorkerPlugin {
-    name = PLUGIN_NAME;
-    context: UseContext;
-    configCacheJson: string
+    private context: UseContext;
 
     public onUse(context: UseContext): void {
         this.context = context;
@@ -16,10 +13,12 @@ export class RemoteControllerSW extends RemoteControllerBase implements ServiceW
     public async onInstall(): Promise<void> {
         try {
             const { config } = await this.getConfig();
+
+            // break off install process while switch closed.
             if (config?.switch !== true) throw new Error('switch closed');
         } catch (error) {
             logger.error(error);
-            throw new Error('checking config switch invalid, cutting off install process');
+            throw new Error('checking switch config invalid, break off install process');
         }
     }
 
@@ -33,23 +32,8 @@ export class RemoteControllerSW extends RemoteControllerBase implements ServiceW
                 assetsCachePluginIns.updateRoutes(assetsCacheRoutes);
             }
         } catch (error) {
-            logger.error('checking config switch invalid, going to uninstall service worker.', error);
+            logger.error('checking switch config invalid, going to uninstall service worker.', error);
             this.context.glacier.uninstall();
         }
-    }
-
-    private async getConfig() {
-        let configUpdated = false;
-        const config = await this.fetchConfigThrottle();
-
-        // checking is it updated.
-        if (JSON.stringify(config) !== this.configCacheJson) {
-            this.configCacheJson = JSON.stringify(config);
-            configUpdated = true;
-        }
-
-        if (config?.switch !== true) throw new Error('switch closed');
-
-        return { config, configUpdated };
     }
 }
