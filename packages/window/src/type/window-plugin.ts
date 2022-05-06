@@ -14,7 +14,7 @@ export type HookFn<ContextType> = (
 ) => Promise<void>;
 
 export interface WindowPlugin {
-  name: string;
+  readonly name: string;
   onUse?: (context: UseContext) => void;
   [Lifecycle.beforeRegister]?: HookFn<object>;
 }

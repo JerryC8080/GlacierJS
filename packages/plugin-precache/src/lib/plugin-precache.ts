@@ -5,7 +5,7 @@ import { logger } from './logger';
 
 export const PLUGIN_NAME = '@glacierjs/plugin-precache';
 
-interface preCacheControllerOptions {
+interface PreCacheControllerOptions {
   cacheName?: string;
   plugins?: WorkboxPlugin[];
   fallbackToNetwork?: boolean;
@@ -16,7 +16,7 @@ interface Assets {
   tag: AssetTags
 }
 
-export interface PluginPreCacheOptions extends preCacheControllerOptions {
+export interface PluginPreCacheOptions extends PreCacheControllerOptions {
   // 通过 webpack plugin injectManifest 注入
   assetsManifest?: [];
 }
@@ -27,7 +27,7 @@ enum AssetTags {
 }
 
 export class PluginpreCacheSW implements ServiceWorkerPlugin {
-  public name = PLUGIN_NAME;
+  public readonly name = PLUGIN_NAME;
   private options: PluginPreCacheOptions;
   private preCacheController: preCacheController;
 

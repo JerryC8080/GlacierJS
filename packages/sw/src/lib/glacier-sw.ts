@@ -8,6 +8,7 @@ const {
 } = (self as unknown) as ServiceWorkerGlobalScope;
 
 export class GlacierSW {
+  public plugins: Record<string, ServiceWorkerPlugin> = {};
   private lifecycleHooks: Record<Lifecycle, MiddlewareQueue> = {
     [Lifecycle.onInstall]: null,
     [Lifecycle.onUninstall]: null,
@@ -15,8 +16,6 @@ export class GlacierSW {
     [Lifecycle.onMessage]: null,
     [Lifecycle.onFetch]: null,
   };
-
-  public plugins: Record<string, ServiceWorkerPlugin> = {};
 
   constructor() {
     Object.keys(Lifecycle).forEach((lifecycle) => {
@@ -90,25 +89,28 @@ export class GlacierSW {
       }));
     });
 
-    addEventListener('message', async (event: ExtendableMessageEvent) => {
-      logger.debug('onMessage: get a message', event);
-      try {
-        // TODO 目前只有一个内部通讯事件实现，未来将实现一个 IPC 模块，以内部插件的形式来提供更完善的服务 @JC
-        if (event?.data?.type === EventNames.UN_INSTALL) {
-          // 处理 GlacierJS 系统内部通讯事件
-          logger.debug('onMessage: handle message by native', event);
-          await this.uninstall();
-          logger.debug('onMessage: handle message by native done', event);
-          event?.ports?.[0]?.postMessage(undefined);
-        } else {
-          // 处理插件定义的通讯事件
-          logger.debug('onMessage: handle message by plugins', event);
-          await this.lifecycleHooks.onMessage.runAll({ event });
-          logger.debug('onMessage: handle message by plugins done', event);
+    addEventListener('message', (event: ExtendableMessageEvent) => {
+      // 由于 message 要求返回 void，匿名函数执行异步任务。
+      (async () => {
+        logger.debug('onMessage: get a message', event);
+        try {
+          // TODO 目前只有一个内部通讯事件实现，未来将实现一个 IPC 模块，以内部插件的形式来提供更完善的服务 @JC
+          if (event?.data?.type === EventNames.UN_INSTALL) {
+            // 处理 GlacierJS 系统内部通讯事件
+            logger.debug('onMessage: handle message by native', event);
+            await this.uninstall();
+            logger.debug('onMessage: handle message by native done', event);
+            event?.ports?.[0]?.postMessage(undefined);
+          } else {
+            // 处理插件定义的通讯事件
+            logger.debug('onMessage: handle message by plugins', event);
+            await this.lifecycleHooks.onMessage.runAll({ event });
+            logger.debug('onMessage: handle message by plugins done', event);
+          }
+        } catch (error) {
+          logger.error('处理 message 异常', error);
         }
-      } catch (error) {
-        logger.error('处理 message 异常', error);
-      }
+      })();
     });
   }
 

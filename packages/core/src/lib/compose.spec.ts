@@ -91,7 +91,7 @@ describe('Compose', () => {
     let called = false;
 
     stack.push(async (ctx, next) => {
-      expect(ctx).toEqual(context)
+      expect(ctx).toEqual(context);
       await next();
       called = true;
     });
@@ -244,7 +244,7 @@ describe('Compose', () => {
       (err) => {
         expect(/multiple times/.test(err.message)).toBeTruthy();
       }
-    )
+    );
   });
 
   it('should return a valid middleware', () => {

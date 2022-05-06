@@ -4,9 +4,9 @@ import { logger } from './logger';
 import { WindowPlugin, Lifecycle } from '../type/index';
 
 export class GlacierWindow {
-  private lifecycleHooks: Record<Lifecycle | string, MiddlewareQueue> = {};
   public plugins: Record<string, WindowPlugin> = {};
   public workbox: Workbox;
+  private lifecycleHooks: Record<Lifecycle | string, MiddlewareQueue> = {};
 
   constructor(scriptURL: string, registerOptions: unknown = {}) {
     if (!('serviceWorker' in navigator)) {
