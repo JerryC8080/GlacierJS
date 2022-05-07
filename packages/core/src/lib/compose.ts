@@ -40,5 +40,3 @@ export function compose(middleware: Array<Middleware>): Middleware {
     }
   };
 }
-
-export default compose;

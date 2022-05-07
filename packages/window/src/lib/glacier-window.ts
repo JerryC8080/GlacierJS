@@ -5,14 +5,12 @@ import { WindowPlugin, Lifecycle } from '../type/index';
 
 export class GlacierWindow {
   public plugins: Record<string, WindowPlugin> = {};
-  private lifecycleHooks: Record<Lifecycle | string, MiddlewareQueue> = {};
   public workbox: Workbox;
+  private lifecycleHooks: Record<Lifecycle | string, MiddlewareQueue> = {};
 
   constructor(scriptURL: string, registerOptions: unknown = {}) {
     if (!('serviceWorker' in navigator)) {
-      const error = new Error(
-        'glacier register fail, ServiceWorker not support!'
-      );
+      const error = new Error('glacier register fail, ServiceWorker not support!');
       logger.error(error.message);
       throw error;
     }
@@ -41,11 +39,11 @@ export class GlacierWindow {
       logger.debug('ServiceWorker uninstall successed');
     } catch (error) {
       logger.error('ServiceWorker uninstall faild', error);
+      throw error;
     }
   }
 
   public use(plugin: WindowPlugin) {
-
     // store plugin instance
     const { name } = plugin;
     if (name) {
@@ -56,7 +54,7 @@ export class GlacierWindow {
       }
     }
 
-    // call onUse hook
+    // call onUse hook as sync
     plugin.onUse?.({ workbox: this.workbox, glacier: this });
     logger.debug(`"${plugin.name}" plugin onUsed hook called`);
 
@@ -64,10 +62,7 @@ export class GlacierWindow {
     Object.keys(Lifecycle).forEach(lifecycle => {
       const handler = plugin[lifecycle];
       this.lifecycleHooks[lifecycle]?.push(handler?.bind(plugin));
-      logger.debug(
-        `"${plugin.name}" plugin registered lifecycle: ${lifecycle}`
-      );
-    })
-
+      logger.debug(`"${plugin.name}" plugin registered lifecycle: ${lifecycle}`);
+    });
   }
 }
