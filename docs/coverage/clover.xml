@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1651658146468" clover="3.2.0">
-  <project timestamp="1651658146468" name="All files">
-    <metrics statements="151" coveredstatements="139" conditionals="39" coveredconditionals="30" methods="32" coveredmethods="29" elements="222" coveredelements="198" complexity="0" loc="151" ncloc="151" packages="11" files="21" classes="21"/>
+<coverage generated="1651888197919" clover="3.2.0">
+  <project timestamp="1651888197919" name="All files">
+    <metrics statements="128" coveredstatements="114" conditionals="39" coveredconditionals="29" methods="32" coveredmethods="28" elements="199" coveredelements="171" complexity="0" loc="128" ncloc="128" packages="7" files="14" classes="14"/>
     <package name="core.src">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="index.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/index.ts">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="5" type="stmt"/>
-        <line num="2" count="5" type="stmt"/>
-        <line num="3" count="6" type="stmt"/>
-        <line num="4" count="5" type="stmt"/>
-        <line num="5" count="5" type="stmt"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
       </file>
     </package>
     <package name="core.src.const">
       <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
       <file name="event-name.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/const/event-name.ts">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-        <line num="1" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="3" count="5" type="stmt"/>
+        <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="3" count="1" type="stmt"/>
       </file>
       <file name="index.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/const/index.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="5" type="stmt"/>
+        <line num="1" count="1" type="stmt"/>
       </file>
     </package>
     <package name="core.src.lib">
-      <metrics statements="71" coveredstatements="69" conditionals="14" coveredconditionals="11" methods="21" coveredmethods="19"/>
+      <metrics statements="70" coveredstatements="67" conditionals="14" coveredconditionals="11" methods="21" coveredmethods="18"/>
       <file name="call-next-while-ignore.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/lib/call-next-while-ignore.ts">
         <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
-        <line num="24" count="6" type="stmt"/>
-        <line num="25" count="12" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="5" type="stmt"/>
         <line num="26" count="5" type="stmt"/>
         <line num="27" count="5" type="stmt"/>
         <line num="28" count="2" type="stmt"/>
         <line num="29" count="2" type="stmt"/>
         <line num="32" count="7" type="cond" truecount="1" falsecount="0"/>
         <line num="33" count="5" type="cond" truecount="1" falsecount="0"/>
-        <line num="36" count="12" type="stmt"/>
+        <line num="36" count="5" type="stmt"/>
       </file>
       <file name="compose.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/lib/compose.ts">
-        <metrics statements="14" coveredstatements="14" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
-        <line num="16" count="7" type="stmt"/>
+        <metrics statements="13" coveredstatements="13" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
+        <line num="16" count="3" type="stmt"/>
         <line num="17" count="21" type="stmt"/>
         <line num="19" count="21" type="stmt"/>
         <line num="22" count="21" type="stmt"/>
@@ -54,61 +54,60 @@
         <line num="34" count="40" type="stmt"/>
         <line num="36" count="40" type="stmt"/>
         <line num="38" count="2" type="stmt"/>
-        <line num="44" count="7" type="stmt"/>
       </file>
       <file name="logger.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/lib/logger.ts">
-        <metrics statements="34" coveredstatements="32" conditionals="7" coveredconditionals="4" methods="10" coveredmethods="8"/>
-        <line num="7" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="8" count="6" type="stmt"/>
-        <line num="9" count="6" type="stmt"/>
-        <line num="10" count="6" type="stmt"/>
-        <line num="11" count="6" type="stmt"/>
-        <line num="14" count="6" type="stmt"/>
-        <line num="45" count="6" type="stmt"/>
-        <line num="46" count="6" type="stmt"/>
-        <line num="48" count="6" type="stmt"/>
-        <line num="59" count="11" type="cond" truecount="0" falsecount="1"/>
-        <line num="60" count="22" type="stmt"/>
-        <line num="61" count="11" type="cond" truecount="1" falsecount="0"/>
-        <line num="62" count="11" type="cond" truecount="0" falsecount="1"/>
-        <line num="65" count="6" type="stmt"/>
+        <metrics statements="34" coveredstatements="31" conditionals="7" coveredconditionals="4" methods="10" coveredmethods="7"/>
+        <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="59" count="3" type="cond" truecount="0" falsecount="1"/>
+        <line num="60" count="6" type="stmt"/>
+        <line num="61" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="62" count="3" type="cond" truecount="0" falsecount="1"/>
+        <line num="65" count="2" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
-        <line num="69" count="6" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
-        <line num="73" count="12" type="stmt"/>
-        <line num="74" count="4" type="stmt"/>
-        <line num="77" count="99" type="stmt"/>
-        <line num="78" count="24" type="stmt"/>
-        <line num="81" count="6" type="stmt"/>
-        <line num="82" count="2" type="stmt"/>
-        <line num="88" count="6" type="stmt"/>
-        <line num="89" count="28" type="cond" truecount="1" falsecount="0"/>
-        <line num="90" count="28" type="cond" truecount="0" falsecount="1"/>
-        <line num="91" count="28" type="stmt"/>
-        <line num="92" count="28" type="stmt"/>
-        <line num="93" count="28" type="stmt"/>
-        <line num="97" count="6" type="stmt"/>
-        <line num="98" count="28" type="stmt"/>
-        <line num="106" count="28" type="stmt"/>
-        <line num="108" count="6" type="stmt"/>
-        <line num="115" count="6" type="stmt"/>
+        <line num="73" count="2" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="77" count="43" type="stmt"/>
+        <line num="78" count="10" type="stmt"/>
+        <line num="81" count="2" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="88" count="2" type="stmt"/>
+        <line num="89" count="10" type="cond" truecount="1" falsecount="0"/>
+        <line num="90" count="10" type="cond" truecount="0" falsecount="1"/>
+        <line num="91" count="10" type="stmt"/>
+        <line num="92" count="10" type="stmt"/>
+        <line num="93" count="10" type="stmt"/>
+        <line num="97" count="2" type="stmt"/>
+        <line num="98" count="10" type="stmt"/>
+        <line num="106" count="10" type="stmt"/>
+        <line num="108" count="2" type="stmt"/>
+        <line num="115" count="2" type="stmt"/>
       </file>
       <file name="middleware-queue.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/lib/middleware-queue.ts">
         <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
-        <line num="1" count="6" type="stmt"/>
-        <line num="2" count="6" type="stmt"/>
-        <line num="4" count="6" type="stmt"/>
-        <line num="6" count="6" type="stmt"/>
-        <line num="7" count="10" type="stmt"/>
-        <line num="8" count="10" type="stmt"/>
-        <line num="11" count="10" type="cond" truecount="1" falsecount="0"/>
-        <line num="14" count="6" type="stmt"/>
-        <line num="15" count="12" type="stmt"/>
-        <line num="21" count="12" type="stmt"/>
-        <line num="24" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="11" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="24" count="4" type="cond" truecount="1" falsecount="0"/>
         <line num="25" count="3" type="stmt"/>
         <line num="29" count="3" type="stmt"/>
-        <line num="31" count="6" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
       </file>
     </package>
     <package name="package-template.src.lib">
@@ -119,105 +118,57 @@
         <line num="2" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="plugin-collector.src.lib">
-      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="constants.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/plugin-collector/src/lib/constants.ts">
-        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-      </file>
-      <file name="logger.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/plugin-collector/src/lib/logger.ts">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-      </file>
-    </package>
-    <package name="plugin-precache.src.lib">
-      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="constants.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/plugin-precache/src/lib/constants.ts">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-      </file>
-      <file name="logger.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/plugin-precache/src/lib/logger.ts">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-      </file>
-    </package>
-    <package name="plugin-remote-controller.src.lib">
-      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="constants.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/plugin-remote-controller/src/lib/constants.ts">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-      </file>
-      <file name="logger.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/plugin-remote-controller/src/lib/logger.ts">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-      </file>
-    </package>
-    <package name="sw.src.lib">
-      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="logger.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/sw/src/lib/logger.ts">
-        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-      </file>
-    </package>
     <package name="window.src">
-      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/index.ts">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
       </file>
     </package>
     <package name="window.src.lib">
-      <metrics statements="40" coveredstatements="30" conditionals="21" coveredconditionals="15" methods="7" coveredmethods="6"/>
+      <metrics statements="41" coveredstatements="30" conditionals="21" coveredconditionals="14" methods="7" coveredmethods="6"/>
       <file name="glacier-window.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/lib/glacier-window.ts">
-        <metrics statements="38" coveredstatements="28" conditionals="21" coveredconditionals="15" methods="7" coveredmethods="6"/>
+        <metrics statements="39" coveredstatements="28" conditionals="21" coveredconditionals="14" methods="7" coveredmethods="6"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
         <line num="11" count="2" type="cond" truecount="1" falsecount="0"/>
         <line num="12" count="1" type="cond" truecount="0" falsecount="1"/>
         <line num="13" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="8" type="stmt"/>
-        <line num="27" count="1" type="cond" truecount="2" falsecount="2"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="25" count="1" type="cond" truecount="2" falsecount="2"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
         <line num="41" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="47" count="1" type="stmt"/>
-        <line num="50" count="1" type="stmt"/>
-        <line num="51" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="52" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="60" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="61" count="1" type="stmt"/>
-        <line num="64" count="1" type="stmt"/>
-        <line num="65" count="8" type="stmt"/>
-        <line num="66" count="8" type="cond" truecount="7" falsecount="1"/>
-        <line num="67" count="8" type="stmt"/>
-        <line num="73" count="1" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="50" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="58" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="64" count="1" type="cond" truecount="6" falsecount="2"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
       </file>
       <file name="logger.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/lib/logger.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -226,23 +177,16 @@
       </file>
     </package>
     <package name="window.src.type">
-      <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
       <file name="index.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/type/index.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
       </file>
       <file name="lifecycle.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/type/lifecycle.ts">
-        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
       </file>
       <file name="window-plugin.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/type/window-plugin.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
