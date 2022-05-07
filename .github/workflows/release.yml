@@ -32,7 +32,7 @@ jobs:
       - name: Bootstrap/Lint/Test
         run: | 
           pnpm run bootstrap
-          pnpm run build
+          pnpm run build:npm
           pnpm run lint
           pnpm run test:unit
 
