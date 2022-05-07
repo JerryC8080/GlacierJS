@@ -1,6 +1,13 @@
 # 远程控制
 
-**Feature：**
+基于 ServiceWorker 的原理，一旦在浏览器安装上了，如果遇到紧急线上问题，唯有发布新的 ServiceWorker 才能解决问题。但是 ServiceWorker 的安装是有时延的，再加上有些团队从修改代码到发布的流程，这个反射弧就很长了。我们有什么办法能缩短对于线上问题的反射弧呢？
+
+> **我们可以在远程存储一个配置，针对可预见的场景，进行「远程控制」**
+
+![](https://bluesun-1252625244.cos.ap-guangzhou.myqcloud.com/jerryc/20220417015441.png)
+
+## Features
+
 1. 实时的配置更新
 2. 全局开关
 3. 静态资源路由更新
@@ -122,3 +129,7 @@ const getMyRemoteConfig = async () => {
 
   - **assetsCacheRoutes**: [OptRoute](https://jerryc8080.github.io/GlacierJS/api/interfaces/plugin_assets_cache_src.OptRoute.html)[]    
     该配置会实时调用 **@glacierjs/plugin-assets-cache** 实例的 **[`updateRoute(routes)`](/contents/plugin-assets-cache?id=updaterouteroutes)** 方法去覆盖路由表，从而达到控制静态资源缓存的目的。要使该字段发挥作用，你必须同时注册 [@glacierjs/plugin-assets-cache](/contents/plugin-assets-cache?id=使用)
+
+
+
+

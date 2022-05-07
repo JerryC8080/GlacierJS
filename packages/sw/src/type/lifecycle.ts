@@ -4,6 +4,8 @@ export enum Lifecycle {
   onActivate = 'onActivate',
   onMessage = 'onMessage',
   onFetch = 'onFetch',
-  onSync = 'onSync',
-  onPush = 'onPush',
+
+  // TODO 以下为保留生命周期，未来迭代实现这些生命周期钩子 @JC
+  // onSync = 'onSync',
+  // onPush = 'onPush',
 }

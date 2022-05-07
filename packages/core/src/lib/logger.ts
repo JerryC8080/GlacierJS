@@ -43,18 +43,18 @@ export interface Options {
  * @category Logger
  */
 export class Logger {
-  public static level: Level = Level.INFO
+  public static level: Level = Level.INFO;
 
   private static methodToColorMap: { [methodName: string]: string | null } = {
     [Level.DEBUG]: '#7f8c8d', // Gray
     [Level.INFO]: '#2ecc71', // Green
     [Level.WARN]: '#f39c12', // Yellow
     [Level.ERROR]: '#c0392b', // Red
-  }
+  };
 
-  private prefix: Options['prefix']
+  private prefix: Options['prefix'];
 
-  private onLog: Options['onLog']
+  private onLog: Options['onLog'];
 
   constructor(options: Options = {}) {
     const { prefix, onLog } = options;

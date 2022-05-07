@@ -1,5 +1,12 @@
 # Remote Controller
 
+Based on the principle of ServiceWorker, once it is installed in the browser, if you encounter an urgent online problem, only a new ServiceWorker can be released to solve the problem. However, the installation of ServiceWorker is time-lag, and coupled with the process of some teams from modifying the code to the release, this reflex arc is very long. How can we shorten the reflex arc for online problems?
+
+> **
+We can store a configuration remotely and perform "remote control" for foreseeable scenarios**
+
+![](https://bluesun-1252625244.cos.ap-guangzhou.myqcloud.com/jerryc/20220417015441.png)
+
 **Feature：**
 1. Real-time configuration updates.
 1. Global switch.
