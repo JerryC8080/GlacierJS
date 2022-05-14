@@ -6,3 +6,4 @@
  */
 export type Middleware = (context: any, next?: NextFn) => Promise<any>;
 export type NextFn = (...arg: any[]) => Promise<any>;
+export type Interceptor = (middleware: Middleware) => Middleware;

@@ -25,5 +25,8 @@
     "LICENSE",
     "README.md"
   ],
-  "gitHead": "83a3acb9dc824a3fa3a9808ccff3f04a5703114e"
+  "gitHead": "83a3acb9dc824a3fa3a9808ccff3f04a5703114e",
+  "dependencies": {
+    "path-to-regexp": "^6.2.1"
+  }
 }

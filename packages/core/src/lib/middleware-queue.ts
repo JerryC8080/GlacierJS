@@ -1,24 +1,28 @@
 import { logger } from './logger';
 import { compose } from './compose';
-import { Middleware } from '../type/index';
-import { callNextWhileIgnore } from './call-next-while-ignore';
+import { Middleware, Interceptor } from '../type/index';
+import { callNextWhileIgnore } from './interceptors/call-next-while-ignore';
 
 export class MiddlewareQueue {
   private name = 'anonymous';
   private queue: Array<Middleware> = [];
+  private interceptors: Interceptor[] = [callNextWhileIgnore];
 
   constructor(name) {
     if (name) this.name = name;
   }
 
-  public push(middleware: Middleware) {
+  public push(middleware: Middleware, interceptors?: Interceptor[]) {
     logger.debug(
       `MiddlewareQueue:${this.name}`,
       'a middleware pushed',
       middleware
     );
 
-    this.queue.push(callNextWhileIgnore(middleware));
+    // 组合全局拦截器和运行时拦截器，优先级：运行时拦截器 > 全局拦截器
+    const combileInterceptors = [...interceptors || [], ...this.interceptors];
+    const combileMiddleware = combileInterceptors.reduce((acc, interceptor) => interceptor(acc), middleware);
+    this.queue.push(combileMiddleware);
   }
 
   public async runAll(context = {}) {

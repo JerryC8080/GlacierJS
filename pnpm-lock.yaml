@@ -77,7 +77,10 @@ importers:
       typescript: 4.5.5
 
   packages/core:
-    specifiers: {}
+    specifiers:
+      path-to-regexp: ^6.2.1
+    dependencies:
+      path-to-regexp: 6.2.1
 
   packages/package-template:
     specifiers: {}
@@ -6050,6 +6053,10 @@ packages:
     dependencies:
       unique-string: 2.0.0
     dev: true
+
+  /path-to-regexp/6.2.1:
+    resolution: {integrity: sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==}
+    dev: false
 
   /path-type/3.0.0:
     resolution: {integrity: sha512-T2ZUsdZFHgA3u4e5PfPbjd7HDDpxPnQb5jN0SrDsjNSuVXHJqtwTnWqG0B1jZrgmJ/7lj1EmVIByWt1gxGkWvg==}
