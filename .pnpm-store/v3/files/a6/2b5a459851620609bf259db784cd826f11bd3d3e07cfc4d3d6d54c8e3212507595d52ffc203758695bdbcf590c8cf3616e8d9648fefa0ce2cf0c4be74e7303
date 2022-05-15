@@ -1,0 +1,169 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const Rx = __importStar(require("rxjs"));
+const operators_1 = require("rxjs/operators");
+const chalk_1 = __importDefault(require("chalk"));
+const repeat_1 = __importDefault(require("ramda/src/repeat"));
+const string_length_1 = __importDefault(require("string-length"));
+const constants_1 = require("../constants");
+const outputConstants_1 = require("./outputConstants");
+const zooming_1 = require("./utils/zooming");
+exports.default = (log$, opts) => {
+    const stats$ = opts.isRecursive
+        ? log$.stats
+        : log$.stats.pipe((0, operators_1.filter)((log) => log.prefix !== opts.cwd));
+    const outputs = [
+        statsForNotCurrentPackage(stats$, {
+            cmd: opts.cmd,
+            currentPrefix: opts.cwd,
+            width: opts.width,
+        }),
+    ];
+    if (!opts.isRecursive) {
+        outputs.push(statsForCurrentPackage(log$.stats, {
+            cmd: opts.cmd,
+            currentPrefix: opts.cwd,
+            width: opts.width,
+        }));
+    }
+    return outputs;
+};
+function statsForCurrentPackage(stats$, opts) {
+    return stats$.pipe((0, operators_1.filter)((log) => log.prefix === opts.currentPrefix), (0, operators_1.take)((opts.cmd === 'install' || opts.cmd === 'install-test' || opts.cmd === 'add' || opts.cmd === 'update') ? 2 : 1), (0, operators_1.reduce)((acc, log) => {
+        if (typeof log['added'] === 'number') {
+            acc['added'] = log['added'];
+        }
+        else if (typeof log['removed'] === 'number') {
+            acc['removed'] = log['removed'];
+        }
+        return acc;
+    }, {}), (0, operators_1.map)((stats) => {
+        if (!stats['removed'] && !stats['added']) {
+            if (opts.cmd === 'link') {
+                return Rx.NEVER;
+            }
+            return Rx.of({ msg: 'Already up-to-date' });
+        }
+        let msg = 'Packages:';
+        if (stats['added']) {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            msg += ' ' + chalk_1.default.green(`+${stats['added'].toString()}`);
+        }
+        if (stats['removed']) {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            msg += ' ' + chalk_1.default.red(`-${stats['removed'].toString()}`);
+        }
+        msg += constants_1.EOL + printPlusesAndMinuses(opts.width, (stats['added'] || 0), (stats['removed'] || 0));
+        return Rx.of({ msg });
+    }));
+}
+function statsForNotCurrentPackage(stats$, opts) {
+    const stats = {};
+    const cookedStats$ = (opts.cmd !== 'remove'
+        ? stats$.pipe((0, operators_1.map)((log) => {
+            // As of pnpm v2.9.0, during `pnpm recursive link`, logging of removed stats happens twice
+            //  1. during linking
+            //  2. during installing
+            // Hence, the stats are added before reported
+            if (!stats[log.prefix]) {
+                stats[log.prefix] = log;
+                return { seed: stats, value: null };
+            }
+            else if (typeof stats[log.prefix].added === 'number' && typeof log['added'] === 'number') {
+                stats[log.prefix].added += log['added']; // eslint-disable-line
+                return { seed: stats, value: null };
+            }
+            else if (typeof stats[log.prefix].removed === 'number' && typeof log['removed'] === 'number') {
+                stats[log.prefix].removed += log['removed']; // eslint-disable-line
+                return { seed: stats, value: null };
+            }
+            else {
+                const value = { ...stats[log.prefix], ...log };
+                delete stats[log.prefix];
+                return value;
+            }
+        }, {}))
+        : stats$);
+    return cookedStats$.pipe((0, operators_1.filter)((stats) => stats !== null && (stats['removed'] || stats['added'])), (0, operators_1.map)((stats) => {
+        const parts = [];
+        if (stats['added']) {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            parts.push(padStep(chalk_1.default.green(`+${stats['added'].toString()}`), 4));
+        }
+        if (stats['removed']) {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            parts.push(padStep(chalk_1.default.red(`-${stats['removed'].toString()}`), 4));
+        }
+        let msg = (0, zooming_1.zoomOut)(opts.currentPrefix, stats['prefix'], parts.join(' '));
+        const rest = Math.max(0, opts.width - 1 - (0, string_length_1.default)(msg));
+        msg += ' ' + printPlusesAndMinuses(rest, roundStats(stats['added'] || 0), roundStats(stats['removed'] || 0));
+        return Rx.of({ msg });
+    }));
+}
+function padStep(s, step) {
+    const sLength = (0, string_length_1.default)(s);
+    const placeholderLength = Math.ceil(sLength / step) * step;
+    if (sLength < placeholderLength) {
+        return (0, repeat_1.default)(' ', placeholderLength - sLength).join('') + s;
+    }
+    return s;
+}
+function roundStats(stat) {
+    if (stat === 0)
+        return 0;
+    return Math.max(1, Math.round(stat / 10));
+}
+function printPlusesAndMinuses(maxWidth, added, removed) {
+    if (maxWidth === 0)
+        return '';
+    const changes = added + removed;
+    let addedChars;
+    let removedChars;
+    if (changes > maxWidth) {
+        if (!added) {
+            addedChars = 0;
+            removedChars = maxWidth;
+        }
+        else if (!removed) {
+            addedChars = maxWidth;
+            removedChars = 0;
+        }
+        else {
+            const p = maxWidth / changes;
+            addedChars = Math.min(Math.max(Math.floor(added * p), 1), maxWidth - 1);
+            removedChars = maxWidth - addedChars;
+        }
+    }
+    else {
+        addedChars = added;
+        removedChars = removed;
+    }
+    return `${(0, repeat_1.default)(outputConstants_1.ADDED_CHAR, addedChars).join('')}${(0, repeat_1.default)(outputConstants_1.REMOVED_CHAR, removedChars).join('')}`;
+}
+//# sourceMappingURL=reportStats.js.map

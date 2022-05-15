@@ -1,0 +1,153 @@
+{
+  "name": "eslint-plugin-functional",
+  "version": "4.2.0",
+  "description": "ESLint rules to disable mutation and promote fp in TypeScript.",
+  "keywords": [
+    "eslint",
+    "eslint plugin",
+    "fp",
+    "functional",
+    "functional programming",
+    "immutability",
+    "immutable"
+  ],
+  "homepage": "https://github.com/jonaskello/eslint-plugin-functional#readme",
+  "bugs": {
+    "url": "https://github.com/jonaskello/eslint-plugin-functional/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonaskello/eslint-plugin-functional"
+  },
+  "license": "MIT",
+  "author": "Jonas Kello",
+  "contributors": [
+    {
+      "name": "Rebecca Stevens",
+      "email": "rebecca.stevens@outlook.co.nz"
+    }
+  ],
+  "exports": {
+    "default": "./lib/index.js",
+    "import": "./lib/index.mjs",
+    "require": "./lib/index.js"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "package.json",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "yarn compile",
+    "prebuild-tests": "rimraf build",
+    "build-tests": "yarn compile-tests",
+    "check-format": "prettier --list-different \"./**/*.{md,ts}\"",
+    "check-spelling": "cspell --config=.cspell.json \"**/*.{md,ts}\"",
+    "compile": "rollup -c",
+    "compile-tests": "ts-node -P scripts/tsconfig.json scripts/compile-tests.ts",
+    "cz": "git-cz",
+    "format": "prettier --write \"./**/*.{md,ts}\"",
+    "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
+    "lint": "yarn lint-js && yarn lint-md",
+    "lint-js": "eslint .",
+    "lint-md": "markdownlint \"**/*.md\" --config=.markdownlint.json --ignore-path=.markdownlintignore",
+    "prepare": "yarn husky install",
+    "test": "nyc ava",
+    "test-compiled": "USE_COMPILED_TESTS=1 ava",
+    "test-work": "ONLY_TEST_WORK_FILE=1 ava",
+    "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build"
+  },
+  "dependencies": {
+    "@typescript-eslint/experimental-utils": "^5.0.0",
+    "deepmerge-ts": "^2.0.1",
+    "escape-string-regexp": "^4.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^14.1.0",
+    "@google/semantic-release-replace-plugin": "^1.1.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@rebeccastevens/eslint-config": "^1.1.5",
+    "@rollup/plugin-commonjs": "^21.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.5",
+    "@rollup/plugin-typescript": "^8.2.5",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/commit-analyzer": "^9.0.1",
+    "@semantic-release/git": "^10.0.0",
+    "@semantic-release/github": "^8.0.1",
+    "@semantic-release/npm": "^8.0.0",
+    "@semantic-release/release-notes-generator": "^10.0.2",
+    "@types/dedent": "^0.7.0",
+    "@types/eslint": "^7.28.1",
+    "@types/estree": "^0.0.50",
+    "@types/node": "16.11.0",
+    "@types/rollup-plugin-auto-external": "^2.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "ava": "^3.15.0",
+    "babel-eslint": "^10.1.0",
+    "chalk": "^4.1.2",
+    "codecov": "^3.8.1",
+    "commitizen": "^4.2.4",
+    "conventional-commit-types": "^3.0.0",
+    "cross-env": "^7.0.3",
+    "cspell": "^5.12.3",
+    "dedent": "^0.7.0",
+    "eslint": "^8.0.1",
+    "eslint-ava-rule-tester": "^4.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-ava": "^13.0.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-eslint-plugin": "^3.6.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsdoc": "^37.1.0",
+    "eslint-plugin-markdown": "^2.2.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-optimize-regex": "^1.2.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-sonarjs": "^0.11.0",
+    "eslint-plugin-unicorn": "^39.0.0",
+    "espree": "^9.0.0",
+    "husky": "^7.0.2",
+    "json-schema": "^0.3.0",
+    "jsonc-parser": "^3.0.0",
+    "lint-staged": "^12.1.2",
+    "markdownlint-cli": "^0.29.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.4.1",
+    "rimraf": "^3.0.0",
+    "rollup": "^2.58.0",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "semantic-release": "^18.0.0",
+    "ts-node": "^10.3.0",
+    "tsc-prog": "^2.2.1",
+    "tsconfig-paths": "^3.10.1",
+    "tslib": "^2.0.3",
+    "tsutils": "^3.21.0",
+    "typescript": "^4.4.4",
+    "word-wrap": "^1.2.3"
+  },
+  "peerDependencies": {
+    "eslint": "^8.0.0",
+    "tsutils": "^3.0.0",
+    "typescript": "^3.4.1 || ^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tsutils": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+  }
+}

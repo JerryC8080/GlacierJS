@@ -1,0 +1,16 @@
+import { DeprecationLog, PackageManifestLog, RootLog, SummaryLog } from '@pnpm/core-loggers';
+import { Config } from '@pnpm/config';
+import * as Rx from 'rxjs';
+declare const _default: (log$: {
+    deprecation: Rx.Observable<DeprecationLog>;
+    summary: Rx.Observable<SummaryLog>;
+    root: Rx.Observable<RootLog>;
+    packageManifest: Rx.Observable<PackageManifestLog>;
+}, opts: {
+    cwd: string;
+    env: NodeJS.ProcessEnv;
+    pnpmConfig?: Config;
+}) => Rx.Observable<Rx.Observable<{
+    msg: string;
+}>>;
+export default _default;

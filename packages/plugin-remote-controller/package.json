@@ -1,6 +1,6 @@
 {
   "name": "@glacierjs/plugin-remote-controller",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
@@ -13,7 +13,6 @@
     "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
-
     "watch:build": "tsc -p tsconfig.json -w"
   },
   "devDependencies": {
@@ -30,10 +29,10 @@
     "README.md"
   ],
   "dependencies": {
-    "@glacierjs/core": "workspace:^0.1.6",
-    "@glacierjs/plugin-assets-cache": "workspace:^0.1.2",
-    "@glacierjs/sw": "workspace:^0.1.6",
-    "@glacierjs/window": "workspace:^0.1.6",
+    "@glacierjs/core": "workspace:^0.1.7",
+    "@glacierjs/plugin-assets-cache": "workspace:^0.1.5",
+    "@glacierjs/sw": "workspace:^0.1.7",
+    "@glacierjs/window": "workspace:^0.1.7",
     "lodash.throttle": "^4.1.1"
   },
   "gitHead": "83a3acb9dc824a3fa3a9808ccff3f04a5703114e"

@@ -1,0 +1,60 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.arrayOfWorkspacePackagesToMap = exports.findWorkspacePackagesNoCheck = void 0;
+const path_1 = __importDefault(require("path"));
+const cli_utils_1 = require("@pnpm/cli-utils");
+const constants_1 = require("@pnpm/constants");
+const find_packages_1 = __importDefault(require("find-packages"));
+const read_yaml_file_1 = __importDefault(require("read-yaml-file"));
+exports.default = async (workspaceRoot, opts) => {
+    const pkgs = await findWorkspacePackagesNoCheck(workspaceRoot, opts);
+    for (const pkg of pkgs) {
+        (0, cli_utils_1.packageIsInstallable)(pkg.dir, pkg.manifest, opts ?? {});
+    }
+    return pkgs;
+};
+async function findWorkspacePackagesNoCheck(workspaceRoot, opts) {
+    let patterns = opts?.patterns;
+    if (patterns == null) {
+        const packagesManifest = await requirePackagesManifest(workspaceRoot);
+        patterns = packagesManifest?.packages ?? undefined;
+    }
+    const pkgs = await (0, find_packages_1.default)(workspaceRoot, {
+        ignore: [
+            '**/node_modules/**',
+            '**/bower_components/**',
+        ],
+        includeRoot: true,
+        patterns,
+    });
+    pkgs.sort((pkg1, pkg2) => pkg1.dir.localeCompare(pkg2.dir));
+    return pkgs;
+}
+exports.findWorkspacePackagesNoCheck = findWorkspacePackagesNoCheck;
+async function requirePackagesManifest(dir) {
+    try {
+        return await (0, read_yaml_file_1.default)(path_1.default.join(dir, constants_1.WORKSPACE_MANIFEST_FILENAME));
+    }
+    catch (err) { // eslint-disable-line
+        if (err['code'] === 'ENOENT') { // eslint-disable-line
+            return null;
+        }
+        throw err;
+    }
+}
+function arrayOfWorkspacePackagesToMap(pkgs) {
+    return pkgs.reduce((acc, pkg) => {
+        if (!pkg.manifest.name)
+            return acc;
+        if (!acc[pkg.manifest.name]) {
+            acc[pkg.manifest.name] = {};
+        }
+        acc[pkg.manifest.name][pkg.manifest.version ?? '0.0.0'] = pkg;
+        return acc;
+    }, {});
+}
+exports.arrayOfWorkspacePackagesToMap = arrayOfWorkspacePackagesToMap;
+//# sourceMappingURL=index.js.map
