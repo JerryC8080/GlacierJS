@@ -1,0 +1,39 @@
+/// <reference types="node" />
+import { Config } from '@pnpm/config';
+import { LogLevel } from '@pnpm/logger';
+import * as Rx from 'rxjs';
+import formatWarn from './reporterForClient/utils/formatWarn';
+export { formatWarn };
+export default function (opts: {
+    useStderr?: boolean;
+    streamParser: object;
+    reportingOptions?: {
+        appendOnly?: boolean;
+        logLevel?: LogLevel;
+        streamLifecycleOutput?: boolean;
+        aggregateOutput?: boolean;
+        throttleProgress?: number;
+        outputMaxWidth?: number;
+    };
+    context: {
+        argv: string[];
+        config?: Config;
+        env?: NodeJS.ProcessEnv;
+    };
+}): () => void;
+export declare function toOutput$(opts: {
+    streamParser: object;
+    reportingOptions?: {
+        appendOnly?: boolean;
+        logLevel?: LogLevel;
+        outputMaxWidth?: number;
+        streamLifecycleOutput?: boolean;
+        aggregateOutput?: boolean;
+        throttleProgress?: number;
+    };
+    context: {
+        argv: string[];
+        config?: Config;
+        env?: NodeJS.ProcessEnv;
+    };
+}): Rx.Observable<string>;

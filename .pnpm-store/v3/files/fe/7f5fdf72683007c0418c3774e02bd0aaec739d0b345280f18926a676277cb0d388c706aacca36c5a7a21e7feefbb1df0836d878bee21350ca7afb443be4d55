@@ -1,0 +1,37 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sync = void 0;
+const which_1 = __importDefault(require("@zkochan/which"));
+const execa_1 = __importDefault(require("execa"));
+const path_name_1 = __importDefault(require("path-name"));
+const pathCache = new Map();
+function sync(file, args, options) {
+    const fileAbsolutePath = getCommandAbsolutePathSync(file, options);
+    return execa_1.default.sync(fileAbsolutePath, args, options);
+}
+exports.sync = sync;
+function getCommandAbsolutePathSync(file, options) {
+    var _a, _b;
+    if (file.includes('\\') || file.includes('/'))
+        return file;
+    const path = (_b = (_a = options === null || options === void 0 ? void 0 : options.env) === null || _a === void 0 ? void 0 : _a[path_name_1.default]) !== null && _b !== void 0 ? _b : process.env[path_name_1.default];
+    const key = JSON.stringify([path, file]);
+    let fileAbsolutePath = pathCache.get(key);
+    if (fileAbsolutePath == null) {
+        fileAbsolutePath = which_1.default.sync(file, { path });
+        pathCache.set(key, fileAbsolutePath);
+    }
+    if (fileAbsolutePath == null) {
+        throw new Error(`Couldn't find ${file}`);
+    }
+    return fileAbsolutePath;
+}
+function default_1(file, args, options) {
+    const fileAbsolutePath = getCommandAbsolutePathSync(file, options);
+    return execa_1.default(fileAbsolutePath, args, options);
+}
+exports.default = default_1;
+//# sourceMappingURL=index.js.map

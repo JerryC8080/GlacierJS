@@ -1,0 +1,60 @@
+{
+  "name": "@pnpm/config",
+  "version": "14.0.0",
+  "description": "Gets configuration options for pnpm",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "!*.map"
+  ],
+  "repository": "https://github.com/pnpm/pnpm/blob/main/packages/config",
+  "keywords": [
+    "pnpm7",
+    "pnpm",
+    "config"
+  ],
+  "engines": {
+    "node": ">=14.19"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pnpm/pnpm/issues"
+  },
+  "homepage": "https://github.com/pnpm/pnpm/blob/main/packages/config#readme",
+  "dependencies": {
+    "@pnpm/constants": "6.0.0",
+    "@pnpm/error": "3.0.0",
+    "@pnpm/pnpmfile": "2.0.0",
+    "@pnpm/read-project-manifest": "3.0.0",
+    "@pnpm/types": "8.0.0",
+    "@zkochan/npm-conf": "2.0.2",
+    "camelcase": "^6.2.0",
+    "can-write-to-dir": "^1.1.1",
+    "is-subdir": "^1.1.1",
+    "normalize-registry-url": "2.0.0",
+    "path-name": "^1.0.0",
+    "ramda": "^0.27.1",
+    "realpath-missing": "^1.1.0",
+    "which": "^2.0.2"
+  },
+  "devDependencies": {
+    "@pnpm/config": "14.0.0",
+    "@pnpm/prepare": "0.0.37",
+    "@types/ramda": "0.27.39",
+    "@types/which": "^2.0.0",
+    "symlink-dir": "^5.0.0"
+  },
+  "funding": "https://opencollective.com/pnpm",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "scripts": {
+    "lint": "eslint src/**/*.ts test/**/*.ts",
+    "test-with-preview": "ts-node test",
+    "_test": "jest",
+    "test": "pnpm run compile && pnpm run _test",
+    "start": "tsc --watch",
+    "compile": "tsc --build && pnpm run lint --fix"
+  }
+}

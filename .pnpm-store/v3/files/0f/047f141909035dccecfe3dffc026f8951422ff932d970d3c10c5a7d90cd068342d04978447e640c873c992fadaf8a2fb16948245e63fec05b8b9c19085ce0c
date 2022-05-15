@@ -1,0 +1,133 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.propertyByDependencyType = void 0;
+const Rx = __importStar(require("rxjs"));
+const operators_1 = require("rxjs/operators");
+const merge_1 = __importDefault(require("ramda/src/merge"));
+const difference_1 = __importDefault(require("ramda/src/difference"));
+exports.propertyByDependencyType = {
+    dev: 'devDependencies',
+    nodeModulesOnly: 'node_modules',
+    optional: 'optionalDependencies',
+    peer: 'peerDependencies',
+    prod: 'dependencies',
+};
+function default_1(log$, opts) {
+    const deprecationSet$ = log$.deprecation
+        .pipe((0, operators_1.filter)((log) => log.prefix === opts.prefix), (0, operators_1.scan)((acc, log) => {
+        acc.add(log.pkgId);
+        return acc;
+    }, new Set()), (0, operators_1.startWith)(new Set()));
+    const filterPrefix = (0, operators_1.filter)((log) => log.prefix === opts.prefix);
+    const pkgsDiff$ = Rx.combineLatest(log$.root.pipe(filterPrefix), deprecationSet$).pipe((0, operators_1.scan)((pkgsDiff, args) => {
+        const rootLog = args[0];
+        const deprecationSet = args[1];
+        if (rootLog['added']) {
+            pkgsDiff[rootLog['added'].dependencyType || 'nodeModulesOnly'][`+${rootLog['added'].name}`] = {
+                added: true,
+                deprecated: deprecationSet.has(rootLog['added'].id),
+                from: rootLog['added'].linkedFrom,
+                latest: rootLog['added'].latest,
+                name: rootLog['added'].name,
+                realName: rootLog['added'].realName,
+                version: rootLog['added'].version,
+            };
+            return pkgsDiff;
+        }
+        if (rootLog['removed']) {
+            pkgsDiff[rootLog['removed'].dependencyType || 'nodeModulesOnly'][`-${rootLog['removed'].name}`] = {
+                added: false,
+                name: rootLog['removed'].name,
+                version: rootLog['removed'].version,
+            };
+            return pkgsDiff;
+        }
+        return pkgsDiff;
+    }, {
+        dev: {},
+        nodeModulesOnly: {},
+        optional: {},
+        peer: {},
+        prod: {},
+    }), (0, operators_1.startWith)({
+        dev: {},
+        nodeModulesOnly: {},
+        optional: {},
+        peer: {},
+        prod: {},
+    }));
+    const packageManifest$ = Rx.merge(log$.packageManifest.pipe(filterPrefix), log$.summary.pipe(filterPrefix, (0, operators_1.mapTo)({})))
+        .pipe((0, operators_1.take)(2), (0, operators_1.reduce)(merge_1.default, {}) // eslint-disable-line @typescript-eslint/no-explicit-any
+    );
+    return Rx.combineLatest(pkgsDiff$, packageManifest$)
+        .pipe((0, operators_1.map)(([pkgsDiff, packageManifests]) => {
+        if ((packageManifests['initial'] == null) || (packageManifests['updated'] == null))
+            return pkgsDiff;
+        const initialPackageManifest = removeOptionalFromProdDeps(packageManifests['initial']);
+        const updatedPackageManifest = removeOptionalFromProdDeps(packageManifests['updated']);
+        for (const depType of ['peer', 'prod', 'optional', 'dev']) {
+            const prop = exports.propertyByDependencyType[depType];
+            const initialDeps = Object.keys(initialPackageManifest[prop] || {});
+            const updatedDeps = Object.keys(updatedPackageManifest[prop] || {});
+            const removedDeps = (0, difference_1.default)(initialDeps, updatedDeps);
+            for (const removedDep of removedDeps) {
+                if (!pkgsDiff[depType][`-${removedDep}`]) {
+                    pkgsDiff[depType][`-${removedDep}`] = {
+                        added: false,
+                        name: removedDep,
+                        version: initialPackageManifest[prop][removedDep],
+                    };
+                }
+            }
+            const addedDeps = (0, difference_1.default)(updatedDeps, initialDeps);
+            for (const addedDep of addedDeps) {
+                if (!pkgsDiff[depType][`+${addedDep}`]) {
+                    pkgsDiff[depType][`+${addedDep}`] = {
+                        added: true,
+                        name: addedDep,
+                        version: updatedPackageManifest[prop][addedDep],
+                    };
+                }
+            }
+        }
+        return pkgsDiff;
+    }));
+}
+exports.default = default_1;
+function removeOptionalFromProdDeps(pkg) {
+    if ((pkg.dependencies == null) || (pkg.optionalDependencies == null))
+        return pkg;
+    for (const depName of Object.keys(pkg.dependencies)) {
+        if (pkg.optionalDependencies[depName]) {
+            delete pkg.dependencies[depName];
+        }
+    }
+    return pkg;
+}
+//# sourceMappingURL=pkgsDiff.js.map

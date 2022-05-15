@@ -1,0 +1,58 @@
+{
+  "name": "@commitlint/load",
+  "version": "16.2.1",
+  "description": "Load shared commitlint configuration",
+  "main": "lib/load.js",
+  "types": "lib/load.d.ts",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "deps": "dep-check",
+    "pkg": "pkg-check --skip-import"
+  },
+  "engines": {
+    "node": ">=v12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conventional-changelog/commitlint.git",
+    "directory": "@commitlint/load"
+  },
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/commitlint/issues"
+  },
+  "homepage": "https://commitlint.js.org/",
+  "keywords": [
+    "conventional-changelog",
+    "commitlint",
+    "library",
+    "core"
+  ],
+  "author": {
+    "name": "Mario Nebl",
+    "email": "hello@herebecode.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/test": "^16.0.0",
+    "@commitlint/utils": "^16.2.1",
+    "@types/lodash": "4.14.178",
+    "conventional-changelog-atom": "^2.0.8",
+    "execa": "^5.0.0"
+  },
+  "dependencies": {
+    "@commitlint/config-validator": "^16.2.1",
+    "@commitlint/execute-rule": "^16.2.1",
+    "@commitlint/resolve-extends": "^16.2.1",
+    "@commitlint/types": "^16.2.1",
+    "@types/node": ">=12",
+    "chalk": "^4.0.0",
+    "cosmiconfig": "^7.0.0",
+    "cosmiconfig-typescript-loader": "^1.0.0",
+    "lodash": "^4.17.19",
+    "resolve-from": "^5.0.0",
+    "typescript": "^4.4.3"
+  },
+  "gitHead": "071cce297f207ebcaf9cfa00e23542b7e0a550e8"
+}

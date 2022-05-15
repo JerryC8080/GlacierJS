@@ -1,5 +1,13 @@
 # @glacierjs/window
 
+## 0.1.7
+
+### Patch Changes
+
+- 22b4218: code optimize
+- Updated dependencies [22b4218]
+  - @glacierjs/core@0.1.7
+
 ## 0.1.6
 
 ### Patch Changes

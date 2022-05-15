@@ -1,0 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = (manifest, depName) => {
+    return manifest.optionalDependencies?.[depName] ??
+        manifest.dependencies?.[depName] ??
+        manifest.devDependencies?.[depName] ??
+        '';
+};
+//# sourceMappingURL=getSpecFromPackageManifest.js.map

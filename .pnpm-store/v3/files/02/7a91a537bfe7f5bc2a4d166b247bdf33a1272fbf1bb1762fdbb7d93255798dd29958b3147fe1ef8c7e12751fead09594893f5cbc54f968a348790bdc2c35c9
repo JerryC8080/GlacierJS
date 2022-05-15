@@ -1,0 +1,47 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const Rx = __importStar(require("rxjs"));
+const operators_1 = require("rxjs/operators");
+const formatWarn_1 = __importDefault(require("./utils/formatWarn"));
+const zooming_1 = require("./utils/zooming");
+exports.default = (installCheck$, opts) => {
+    return installCheck$.pipe((0, operators_1.map)((log) => formatInstallCheck(opts.cwd, log)), (0, operators_1.filter)(Boolean), (0, operators_1.map)((msg) => Rx.of({ msg })));
+};
+function formatInstallCheck(currentPrefix, logObj, opts) {
+    const zoomOutCurrent = opts?.zoomOutCurrent ?? false;
+    switch (logObj.code) {
+        case 'EBADPLATFORM':
+            return (0, zooming_1.autozoom)(currentPrefix, logObj['prefix'], (0, formatWarn_1.default)(`Unsupported system. Skipping dependency ${logObj.pkgId}`), { zoomOutCurrent });
+        case 'ENOTSUP':
+            return (0, zooming_1.autozoom)(currentPrefix, logObj['prefix'], logObj.toString(), { zoomOutCurrent });
+        default:
+            return undefined;
+    }
+}
+//# sourceMappingURL=reportInstallChecks.js.map

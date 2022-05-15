@@ -1,0 +1,14 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.readDepNameCompletions = void 0;
+const manifest_utils_1 = require("@pnpm/manifest-utils");
+const read_project_manifest_1 = __importDefault(require("@pnpm/read-project-manifest"));
+async function readDepNameCompletions(dir) {
+    const { manifest } = await (0, read_project_manifest_1.default)(dir ?? process.cwd());
+    return Object.keys((0, manifest_utils_1.getAllDependenciesFromManifest)(manifest)).map((name) => ({ name }));
+}
+exports.readDepNameCompletions = readDepNameCompletions;
+//# sourceMappingURL=readDepNameCompletions.js.map

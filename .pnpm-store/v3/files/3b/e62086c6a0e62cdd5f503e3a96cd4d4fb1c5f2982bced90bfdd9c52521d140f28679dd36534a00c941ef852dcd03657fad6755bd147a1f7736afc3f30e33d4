@@ -1,0 +1,1 @@
+export default function findWorkspaceDir(cwd: string): Promise<string | undefined>;

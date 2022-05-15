@@ -1,0 +1,39 @@
+{
+  "name": "@pnpm/lockfile-types",
+  "version": "4.0.0",
+  "description": "Types for the pnpm-lock.yaml lockfile",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "engines": {
+    "node": ">=14.19"
+  },
+  "files": [
+    "lib",
+    "!*.map"
+  ],
+  "repository": "https://github.com/pnpm/pnpm/blob/main/packages/lockfile-types",
+  "keywords": [
+    "pnpm7",
+    "pnpm",
+    "types"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pnpm/pnpm/issues"
+  },
+  "homepage": "https://github.com/pnpm/pnpm/blob/main/packages/lockfile-types#readme",
+  "funding": "https://opencollective.com/pnpm",
+  "dependencies": {
+    "@pnpm/types": "8.0.0"
+  },
+  "devDependencies": {
+    "@pnpm/lockfile-types": "4.0.0"
+  },
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "scripts": {
+    "lint": "eslint src/**/*.ts",
+    "compile": "tsc --build && pnpm run lint --fix"
+  }
+}
