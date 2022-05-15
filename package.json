@@ -13,7 +13,7 @@
     "build:npm": "pnpm nx run-many --target=build --all",
     "build:dist": "node scripts/build-umd-dist.js",
     "changeset": "pnpm changeset",
-    "version": "./node_modules/.bin/changeset version && pnpm i",
+    "version": "./node_modules/.bin/changeset version && pnpm install --no-frozen-lockfile",
     "publish": "pnpm -r publish --no-git-checks",
     "test:unit": "pnpm jest",
     "lint": "pnpm eslint 'packages/**/*.ts'",
