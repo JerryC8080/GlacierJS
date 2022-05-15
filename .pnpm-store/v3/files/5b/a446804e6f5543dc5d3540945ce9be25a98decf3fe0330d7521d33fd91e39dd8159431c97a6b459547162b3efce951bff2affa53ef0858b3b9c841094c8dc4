@@ -1,0 +1,8 @@
+import getConfig from './getConfig';
+export { getConfig };
+export * from './packageIsInstallable';
+export * from './readDepNameCompletions';
+export * from './readProjectManifest';
+export * from './recursiveSummary';
+export * from './style';
+export declare const docsUrl: (cmd: string) => string;

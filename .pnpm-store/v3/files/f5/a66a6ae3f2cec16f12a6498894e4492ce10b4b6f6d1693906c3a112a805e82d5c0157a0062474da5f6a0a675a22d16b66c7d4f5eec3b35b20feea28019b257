@@ -1,0 +1,41 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const path_1 = __importDefault(require("path"));
+const load_json_file_1 = __importDefault(require("load-json-file"));
+const defaultManifest = {
+    name: process.env.npm_package_name != null && process.env.npm_package_name !== ''
+        ? process.env.npm_package_name
+        : 'pnpm',
+    version: process.env.npm_package_version != null && process.env.npm_package_version !== ''
+        ? process.env.npm_package_version
+        : '0.0.0',
+};
+let pkgJson;
+if (require.main == null) {
+    pkgJson = defaultManifest;
+}
+else {
+    try {
+        pkgJson = {
+            ...defaultManifest,
+            ...load_json_file_1.default.sync(path_1.default.join(path_1.default.dirname(require.main.filename), '../package.json')),
+        };
+    }
+    catch (err) { // eslint-disable-line
+        pkgJson = defaultManifest;
+    }
+}
+const packageManager = {
+    name: pkgJson.name,
+    // Never a prerelease version
+    stableVersion: pkgJson.version.includes('-')
+        ? pkgJson.version.substr(0, pkgJson.version.indexOf('-'))
+        : pkgJson.version,
+    // This may be a 3.0.0-beta.2
+    version: pkgJson.version,
+};
+exports.default = packageManager;
+//# sourceMappingURL=index.js.map

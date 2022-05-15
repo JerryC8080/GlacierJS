@@ -1,0 +1,25 @@
+{
+  "name": "ansi-diff",
+  "version": "1.1.1",
+  "description": "A module that diffs an input buffer with the previous one provided to it and outputs the diff as ANSI",
+  "main": "index.js",
+  "dependencies": {
+    "ansi-split": "^1.0.1"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3"
+  },
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/ansi-diff.git"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/ansi-diff/issues"
+  },
+  "homepage": "https://github.com/mafintosh/ansi-diff"
+}

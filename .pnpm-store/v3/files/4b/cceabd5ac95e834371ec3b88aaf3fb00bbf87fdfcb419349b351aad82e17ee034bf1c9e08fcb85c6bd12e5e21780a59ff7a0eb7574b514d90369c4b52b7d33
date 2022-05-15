@@ -1,0 +1,41 @@
+{
+  "name": "path-name",
+  "version": "1.0.0",
+  "description": "Cross-platform PATH env name",
+  "main": "index.js",
+  "scripts": {
+    "test": "mos t && standard",
+    "md": "mos"
+  },
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zkochan/path-name.git"
+  },
+  "author": "Zoltan Kochan",
+  "keywords": [
+    "env",
+    "environ",
+    "path"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zkochan/path-name/issues"
+  },
+  "homepage": "https://github.com/zkochan/path-name#readme",
+  "mos": {
+    "plugins": [
+      "readme"
+    ],
+    "installation": {
+      "useShortAlias": true
+    }
+  },
+  "devDependencies": {
+    "mos": "^1.3.1",
+    "mos-plugin-readme": "^1.0.4",
+    "standard": "^8.4.0"
+  }
+}

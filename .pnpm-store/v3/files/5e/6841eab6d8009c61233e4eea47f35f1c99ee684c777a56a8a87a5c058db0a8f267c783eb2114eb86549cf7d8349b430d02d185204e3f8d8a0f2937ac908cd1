@@ -1,0 +1,22 @@
+import { Config, UniversalOptions } from './Config';
+export { Config, UniversalOptions };
+export declare const types: any;
+export declare type CliOptions = Record<string, unknown> & {
+    dir?: string;
+};
+declare const _default: (opts: {
+    globalDirShouldAllowWrite?: boolean;
+    cliOptions: CliOptions;
+    packageManager: {
+        name: string;
+        version: string;
+    };
+    rcOptionsTypes?: Record<string, unknown>;
+    workspaceDir?: string | undefined;
+    checkUnknownSetting?: boolean;
+    env?: Record<string, string | undefined>;
+}) => Promise<{
+    config: Config;
+    warnings: string[];
+}>;
+export default _default;

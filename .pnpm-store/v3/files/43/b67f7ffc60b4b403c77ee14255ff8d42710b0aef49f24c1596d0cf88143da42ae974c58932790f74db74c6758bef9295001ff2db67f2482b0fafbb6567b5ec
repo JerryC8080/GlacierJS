@@ -1,0 +1,1 @@
+{"version":3,"file":"getAllDependenciesFromManifest.js","sourceRoot":"","sources":["../src/getAllDependenciesFromManifest.ts"],"names":[],"mappings":";;AAEA,SAAwB,8BAA8B,CACpD,GAAuF;IAEvF,OAAO;QACL,GAAG,GAAG,CAAC,eAAe;QACtB,GAAG,GAAG,CAAC,YAAY;QACnB,GAAG,GAAG,CAAC,oBAAoB;KACZ,CAAA;AACnB,CAAC;AARD,iDAQC"}

@@ -1,0 +1,134 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const Rx = __importStar(require("rxjs"));
+const operators_1 = require("rxjs/operators");
+const outputConstants_1 = require("./outputConstants");
+const zooming_1 = require("./utils/zooming");
+exports.default = (log$, opts) => {
+    const progressOutput = throttledProgressOutput.bind(null, opts.throttle);
+    return getModulesInstallProgress$(log$.stage, log$.progress).pipe((0, operators_1.map)(({ importingDone$, progress$, requirer }) => {
+        const output$ = progressOutput(importingDone$, progress$);
+        if (requirer === opts.cwd) {
+            return output$;
+        }
+        return output$.pipe((0, operators_1.map)((msg) => {
+            msg['msg'] = (0, zooming_1.zoomOut)(opts.cwd, requirer, msg['msg']);
+            return msg;
+        }));
+    }));
+};
+function throttledProgressOutput(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+throttle, importingDone$, progress$) {
+    let combinedProgress = Rx.combineLatest(progress$, importingDone$)
+        // Avoid logs after all resolved packages were downloaded.
+        // Fixing issue: https://github.com/pnpm/pnpm/issues/1028#issuecomment-364782901
+        .pipe((0, operators_1.takeWhile)(([, importingDone]) => !importingDone, true));
+    if (throttle != null) {
+        combinedProgress = combinedProgress.pipe(throttle);
+    }
+    return combinedProgress.pipe((0, operators_1.map)(createStatusMessage));
+}
+function getModulesInstallProgress$(stage$, progress$) {
+    const modulesInstallProgressPushStream = new Rx.Subject();
+    const progessStatsPushStreamByRequirer = getProgessStatsPushStreamByRequirer(progress$);
+    const stagePushStreamByRequirer = {};
+    stage$
+        .forEach((log) => {
+        if (!stagePushStreamByRequirer[log.prefix]) {
+            stagePushStreamByRequirer[log.prefix] = new Rx.Subject();
+            if (!progessStatsPushStreamByRequirer[log.prefix]) {
+                progessStatsPushStreamByRequirer[log.prefix] = new Rx.Subject();
+            }
+            modulesInstallProgressPushStream.next({
+                importingDone$: stage$ToImportingDone$(Rx.from(stagePushStreamByRequirer[log.prefix])),
+                progress$: Rx.from(progessStatsPushStreamByRequirer[log.prefix]),
+                requirer: log.prefix,
+            });
+        }
+        stagePushStreamByRequirer[log.prefix].next(log);
+        if (log.stage === 'importing_done') {
+            progessStatsPushStreamByRequirer[log.prefix].complete();
+            stagePushStreamByRequirer[log.prefix].complete();
+        }
+    })
+        .catch(() => { });
+    return Rx.from(modulesInstallProgressPushStream);
+}
+function stage$ToImportingDone$(stage$) {
+    return stage$
+        .pipe((0, operators_1.filter)((log) => log.stage === 'importing_done'), (0, operators_1.mapTo)(true), (0, operators_1.take)(1), (0, operators_1.startWith)(false));
+}
+function getProgessStatsPushStreamByRequirer(progress$) {
+    const progessStatsPushStreamByRequirer = {};
+    const previousProgressStatsByRequirer = {};
+    progress$
+        .forEach((log) => {
+        if (!previousProgressStatsByRequirer[log.requester]) {
+            previousProgressStatsByRequirer[log.requester] = {
+                fetched: 0,
+                imported: 0,
+                resolved: 0,
+                reused: 0,
+            };
+        }
+        switch (log.status) {
+            case 'resolved':
+                previousProgressStatsByRequirer[log.requester].resolved++;
+                break;
+            case 'fetched':
+                previousProgressStatsByRequirer[log.requester].fetched++;
+                break;
+            case 'found_in_store':
+                previousProgressStatsByRequirer[log.requester].reused++;
+                break;
+            case 'imported':
+                previousProgressStatsByRequirer[log.requester].imported++;
+                break;
+        }
+        if (!progessStatsPushStreamByRequirer[log.requester]) {
+            progessStatsPushStreamByRequirer[log.requester] = new Rx.Subject();
+        }
+        progessStatsPushStreamByRequirer[log.requester].next(previousProgressStatsByRequirer[log.requester]);
+    })
+        .catch(() => { });
+    return progessStatsPushStreamByRequirer;
+}
+function createStatusMessage([progress, importingDone]) {
+    const msg = `Progress: resolved ${(0, outputConstants_1.hlValue)(progress.resolved.toString())}, reused ${(0, outputConstants_1.hlValue)(progress.reused.toString())}, downloaded ${(0, outputConstants_1.hlValue)(progress.fetched.toString())}, added ${(0, outputConstants_1.hlValue)(progress.imported.toString())}`;
+    if (importingDone) {
+        return {
+            done: true,
+            fixed: false,
+            msg: `${msg}, done`,
+        };
+    }
+    return {
+        fixed: true,
+        msg,
+    };
+}
+//# sourceMappingURL=reportProgress.js.map

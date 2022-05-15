@@ -1,0 +1,42 @@
+{
+	"name": "@zkochan/npm-conf",
+	"version": "2.0.2",
+	"description": "Get the npm config",
+	"license": "MIT",
+	"repository": "zkochan/npm-conf",
+	"author": {
+		"name": "Zoltan Kochan",
+		"email": "z@kochan.io"
+	},
+	"engines": {
+		"node": ">=10"
+	},
+	"scripts": {
+		"prepublish": "node lib/make.js",
+		"test": "jest"
+	},
+	"files": [
+		"index.js",
+		"lib"
+	],
+	"keywords": [
+		"conf",
+		"config",
+		"global",
+		"npm",
+		"path",
+		"prefix",
+		"rc"
+	],
+	"dependencies": {
+		"config-chain": "^1.1.11"
+	},
+	"devDependencies": {
+		"babel-generator": "^6.24.1",
+		"babel-traverse": "^6.24.1",
+		"babylon": "^6.17.1",
+		"eslint-import-resolver-node": "^0.3.2",
+		"jest": "^25.1.0",
+		"npm": "^5.0.4"
+	}
+}

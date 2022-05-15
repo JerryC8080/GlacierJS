@@ -1,0 +1,50 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const boxen_1 = __importDefault(require("boxen"));
+const chalk_1 = __importDefault(require("chalk"));
+const Rx = __importStar(require("rxjs"));
+const operators_1 = require("rxjs/operators");
+const semver_1 = __importDefault(require("semver"));
+exports.default = (log$) => {
+    return log$.pipe((0, operators_1.take)(1), (0, operators_1.filter)((log) => semver_1.default.gt(log.latestVersion, log.currentVersion)), (0, operators_1.map)((log) => Rx.of({
+        msg: (0, boxen_1.default)(`\
+Update available! ${chalk_1.default.red(log.currentVersion)} → ${chalk_1.default.green(log.latestVersion)}.
+${chalk_1.default.magenta('Changelog:')} https://github.com/pnpm/pnpm/releases/tag/v${log.latestVersion}
+Run ${chalk_1.default.magenta('pnpm add -g pnpm')} to update.
+
+Follow ${chalk_1.default.magenta('@pnpmjs')} for updates: https://twitter.com/pnpmjs`, {
+            padding: 1,
+            margin: 1,
+            align: 'center',
+            borderColor: 'yellow',
+            borderStyle: 'round',
+        }),
+    })));
+};
+//# sourceMappingURL=reportUpdateCheck.js.map

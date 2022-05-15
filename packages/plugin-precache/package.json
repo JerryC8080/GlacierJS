@@ -1,6 +1,6 @@
 {
   "name": "@glacierjs/plugin-precache",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
@@ -29,8 +29,8 @@
     "README.md"
   ],
   "dependencies": {
-    "@glacierjs/core": "^0.1.6",
-    "@glacierjs/sw": "^0.1.6",
+    "@glacierjs/core": "^0.1.7",
+    "@glacierjs/sw": "^0.1.7",
     "workbox-precaching": "^6.4.2"
   },
   "gitHead": "83a3acb9dc824a3fa3a9808ccff3f04a5703114e"

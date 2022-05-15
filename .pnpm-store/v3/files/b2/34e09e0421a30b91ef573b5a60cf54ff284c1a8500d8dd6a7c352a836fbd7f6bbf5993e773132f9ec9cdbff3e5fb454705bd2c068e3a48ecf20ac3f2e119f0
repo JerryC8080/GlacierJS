@@ -1,0 +1,27 @@
+{
+  "name": "realpath-missing",
+  "version": "1.1.0",
+  "description": "Canonicalize by following every symlink in every component of the given name recursively, without requirements on components existence",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "test": "node test"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "repository": "https://github.com/zkochan/packages/tree/master/realpath-missing",
+  "keywords": [],
+  "author": {
+    "name": "Zoltan Kochan",
+    "url": "https://www.kochan.io"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/zkochan/packages/tree/master/realpath-missing#readme",
+  "devDependencies": {
+    "tape": "^5.1.1"
+  }
+}
