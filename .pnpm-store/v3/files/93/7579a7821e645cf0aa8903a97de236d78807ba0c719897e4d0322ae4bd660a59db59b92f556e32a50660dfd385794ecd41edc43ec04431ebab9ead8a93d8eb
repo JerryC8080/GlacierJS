@@ -1,4 +1,0 @@
-export declare function checkGlobalBinDir(globalBinDir: string, { env, shouldAllowWrite }: {
-    env: Record<string, string | undefined>;
-    shouldAllowWrite?: boolean;
-}): void;
