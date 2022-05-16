@@ -1,1 +1,0 @@
-{"version":3,"file":"getSpecFromPackageManifest.js","sourceRoot":"","sources":["../src/getSpecFromPackageManifest.ts"],"names":[],"mappings":";;AAEA,kBAAe,CACb,QAA4F,EAC5F,OAAe,EACf,EAAE;IACF,OAAO,QAAQ,CAAC,oBAAoB,EAAE,CAAC,OAAO,CAAC;QAC7C,QAAQ,CAAC,YAAY,EAAE,CAAC,OAAO,CAAC;QAChC,QAAQ,CAAC,eAAe,EAAE,CAAC,OAAO,CAAC;QACnC,EAAE,CAAA;AACN,CAAC,CAAA"}
