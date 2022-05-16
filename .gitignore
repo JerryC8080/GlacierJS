@@ -9,3 +9,4 @@ src/**.js
 package-lock.json
 yarn.lock
 .vscode
+.pnpm-store
