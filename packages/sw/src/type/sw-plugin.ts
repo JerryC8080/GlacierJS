@@ -1,6 +1,6 @@
 import { Lifecycle } from './lifecycle';
 import { GlacierSW } from '../lib/glacier-sw';
-import type { NextFn, MiddlewareQueue } from '@glacierjs/core';
+import type { NextFn, LifecycleHook } from '@glacierjs/core';
 
 export interface BaseContext {
   [propName: string]: unknown;
@@ -31,11 +31,6 @@ export type HookFn<ContextType> = (
   context: ContextType,
   next: NextFn
 ) => Promise<void>;
-
-export interface LifecycleHook<Context> {
-  globalQueue: MiddlewareQueue<Context>,
-  scopeQueues: { scope: string, queue: MiddlewareQueue<Context> }[]
-}
 
 export interface LifecycleHooks {
   [Lifecycle.onInstall]: LifecycleHook<InstallContext>,

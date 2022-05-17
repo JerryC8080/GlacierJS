@@ -1,11 +1,12 @@
+import { match } from 'path-to-regexp';
 import { MiddlewareQueue } from './middleware-queue';
 import { BaseContext, LifecycleHook, Plugin } from '../type';
 import { logger } from './logger';
 
 export class Pluggable<
-    CustomPlugin extends Plugin<BaseContext>,
-    Lifecycle extends string,
-    LifecycleHooks extends Record<Lifecycle, LifecycleHook<BaseContext>>
+  CustomPlugin extends Plugin<BaseContext>,
+  Lifecycle extends string,
+  LifecycleHooks extends Record<Lifecycle, LifecycleHook<BaseContext>>
   > {
   public plugins: {
     global: CustomPlugin[],
@@ -15,10 +16,7 @@ export class Pluggable<
       scope: []
     };
 
-  protected lifecycleHooks: LifecycleHooks;
-  protected lifecycles: string[] = [];
-
-  constructor(lifecycles, lifecycleHooks) {
+  constructor(protected lifecycles: string[] = [], protected lifecycleHooks: LifecycleHooks) {
     this.lifecycles = lifecycles;
     this.lifecycleHooks = lifecycleHooks;
     this.lifecycles.forEach((lifecycle) => {
@@ -40,13 +38,26 @@ export class Pluggable<
     }
   }
 
-  protected async callLifecyleMiddlewares<Context extends BaseContext>(lifecycle: Lifecycle, context?: Context) {
+  protected async callLifecyleMiddlewares<Context extends BaseContext>(scopePath: string, lifecycle: Lifecycle, context?: Context) {
+    const ctx = { ...context || {} };
+
     // 执行声明周期钩子函数，执行顺序：global -> scopes[]
     const middlewareQueues = [
       this.lifecycleHooks[lifecycle].globalQueue,
-      ...this.lifecycleHooks[lifecycle].scopeQueues.map(scopeQueue => scopeQueue.queue),
+
+      // 获取第一个匹配当前 path 的 scope 的中间件队列
+      this.lifecycleHooks[lifecycle].scopeQueues.find((scopeQueue) => {
+        let finded = false;
+        const captureInfo = scopeQueue.capture(scopePath);
+        if (captureInfo) {
+          ctx.pathParams = captureInfo.params;
+          finded = true;
+        }
+        return finded;
+      }).queue,
     ];
 
+    // 串行异步执行
     for (const middlewareQueue of middlewareQueues) {
       await middlewareQueue.runAll(context);
     }
@@ -101,7 +112,11 @@ export class Pluggable<
         if (!handler) return;
         const queue = new MiddlewareQueue(`${lifecycle}-scope:${scope}`);
         queue.push(handler.bind(plugin));
-        this.lifecycleHooks[lifecycle].scopeQueues.push(queue);
+        this.lifecycleHooks[lifecycle].scopeQueues.push({
+          scope,
+          capture: match(scope),
+          queue,
+        });
         logger.debug(`"${plugin.name}" plugin registered at scope:${scope} lifecycle:${lifecycle}`);
       });
     });

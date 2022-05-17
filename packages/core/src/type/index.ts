@@ -26,5 +26,9 @@ export interface BaseContext {
 
 export interface LifecycleHook<Context> {
   globalQueue: MiddlewareQueue<Context>,
-  scopeQueues: { scope: string, queue: MiddlewareQueue<Context> }[]
+  scopeQueues: {
+    scope: string,
+    capture: (path: string) => Record<string, string>
+    queue: MiddlewareQueue<Context>,
+  }[]
 }

@@ -26,7 +26,8 @@ export class GlacierWindow extends Pluggable<WindowPlugin, Lifecycle, LifecycleH
 
   public async register({ immediate = false } = {}): Promise<ServiceWorkerRegistration | undefined> {
     try {
-      await this.callLifecyleMiddlewares<BaseContext>(Lifecycle.beforeRegister);
+      const scopePath = this.getScopePath();
+      await this.callLifecyleMiddlewares<BaseContext>(scopePath, Lifecycle.beforeRegister);
       return this.workbox.register({ immediate });
     } catch (error) {
       logger.error('glacier register fail, ', error);
@@ -38,11 +39,16 @@ export class GlacierWindow extends Pluggable<WindowPlugin, Lifecycle, LifecycleH
     try {
       logger.debug('ServiceWorker uninstalling...');
       await this.workbox.messageSW({ type: EventNames.UN_INSTALL });
-      await this.callLifecyleMiddlewares<BaseContext>(Lifecycle.onRedundant);
+      const scopePath = this.getScopePath();
+      await this.callLifecyleMiddlewares<BaseContext>(scopePath, Lifecycle.onRedundant);
       logger.debug('ServiceWorker uninstall successed');
     } catch (error) {
       logger.error('ServiceWorker uninstall faild', error);
       throw error;
     }
+  }
+
+  private getScopePath() {
+    return location.pathname;
   }
 }

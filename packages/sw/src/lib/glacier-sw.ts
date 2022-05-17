@@ -32,14 +32,16 @@ export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, Lifecyc
   public listen() {
     addEventListener('install', (event: ExtendableEvent) => {
       event.waitUntil(async () => {
-        await this.callLifecyleMiddlewares<InstallContext>(Lifecycle.onInstall, { event });
+        const scopePath = this.getScopePathByLifeCycle(Lifecycle.onInstall);
+        await this.callLifecyleMiddlewares<InstallContext>(scopePath, Lifecycle.onInstall, { event });
         logger.debug('onInstall: all hooks done', event);
       });
     });
 
     addEventListener('activate', (event: ExtendableEvent) => {
       event.waitUntil(async () => {
-        await this.callLifecyleMiddlewares<ActivateContext>(Lifecycle.onActivate, { event });
+        const scopePath = this.getScopePathByLifeCycle(Lifecycle.onActivate);
+        await this.callLifecyleMiddlewares<ActivateContext>(scopePath, Lifecycle.onActivate, { event });
         logger.debug('onActivate: all hooks done', event);
       });
     });
@@ -48,7 +50,8 @@ export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, Lifecyc
       // FetchEvent 回调函数接收的是 PromiseLike<Response> 类型，这里需要用 Promise.resolve 包一层以防止 TS 报错：https://github.com/microsoft/TypeScript/issues/5911
       event.respondWith(Promise.resolve().then(async () => {
         const context: FetchContext = { event, res: undefined };
-        await this.callLifecyleMiddlewares<FetchContext>(Lifecycle.onActivate, context);
+        const scopePath = this.getScopePathByLifeCycle(Lifecycle.onFetch);
+        await this.callLifecyleMiddlewares<FetchContext>(scopePath, Lifecycle.onActivate, context);
         logger.debug('onFetch: all hooks done', context.event?.request?.url, context);
 
         // 当没有设置 response 的时候，透传请求网络资源。
@@ -72,7 +75,8 @@ export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, Lifecyc
           } else {
             // 处理插件定义的通讯事件
             logger.debug('onMessage: handle message by plugins', event);
-            await this.callLifecyleMiddlewares<MessageContext>(Lifecycle.onMessage, { event });
+            const scopePath = this.getScopePathByLifeCycle(Lifecycle.onMessage);
+            await this.callLifecyleMiddlewares<MessageContext>(scopePath, Lifecycle.onMessage, { event });
             logger.debug('onMessage: handle message by plugins done', event);
           }
         } catch (error) {
@@ -84,9 +88,15 @@ export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, Lifecyc
 
   public async uninstall() {
     // 执行所有生命周期函数
-    await this.callLifecyleMiddlewares(Lifecycle.onUninstall);
+    const scopePath = this.getScopePathByLifeCycle(Lifecycle.onUninstall);
+    await this.callLifecyleMiddlewares(scopePath, Lifecycle.onUninstall);
 
     // 注销 ServiceWorker
     await registration.unregister();
+  }
+
+  // TODO
+  private getScopePathByLifeCycle(lifecycle: Lifecycle) {
+    return `${lifecycle}`;
   }
 }

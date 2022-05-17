@@ -26,6 +26,7 @@ export class RemoteControllerSW extends RemoteControllerBase implements ServiceW
     try {
       const { config: { assetsCacheRoutes }, configUpdated } = await this.getConfig();
 
+      // TODO plugin 实例不再保存，改用 EventBus 通讯
       const assetsCachePluginIns = (this.context.glacier.plugins[PLUGIN_NAME_OF_ASSETS_CACHE] as AssetsCacheSW);
       if (assetsCachePluginIns && configUpdated) {
         logger.info(`going to update routes with remote config: ${assetsCacheRoutes}`);
