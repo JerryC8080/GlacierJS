@@ -13,7 +13,9 @@
     "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
-    "watch:build": "tsc -p tsconfig.json -w"
+    "watch:build": "run-p watch:build:*",
+    "watch:build:module": "tsc -p tsconfig.module.json -w",
+    "watch:build:main": "tsc -p tsconfig.json -w"
   },
   "files": [
     "dist",

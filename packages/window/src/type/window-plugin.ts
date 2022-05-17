@@ -1,20 +1,24 @@
 import { Workbox } from 'workbox-window';
-import { NextFn } from '@glacierjs/core';
+import { MiddlewareQueue, BaseContext, HookFn, Plugin } from '@glacierjs/core';
 import { Lifecycle } from './lifecycle';
 import { GlacierWindow } from '../lib/glacier-window';
 
-export type UseContext = {
+export interface UseContext extends BaseContext {
   workbox: Workbox;
   glacier: GlacierWindow;
-};
+}
 
-export type HookFn<ContextType> = (
-  context: ContextType,
-  next: NextFn
-) => Promise<void>;
+export interface LifecycleHook<Context> {
+  globalQueue: MiddlewareQueue<Context>,
+  scopeQueues: { scope: string, queue: MiddlewareQueue<Context> }[]
+}
 
-export interface WindowPlugin {
-  readonly name: string;
-  onUse?: (context: UseContext) => void;
-  [Lifecycle.beforeRegister]?: HookFn<object>;
+export interface LifecycleHooks {
+  [Lifecycle.beforeRegister]: LifecycleHook<BaseContext>,
+  [Lifecycle.onRedundant]: LifecycleHook<BaseContext>
+}
+
+export interface WindowPlugin extends Plugin<UseContext> {
+  [Lifecycle.beforeRegister]?: HookFn<BaseContext>;
+  [Lifecycle.onRedundant]?: HookFn<BaseContext>;
 }

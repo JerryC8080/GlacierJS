@@ -1,68 +1,45 @@
-import { MiddlewareQueue, EventNames } from '@glacierjs/core';
-import { Lifecycle, ServiceWorkerPlugin, FetchContext } from '../type/index';
+import { EventNames, Pluggable } from '@glacierjs/core';
 import { logger } from './logger';
+import {
+  Lifecycle,
+  ServiceWorkerPlugin,
+  LifecycleHooks,
+  FetchContext,
+  MessageContext,
+  InstallContext,
+  ActivateContext,
+} from '../type/index';
 
 const {
   registration,
   addEventListener,
 } = (self as unknown) as ServiceWorkerGlobalScope;
 
-export class GlacierSW {
-  public plugins: Record<string, ServiceWorkerPlugin> = {};
-  private lifecycleHooks: Record<Lifecycle, MiddlewareQueue> = {
-    [Lifecycle.onInstall]: null,
-    [Lifecycle.onUninstall]: null,
-    [Lifecycle.onActivate]: null,
-    [Lifecycle.onMessage]: null,
-    [Lifecycle.onFetch]: null,
-  };
-
+export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, LifecycleHooks>{
   constructor() {
-    Object.keys(Lifecycle).forEach((lifecycle) => {
-      this.lifecycleHooks[lifecycle] = new MiddlewareQueue(lifecycle);
-    });
-  }
-
-  public use(plugin: ServiceWorkerPlugin) {
-    // store plugin instance
-    const { name } = plugin;
-    if (name) {
-      if (this.plugins[name]) {
-        logger.error(`The name of "${name}" plugin has used, can't store instance.`);
-      } else {
-        this.plugins[name] = plugin;
+    super(
+      Object.keys(Lifecycle).map(lifecycle => lifecycle),
+      {
+        [Lifecycle.onInstall]: null,
+        [Lifecycle.onUninstall]: null,
+        [Lifecycle.onActivate]: null,
+        [Lifecycle.onMessage]: null,
+        [Lifecycle.onFetch]: null,
       }
-    }
-
-    // call onUse hook
-    plugin.onUse?.({ glacier: this });
-    logger.debug(`"${plugin.name}" plugin onUsed hook called`);
-
-    // register lifecycle hooks
-    Object.keys(Lifecycle).forEach((lifecycle) => {
-      const handler = plugin[lifecycle];
-      if (!handler) return;
-
-      const queue: MiddlewareQueue = this.lifecycleHooks[lifecycle];
-      queue?.push(handler.bind(plugin));
-
-      logger.debug(
-        `"${plugin.name}" plugin registered lifecycle: ${lifecycle}`
-      );
-    });
+    );
   }
 
   public listen() {
     addEventListener('install', (event: ExtendableEvent) => {
       event.waitUntil(async () => {
-        await this.lifecycleHooks.onInstall.runAll({ event });
+        await this.callLifecyleMiddlewares<InstallContext>(Lifecycle.onInstall, { event });
         logger.debug('onInstall: all hooks done', event);
       });
     });
 
     addEventListener('activate', (event: ExtendableEvent) => {
       event.waitUntil(async () => {
-        await this.lifecycleHooks.onActivate.runAll({ event });
+        await this.callLifecyleMiddlewares<ActivateContext>(Lifecycle.onActivate, { event });
         logger.debug('onActivate: all hooks done', event);
       });
     });
@@ -70,18 +47,9 @@ export class GlacierSW {
     addEventListener('fetch', (event: FetchEvent) => {
       // FetchEvent 回调函数接收的是 PromiseLike<Response> 类型，这里需要用 Promise.resolve 包一层以防止 TS 报错：https://github.com/microsoft/TypeScript/issues/5911
       event.respondWith(Promise.resolve().then(async () => {
-        const context: FetchContext = {
-          event,
-          res: undefined,
-        };
-
-        await this.lifecycleHooks.onFetch.runAll(context);
-
-        logger.debug(
-          'onFetch: all hooks done',
-          context.event?.request?.url,
-          context
-        );
+        const context: FetchContext = { event, res: undefined };
+        await this.callLifecyleMiddlewares<FetchContext>(Lifecycle.onActivate, context);
+        logger.debug('onFetch: all hooks done', context.event?.request?.url, context);
 
         // 当没有设置 response 的时候，透传请求网络资源。
         if (!context.res) return fetch(event.request);
@@ -104,7 +72,7 @@ export class GlacierSW {
           } else {
             // 处理插件定义的通讯事件
             logger.debug('onMessage: handle message by plugins', event);
-            await this.lifecycleHooks.onMessage.runAll({ event });
+            await this.callLifecyleMiddlewares<MessageContext>(Lifecycle.onMessage, { event });
             logger.debug('onMessage: handle message by plugins done', event);
           }
         } catch (error) {
@@ -116,7 +84,7 @@ export class GlacierSW {
 
   public async uninstall() {
     // 执行所有生命周期函数
-    await this.lifecycleHooks.onUninstall.runAll();
+    await this.callLifecyleMiddlewares(Lifecycle.onUninstall);
 
     // 注销 ServiceWorker
     await registration.unregister();

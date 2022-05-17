@@ -1,14 +1,20 @@
 import { Workbox } from 'workbox-window';
-import { MiddlewareQueue, EventNames } from '@glacierjs/core';
+import { EventNames, Pluggable, BaseContext } from '@glacierjs/core';
 import { logger } from './logger';
-import { WindowPlugin, Lifecycle } from '../type/index';
+import { WindowPlugin, Lifecycle, LifecycleHooks } from '../type/index';
 
-export class GlacierWindow {
-  public plugins: Record<string, WindowPlugin> = {};
+export class GlacierWindow extends Pluggable<WindowPlugin, Lifecycle, LifecycleHooks> {
   public workbox: Workbox;
-  private lifecycleHooks: Record<Lifecycle | string, MiddlewareQueue> = {};
 
   constructor(scriptURL: string, registerOptions: unknown = {}) {
+    super(
+      Object.keys(Lifecycle).map(lifecycle => lifecycle),
+      {
+        [Lifecycle.beforeRegister]: null,
+        [Lifecycle.onRedundant]: null,
+      }
+    );
+
     if (!('serviceWorker' in navigator)) {
       const error = new Error('glacier register fail, ServiceWorker not support!');
       logger.error(error.message);
@@ -16,15 +22,11 @@ export class GlacierWindow {
     }
 
     this.workbox = new Workbox(scriptURL, registerOptions);
-
-    Object.keys(Lifecycle).forEach(lifecycle => {
-      this.lifecycleHooks[lifecycle] = new MiddlewareQueue(lifecycle);
-    });
   }
 
   public async register({ immediate = false } = {}): Promise<ServiceWorkerRegistration | undefined> {
     try {
-      await this.lifecycleHooks.beforeRegister.runAll();
+      await this.callLifecyleMiddlewares<BaseContext>(Lifecycle.beforeRegister);
       return this.workbox.register({ immediate });
     } catch (error) {
       logger.error('glacier register fail, ', error);
@@ -36,33 +38,11 @@ export class GlacierWindow {
     try {
       logger.debug('ServiceWorker uninstalling...');
       await this.workbox.messageSW({ type: EventNames.UN_INSTALL });
+      await this.callLifecyleMiddlewares<BaseContext>(Lifecycle.onRedundant);
       logger.debug('ServiceWorker uninstall successed');
     } catch (error) {
       logger.error('ServiceWorker uninstall faild', error);
       throw error;
     }
-  }
-
-  public use(plugin: WindowPlugin) {
-    // store plugin instance
-    const { name } = plugin;
-    if (name) {
-      if (this.plugins[name]) {
-        logger.error(`The name of "${name}" plugin has used, can't store instance.`);
-      } else {
-        this.plugins[name] = plugin;
-      }
-    }
-
-    // call onUse hook as sync
-    plugin.onUse?.({ workbox: this.workbox, glacier: this });
-    logger.debug(`"${plugin.name}" plugin onUsed hook called`);
-
-    // register lifecycle hooks
-    Object.keys(Lifecycle).forEach(lifecycle => {
-      const handler = plugin[lifecycle];
-      this.lifecycleHooks[lifecycle]?.push(handler?.bind(plugin));
-      logger.debug(`"${plugin.name}" plugin registered lifecycle: ${lifecycle}`);
-    });
   }
 }

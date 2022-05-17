@@ -3,7 +3,7 @@ import { compose } from './compose';
 import { Middleware, Interceptor } from '../type/index';
 import { callNextWhileIgnore } from './interceptors/call-next-while-ignore';
 
-export class MiddlewareQueue {
+export class MiddlewareQueue<Context> {
   private name = 'anonymous';
   private queue: Array<Middleware> = [];
   private interceptors: Interceptor[] = [callNextWhileIgnore];
@@ -25,7 +25,7 @@ export class MiddlewareQueue {
     this.queue.push(combileMiddleware);
   }
 
-  public async runAll(context = {}) {
+  public async runAll(context: Context) {
     logger.debug(
       `MiddlewareQueue:${this.name}`,
       'will run all middleware as serial'
