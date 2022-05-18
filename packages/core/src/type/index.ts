@@ -28,7 +28,7 @@ export interface LifecycleHook<Context> {
   globalQueue: MiddlewareQueue<Context>,
   scopeQueues: {
     scope: string,
-    capture: (path: string) => Record<string, string>
+    capture: (path: string) => Record<string, unknown>
     queue: MiddlewareQueue<Context>,
   }[]
 }

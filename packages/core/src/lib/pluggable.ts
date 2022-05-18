@@ -38,24 +38,29 @@ export class Pluggable<
     }
   }
 
-  protected async callLifecyleMiddlewares<Context extends BaseContext>(scopePath: string, lifecycle: Lifecycle, context?: Context) {
-    const ctx = { ...context || {} };
+  protected async callLifecyleMiddlewares<Context extends BaseContext>(scopePath: string[] | string, lifecycle: Lifecycle, context?: Context) {
+    const scopePaths = Array.isArray(scopePath) ? scopePath : [scopePath];
+    const ctx = { ...(context || {}), pathParams: {} };
 
     // 执行声明周期钩子函数，执行顺序：global -> scopes[]
     const middlewareQueues = [
       this.lifecycleHooks[lifecycle].globalQueue,
+    ];
 
+    scopePaths.forEach((path) => {
       // 获取第一个匹配当前 path 的 scope 的中间件队列
-      this.lifecycleHooks[lifecycle].scopeQueues.find((scopeQueue) => {
+      const queue = this.lifecycleHooks[lifecycle].scopeQueues.find((scopeQueue) => {
         let finded = false;
-        const captureInfo = scopeQueue.capture(scopePath);
+        const captureInfo = scopeQueue.capture(path);
         if (captureInfo) {
-          ctx.pathParams = captureInfo.params;
+          ctx.pathParams = { ...ctx.pathParams, ...captureInfo.params as object };
           finded = true;
         }
         return finded;
-      }).queue,
-    ];
+      }).queue;
+
+      middlewareQueues.push(queue);
+    });
 
     // 串行异步执行
     for (const middlewareQueue of middlewareQueues) {
