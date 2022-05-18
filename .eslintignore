@@ -3,6 +3,7 @@ scripts
 dev
 build
 dist
+!tools/*
 
 # 依赖
 node_modules

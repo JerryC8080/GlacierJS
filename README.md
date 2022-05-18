@@ -87,7 +87,7 @@ It consists of several parts:
 
 * **Plugins**
     - [x] `@glacierjs/plugin-precache`: Implement static resource pre-cache function.
-    - [x] `@glacierjs/plugin-reporter`: Realize basic data reporting function.
+    - [x] `@glacierjs/plugin-collector`: Realize basic data reporting function.
     - [x] `@glacierjs/plugin-assets`: Implement static resource caching.
     - [x] `@glacierjs/plugin-remote-controller`: Implement remote control function.
 

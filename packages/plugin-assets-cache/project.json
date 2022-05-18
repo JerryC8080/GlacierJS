@@ -1,0 +1,11 @@
+{
+    "name": "plugin-assets-cache",
+    "root": "packages/plugin-assets-cache",
+    "sourceRoot": "packages/plugin-assets-cache/src",
+    "type": "library",
+    "targets": {
+        "dist": {
+            "executor": "@nx-glacier/build:dist"
+        }
+    }
+}

@@ -20,6 +20,6 @@ export interface CollectedData<Data = unknown> {
   data?: Data,
 }
 
-export interface ReporterWindowOptions {
+export interface CollectorWindowOptions {
   send: (data: CollectedData) => void;
 }

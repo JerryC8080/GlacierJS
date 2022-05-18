@@ -1,0 +1,11 @@
+{
+    "name": "plugin-precache",
+    "root": "packages/plugin-precache",
+    "sourceRoot": "packages/plugin-precache/src",
+    "type": "library",
+    "targets": {
+        "dist": {
+            "executor": "@nx-glacier/build:dist"
+        }
+    }
+}

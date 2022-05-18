@@ -1,0 +1,11 @@
+{
+    "name": "core",
+    "root": "packages/core",
+    "sourceRoot": "packages/core/src",
+    "type": "library",
+    "targets": {
+        "dist": {
+            "executor": "@nx-glacier/build:dist"
+        }
+    }
+}

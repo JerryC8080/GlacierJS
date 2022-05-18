@@ -20,9 +20,9 @@ export class MiddlewareQueue<Context> {
     );
 
     // 组合全局拦截器和运行时拦截器，优先级：运行时拦截器 > 全局拦截器
-    const combileInterceptors = [...interceptors || [], ...this.interceptors];
-    const combileMiddleware = combileInterceptors.reduce((acc, interceptor) => interceptor(acc), middleware);
-    this.queue.push(combileMiddleware);
+    const combineInterceptors = [...interceptors || [], ...this.interceptors];
+    const combineMiddleware = combineInterceptors.reduce((acc, interceptor) => interceptor(acc), middleware);
+    this.queue.push(combineMiddleware);
   }
 
   public async runAll(context: Context) {

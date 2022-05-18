@@ -1,12 +1,3 @@
-/**
- * Compose `middleware` returning
- * a fully valid middleware comprised
- * of all those which are passed.
- *
- * @param {Array} middleware
- * @return {Function}
- * @api public
- */
 import { Middleware } from '../type/index';
 
 /**

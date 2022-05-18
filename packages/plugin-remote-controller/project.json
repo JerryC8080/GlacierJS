@@ -1,0 +1,11 @@
+{
+    "name": "plugin-remote-controller",
+    "root": "packages/plugin-remote-controller",
+    "sourceRoot": "packages/plugin-remote-controller/src",
+    "type": "library",
+    "targets": {
+        "dist": {
+            "executor": "@nx-glacier/build:dist"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "plugin-collector",
+    "root": "packages/plugin-collector",
+    "sourceRoot": "packages/plugin-collector/src",
+    "type": "library",
+    "targets": {
+        "dist": {
+            "executor": "@nx-glacier/build:dist"
+        }
+    }
+}

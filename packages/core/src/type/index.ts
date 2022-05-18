@@ -7,6 +7,8 @@ import type { MiddlewareQueue } from '../lib/middleware-queue';
  * 3. NextFn 不关心入参和返回，只保证是异步任务。
  */
 export type Middleware = (context: any, next?: NextFn) => Promise<any>;
+
+// NextFn 不关心入参和返回，只保证是异步任务。
 export type NextFn = (...arg: any[]) => Promise<any>;
 export type Interceptor = (middleware: Middleware) => Middleware;
 

@@ -11,9 +11,9 @@
     "bootstrap": "pnpm i",
     "build": "run-p build:*",
     "build:npm": "pnpm nx run-many --target=build --all",
-    "build:dist": "node scripts/build-umd-dist.js",
+    "build:dist": "pnpm nx run-many --target=dist --all",
     "changeset": "pnpm changeset",
-    "version": "./node_modules/.bin/changeset version && pnpm install --no-frozen-lockfile",
+    "version": "pnpm changeset version && pnpm i",
     "publish": "pnpm -r publish --no-git-checks",
     "test:unit": "pnpm jest",
     "lint": "pnpm eslint 'packages/**/*.ts'",
@@ -31,6 +31,8 @@
     "@changesets/cli": "^2.22.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@knodes/typedoc-plugin-monorepo-readmes": "^0.22.4",
+    "@nrwl/devkit": "13.10.0",
+    "@nrwl/workspace": "^14.1.4",
     "@pnpm/exec": "^2.0.0",
     "@pnpm/find-workspace-dir": "^4.0.0",
     "@pnpm/find-workspace-packages": "^4.0.0",
@@ -74,11 +76,6 @@
     "LICENSE",
     "README.md"
   ],
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
   "prettier": {
     "singleQuote": true
   }

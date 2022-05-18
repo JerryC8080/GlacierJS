@@ -1,0 +1,5 @@
+{
+    "name": "@nx-glacier/build",
+    "version": "0.0.1",
+    "executors": "./executors.json"
+}
