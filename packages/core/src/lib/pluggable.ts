@@ -57,9 +57,10 @@ export class Pluggable<
           finded = true;
         }
         return finded;
-      }).queue;
+      })?.queue;
 
-      middlewareQueues.push(queue);
+      // 如果没有注册过 scopeQueues，会为空
+      if (queue) middlewareQueues.push(queue);
     });
 
     // 串行异步执行
