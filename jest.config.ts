@@ -1,4 +1,6 @@
 import type { Config } from '@jest/types';
+import { pathsToModuleNameMapper } from 'ts-jest';
+import { compilerOptions } from './test/tsconfig.test.json';
 
 const config: Config.InitialOptions = {
   injectGlobals: true,
@@ -12,7 +14,8 @@ const config: Config.InitialOptions = {
     'ts-jest': {
       tsconfig: './test/tsconfig.test.json',
     }
-  }
+  },
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
 };
 
 export default config;

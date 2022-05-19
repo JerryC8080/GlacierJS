@@ -9,11 +9,11 @@ export class Pluggable<
   LifecycleHooks extends Record<Lifecycle, LifecycleHook<BaseContext>>
   > {
   public plugins: {
-    global: CustomPlugin[],
-    scope: CustomPlugin[]
+    global: Record<string, CustomPlugin>,
+    scope: Record<string, Record<string, CustomPlugin>>
   } = {
-      global: [],
-      scope: []
+      global: {},
+      scope: {},
     };
 
   constructor(protected lifecycles: string[] = [], protected lifecycleHooks: LifecycleHooks) {
@@ -75,7 +75,7 @@ export class Pluggable<
       const { name } = plugin;
       if (name) {
         if (this.plugins.global[name]) {
-          logger.error(`The name of "${name}" plugin for global has used, can't store instance.`);
+          logger.warn(`The name of "${name}" plugin for global has used, can't store instance.`);
         } else {
           this.plugins.global[name] = plugin;
         }
@@ -100,12 +100,14 @@ export class Pluggable<
     // store plugin instance
     plugins.forEach((plugin) => {
       const { name } = plugin;
+      const curScopePlugin = this.plugins.scope[scope] || {}; 
       if (name) {
-        if (this.plugins.scope[name]) {
+        if (curScopePlugin[name]) {
           logger.error(`The name of "${name}" plugin for scope "${scope}" has used, can't store instance.`);
         } else {
-          this.plugins.scope[name] = plugin;
+          curScopePlugin[name] = plugin;
         }
+        this.plugins.scope[scope] = curScopePlugin;
       }
 
       // call onUse hook
