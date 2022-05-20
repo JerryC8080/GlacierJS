@@ -97,36 +97,39 @@ export class Pluggable<
   }
 
   private useScopePlugins(scope: string, plugins: CustomPlugin[]) {
-    // store plugin instance
+    this.lifecycles.forEach((lifecycle) => {
+      // 为每一个生命周期创建 MiddlewareQueue
+      const queue = new MiddlewareQueue(`${lifecycle}-scope:${scope}`);
+      const scopeQueue = { scope, capture: match(scope), queue };
+
+      // 为每一个插件注册对应生命周期钩子
+      plugins.forEach(plugin => {
+        // 把 handler push 到生命周期的 MiddlewareQueue 中
+        const handler = plugin[lifecycle];
+        if (!handler) return;
+        scopeQueue.queue.push(handler.bind(plugin));
+        logger.debug(`"${plugin.name}" plugin registered at scope:${scope} lifecycle:${lifecycle}`);
+      });
+
+      this.lifecycleHooks[lifecycle].scopeQueues.push(scopeQueue);
+    });
+
     plugins.forEach((plugin) => {
+      // 存储 plugin 实例
       const { name } = plugin;
-      const curScopePlugin = this.plugins.scope[scope] || {}; 
+      const curScopePlugin = this.plugins.scope[scope] || {};
       if (name) {
         if (curScopePlugin[name]) {
-          logger.error(`The name of "${name}" plugin for scope "${scope}" has used, can't store instance.`);
+          logger.warn(`The name of "${name}" plugin for scope "${scope}" has used, can't store instance.`);
         } else {
           curScopePlugin[name] = plugin;
         }
         this.plugins.scope[scope] = curScopePlugin;
       }
 
-      // call onUse hook
+      // 同步调用 onUse 生命周期钩子
       plugin.onUse?.({ glacier: this });
       logger.debug(`${scope}-"${plugin.name}" plugin onUsed hook called`);
-
-      // register lifecycle hooks
-      this.lifecycles.forEach((lifecycle) => {
-        const handler = plugin[lifecycle];
-        if (!handler) return;
-        const queue = new MiddlewareQueue(`${lifecycle}-scope:${scope}`);
-        queue.push(handler.bind(plugin));
-        this.lifecycleHooks[lifecycle].scopeQueues.push({
-          scope,
-          capture: match(scope),
-          queue,
-        });
-        logger.debug(`"${plugin.name}" plugin registered at scope:${scope} lifecycle:${lifecycle}`);
-      });
     });
   }
 }

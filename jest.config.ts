@@ -9,7 +9,6 @@ const config: Config.InitialOptions = {
   testEnvironment: 'jsdom',
   testMatch: ['**/?(*.)+(spec|test).[t]s?(x)'],
   coverageDirectory: `${__dirname}/docs/coverage`,
-  setupFiles: ['./test/fetch-mock.ts'],
   globals: {
     'ts-jest': {
       tsconfig: './test/tsconfig.test.json',

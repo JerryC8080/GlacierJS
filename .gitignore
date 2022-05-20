@@ -3,7 +3,6 @@
 build
 dist
 node_modules
-test
 src/**.js
 *.log
 package-lock.json

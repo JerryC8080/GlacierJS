@@ -32,24 +32,23 @@ export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, Lifecyc
 
   public listen() {
     addEventListener('install', (event: ExtendableEvent) => {
-      event.waitUntil(async () => {
+      event.waitUntil((async () => {
         const scopePaths = await this.getScopePathsOfVisableClients();
         await this.callLifecyleMiddlewares<InstallContext>(scopePaths, Lifecycle.onInstall, { event });
         logger.debug('onInstall: all hooks done', event);
-      });
+      })());
     });
 
     addEventListener('activate', (event: ExtendableEvent) => {
-      event.waitUntil(async () => {
+      event.waitUntil((async () => {
         const scopePaths = await this.getScopePathsOfVisableClients();
         await this.callLifecyleMiddlewares<ActivateContext>(scopePaths, Lifecycle.onActivate, { event });
         logger.debug('onActivate: all hooks done', event);
-      });
+      })());
     });
 
     addEventListener('fetch', (event: FetchEvent) => {
-      // FetchEvent 回调函数接收的是 PromiseLike<Response> 类型，这里需要用 Promise.resolve 包一层以防止 TS 报错：https://github.com/microsoft/TypeScript/issues/5911
-      event.respondWith(Promise.resolve().then(async () => {
+      event.respondWith((async () => {
         const context: FetchContext = { event, res: undefined };
 
         /**
@@ -69,13 +68,13 @@ export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, Lifecyc
         }
         const scopePath = targetUrl.pathname;
 
-        await this.callLifecyleMiddlewares<FetchContext>(scopePath, Lifecycle.onActivate, context);
+        await this.callLifecyleMiddlewares<FetchContext>(scopePath, Lifecycle.onFetch, context);
         logger.debug('onFetch: all hooks done', context.event?.request?.url, context);
-
+        
         // 当没有设置 response 的时候，透传请求，获取网络资源或者浏览器缓存。
         if (!context.res) return fetch(event.request);
         return context.res;
-      }));
+      })());
     });
 
     addEventListener('message', (event: ExtendableMessageEvent) => {

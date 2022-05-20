@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES6",
+    "paths": {
+      "@glacierjs/core": ["./packages/core/src/index"],
+      "@glacierjs/sw": ["./packages/sw/src/index"],
+      "@glacierjs/window": ["./packages/window/src/index"],
+      "@glacierjs/plugin-assets-cache": ["./packages/plugin-assets-cache/src/index"],
+      "@glacierjs/plugin-collector": ["./packages/plugin-collector/src/index"],
+      "@glacierjs/plugin-precache": ["./packages/plugin-precache/src/index"],
+      "@glacierjs/plugin-remote-controller": ["./packages/plugin-remote-controlle/src/index"]
+   }
+  },
+  "include": ["packages/**/*.ts", "packages/**/*.spec.ts", "test/**/*.ts"],
+  "exclude": ["node_modules/**"],
+  "compileOnSave": false
+}
