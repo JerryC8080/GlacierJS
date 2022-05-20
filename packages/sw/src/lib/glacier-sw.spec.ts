@@ -105,6 +105,7 @@ describe('Glacier SW', () => {
     [...scopeAPlugins, ...scopeBPlugins].forEach(plugin => {
       expect(plugin.lifecycleCalls.onInstall.length === 0).toBeTruthy();
       expect(plugin.lifecycleCalls.onActivate.length === 0).toBeTruthy();
+      expect(plugin.lifecycleCalls.onFetch.length === 0).toBeTruthy();
     });
   });
 
@@ -122,10 +123,12 @@ describe('Glacier SW', () => {
     global.clients.clients.forEach(client => {
       client.visibilityState = 'visible';
     });
+    const clientA = global.clients.clients[0];
 
     // should emit 
     await global.trigger('install', new global.ExtendableEvent('install'));
     await global.trigger('activate', new global.ExtendableEvent('activate'));
+    await global.trigger('fetch', { request: 'https://www.test.com/scope-a/abc.jpg', clientId: clientA.id });
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -135,18 +138,21 @@ describe('Glacier SW', () => {
     [...globalPlugins].forEach(plugin => {
       expect(plugin.lifecycleCalls.onInstall.length === 1).toBeTruthy();
       expect(plugin.lifecycleCalls.onActivate.length === 1).toBeTruthy();
+      expect(plugin.lifecycleCalls.onFetch.length === 1).toBeTruthy();
     });
 
     // should emit scopeA plugins onInstall/onActivate event
     [...scopeAPlugins].forEach(plugin => {
       expect(plugin.lifecycleCalls.onInstall.length === 1).toBeTruthy();
       expect(plugin.lifecycleCalls.onActivate.length === 1).toBeTruthy();
+      expect(plugin.lifecycleCalls.onFetch.length === 1).toBeTruthy();
     });
 
     // should not emit scopeB plugins onInstall/onActivate event
     [...scopeBPlugins].forEach(plugin => {
       expect(plugin.lifecycleCalls.onInstall.length === 0).toBeTruthy();
       expect(plugin.lifecycleCalls.onActivate.length === 0).toBeTruthy();
+      expect(plugin.lifecycleCalls.onFetch.length === 0).toBeTruthy();
     });
   });
 
@@ -165,10 +171,15 @@ describe('Glacier SW', () => {
     global.clients.clients.forEach(client => {
       client.visibilityState = 'visible';
     });
+    const clientA = global.clients.clients[0];
+    const clientB = global.clients.clients[1];
+
 
     // should emit 
     await global.trigger('install', new global.ExtendableEvent('install'));
     await global.trigger('activate', new global.ExtendableEvent('activate'));
+    await global.trigger('fetch', { request: 'https://www.test.com/scope-a/abc.jpg', clientId: clientA.id });
+    await global.trigger('fetch', { request: 'https://www.test.com/scope-a/abc.jpg', clientId: clientB.id });
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -178,18 +189,21 @@ describe('Glacier SW', () => {
     [...globalPlugins].forEach(plugin => {
       expect(plugin.lifecycleCalls.onInstall.length === 1).toBeTruthy();
       expect(plugin.lifecycleCalls.onActivate.length === 1).toBeTruthy();
+      expect(plugin.lifecycleCalls.onFetch.length === 2).toBeTruthy();
     });
 
     // should emit scopeA plugins onInstall/onActivate event
     [...scopeAPlugins].forEach(plugin => {
       expect(plugin.lifecycleCalls.onInstall.length === 1).toBeTruthy();
       expect(plugin.lifecycleCalls.onActivate.length === 1).toBeTruthy();
+      expect(plugin.lifecycleCalls.onFetch.length === 1).toBeTruthy();
     });
 
     // should emit scopeB plugins onInstall/onActivate event
     [...scopeAPlugins].forEach(plugin => {
       expect(plugin.lifecycleCalls.onInstall.length === 1).toBeTruthy();
       expect(plugin.lifecycleCalls.onActivate.length === 1).toBeTruthy();
+      expect(plugin.lifecycleCalls.onFetch.length === 1).toBeTruthy();
     });
 
   });
