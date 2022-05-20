@@ -1,7 +1,7 @@
 import { GlacierWindow, WindowPlugin } from '../index';
 import { Logger, LoggerLevel } from '@glacierjs/core';
 
-Logger.level = LoggerLevel.DEBUG;
+Logger.level = LoggerLevel.INFO;
 
 describe('Glacier Window', () => {
   Object.defineProperty(global.navigator, 'serviceWorker', {
