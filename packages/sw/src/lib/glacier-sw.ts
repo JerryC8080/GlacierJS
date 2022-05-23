@@ -16,6 +16,9 @@ const {
   clients,
 } = (self as unknown) as ServiceWorkerGlobalScope;
 
+/**
+ * 运行在 ServiceWorker 线程中的代码
+ */
 export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, LifecycleHooks>{
   constructor() {
     super(
@@ -30,6 +33,9 @@ export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, Lifecyc
     );
   }
 
+  /**
+   * 监听 ServiceWorker 各种生命周期事件，焊接到 GlacierJS 对应事件的异步队列
+   */
   public listen() {
     addEventListener('install', (event: ExtendableEvent) => {
       event.waitUntil((async () => {
@@ -106,6 +112,9 @@ export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, Lifecyc
     });
   }
 
+  /**
+   * 统一处理 ServiceWorker 卸载动作
+   */
   public async uninstall() {
     // 执行所有生命周期函数
     const scopePaths = await this.getScopePathsOfVisableClients();

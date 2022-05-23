@@ -3,6 +3,10 @@ import { compose } from './compose';
 import { Middleware, Interceptor } from '../type/index';
 import { callNextWhileIgnore } from './interceptors/call-next-while-ignore';
 
+/**
+ * 中间件队列
+ * 功能：把异步任务按照洋葱模型串行起来。
+ */
 export class MiddlewareQueue<Context> {
   private name = 'anonymous';
   private queue: Array<Middleware> = [];
