@@ -3,10 +3,10 @@
 build
 dist
 node_modules
-test
 src/**.js
 *.log
 package-lock.json
 yarn.lock
 .vscode
 .pnpm-store
+!tools/*

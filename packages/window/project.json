@@ -1,0 +1,11 @@
+{
+    "name": "window",
+    "root": "packages/window",
+    "sourceRoot": "packages/window/src",
+    "type": "library",
+    "targets": {
+        "dist": {
+            "executor": "@nx-glacier/build:dist"
+        }
+    }
+}

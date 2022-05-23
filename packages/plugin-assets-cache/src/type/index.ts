@@ -19,7 +19,10 @@ export interface OptRoute {
 }
 
 export enum CacheFrom {
+  // 命中 ServiceWorker 缓存
   SW = 'sw-cache',
+
+  // 命中浏览器缓存或者网络资源
   WINDOW = 'window-cache'
 }
 

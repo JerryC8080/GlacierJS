@@ -1,0 +1,11 @@
+{
+    "name": "sw",
+    "root": "packages/sw",
+    "sourceRoot": "packages/sw/src",
+    "type": "library",
+    "targets": {
+        "dist": {
+            "executor": "@nx-glacier/build:dist"
+        }
+    }
+}

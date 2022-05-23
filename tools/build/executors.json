@@ -1,0 +1,10 @@
+{
+    "executors": {
+      "dist": {
+        "implementation": "./executors/dist",
+        "schema": "./schema.json",
+        "description": "打包构建 dist 产物"
+      }
+    }
+  }
+  

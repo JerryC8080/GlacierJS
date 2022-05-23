@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
     "allowJs": true,
     "target": "ES5",
     "moduleResolution": "node",
@@ -22,7 +24,10 @@
     "pretty": true /* Stylize errors and messages using color and context. */,
 
     "lib": ["es2017", "ESNext", "webworker"],
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "paths": {
+      "@nx-glacier/build": ["tools/build"]
+    }
   },
   "include": ["packages/**/*.ts"],
   "exclude": ["node_modules/**", "packages/**/src/**/*.spec.ts"],

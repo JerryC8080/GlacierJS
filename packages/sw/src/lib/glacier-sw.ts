@@ -1,92 +1,80 @@
-import { MiddlewareQueue, EventNames } from '@glacierjs/core';
-import { Lifecycle, ServiceWorkerPlugin, FetchContext } from '../type/index';
+import { EventNames, Pluggable } from '@glacierjs/core';
 import { logger } from './logger';
+import {
+  Lifecycle,
+  ServiceWorkerPlugin,
+  LifecycleHooks,
+  FetchContext,
+  MessageContext,
+  InstallContext,
+  ActivateContext,
+} from '../type/index';
 
 const {
   registration,
   addEventListener,
+  clients,
 } = (self as unknown) as ServiceWorkerGlobalScope;
 
-export class GlacierSW {
-  public plugins: Record<string, ServiceWorkerPlugin> = {};
-  private lifecycleHooks: Record<Lifecycle, MiddlewareQueue> = {
-    [Lifecycle.onInstall]: null,
-    [Lifecycle.onUninstall]: null,
-    [Lifecycle.onActivate]: null,
-    [Lifecycle.onMessage]: null,
-    [Lifecycle.onFetch]: null,
-  };
-
+export class GlacierSW extends Pluggable<ServiceWorkerPlugin, Lifecycle, LifecycleHooks>{
   constructor() {
-    Object.keys(Lifecycle).forEach((lifecycle) => {
-      this.lifecycleHooks[lifecycle] = new MiddlewareQueue(lifecycle);
-    });
-  }
-
-  public use(plugin: ServiceWorkerPlugin) {
-    // store plugin instance
-    const { name } = plugin;
-    if (name) {
-      if (this.plugins[name]) {
-        logger.error(`The name of "${name}" plugin has used, can't store instance.`);
-      } else {
-        this.plugins[name] = plugin;
+    super(
+      Object.keys(Lifecycle).map(lifecycle => lifecycle),
+      {
+        [Lifecycle.onInstall]: null,
+        [Lifecycle.onUninstall]: null,
+        [Lifecycle.onActivate]: null,
+        [Lifecycle.onMessage]: null,
+        [Lifecycle.onFetch]: null,
       }
-    }
-
-    // call onUse hook
-    plugin.onUse?.({ glacier: this });
-    logger.debug(`"${plugin.name}" plugin onUsed hook called`);
-
-    // register lifecycle hooks
-    Object.keys(Lifecycle).forEach((lifecycle) => {
-      const handler = plugin[lifecycle];
-      if (!handler) return;
-
-      const queue: MiddlewareQueue = this.lifecycleHooks[lifecycle];
-      queue?.push(handler.bind(plugin));
-
-      logger.debug(
-        `"${plugin.name}" plugin registered lifecycle: ${lifecycle}`
-      );
-    });
+    );
   }
 
   public listen() {
     addEventListener('install', (event: ExtendableEvent) => {
-      event.waitUntil(async () => {
-        await this.lifecycleHooks.onInstall.runAll({ event });
+      event.waitUntil((async () => {
+        const scopePaths = await this.getScopePathsOfVisableClients();
+        await this.callLifecyleMiddlewares<InstallContext>(scopePaths, Lifecycle.onInstall, { event });
         logger.debug('onInstall: all hooks done', event);
-      });
+      })());
     });
 
     addEventListener('activate', (event: ExtendableEvent) => {
-      event.waitUntil(async () => {
-        await this.lifecycleHooks.onActivate.runAll({ event });
+      event.waitUntil((async () => {
+        const scopePaths = await this.getScopePathsOfVisableClients();
+        await this.callLifecyleMiddlewares<ActivateContext>(scopePaths, Lifecycle.onActivate, { event });
         logger.debug('onActivate: all hooks done', event);
-      });
+      })());
     });
 
     addEventListener('fetch', (event: FetchEvent) => {
-      // FetchEvent 回调函数接收的是 PromiseLike<Response> 类型，这里需要用 Promise.resolve 包一层以防止 TS 报错：https://github.com/microsoft/TypeScript/issues/5911
-      event.respondWith(Promise.resolve().then(async () => {
-        const context: FetchContext = {
-          event,
-          res: undefined,
-        };
+      event.respondWith((async () => {
+        const context: FetchContext = { event, res: undefined };
 
-        await this.lifecycleHooks.onFetch.runAll(context);
+        /**
+         * onFetch scopePath 获取策略：
+         * 1. 优先取 FetchEvent.clientId 去查询 client.url
+         * 2. 当请求是 navigation fetch（即在浏览器直接输入地址）时，clientId 会为空：https://github.com/w3c/ServiceWorker/issues/1266
+         * 3. 这时候取当前资源 url。
+         */
+        let targetUrl: URL;
+        const assetsUrl = new URL(context.event?.request?.url);
+        const clientId = event.clientId;
+        if (clientId) {
+          const client = await clients.get(clientId);
+          targetUrl = client ? new URL(client.url) : assetsUrl;
+        } else {
+          targetUrl = assetsUrl;
+        }
+        const scopePath = targetUrl.pathname;
 
-        logger.debug(
-          'onFetch: all hooks done',
-          context.event?.request?.url,
-          context
-        );
-
-        // 当没有设置 response 的时候，透传请求网络资源。
+        await this.callLifecyleMiddlewares<FetchContext>(scopePath, Lifecycle.onFetch, context);
+        logger.debug('onFetch: all hooks done', context.event?.request?.url, context);
+        
+        // 当没有设置 response 的时候，透传请求，获取网络资源或者浏览器缓存。
         if (!context.res) return fetch(event.request);
         return context.res;
-      }));
+      })());
     });
 
     addEventListener('message', (event: ExtendableMessageEvent) => {
@@ -104,7 +92,11 @@ export class GlacierSW {
           } else {
             // 处理插件定义的通讯事件
             logger.debug('onMessage: handle message by plugins', event);
-            await this.lifecycleHooks.onMessage.runAll({ event });
+
+            // onMessage scopePath 获取策略: ExtendableMessageEvent.origin.url，其中 origin 在类型库中的类型是错误的，需要修正。
+            const originClient = (event.origin as unknown as WindowClient);
+            const scopePath = new URL(originClient.url).pathname;
+            await this.callLifecyleMiddlewares<MessageContext>(scopePath, Lifecycle.onMessage, { event });
             logger.debug('onMessage: handle message by plugins done', event);
           }
         } catch (error) {
@@ -116,9 +108,25 @@ export class GlacierSW {
 
   public async uninstall() {
     // 执行所有生命周期函数
-    await this.lifecycleHooks.onUninstall.runAll();
+    const scopePaths = await this.getScopePathsOfVisableClients();
+    await this.callLifecyleMiddlewares(scopePaths, Lifecycle.onUninstall);
 
     // 注销 ServiceWorker
     await registration.unregister();
+  }
+
+  /**
+   * 多个窗口打开时，会存在多个 client 为 visibilityState = true
+   * 获取这些 Client 的 url 计算出 scopePath
+   * @param lifecycle 
+   * @returns 
+   */
+  private async getScopePathsOfVisableClients(): Promise<string[]> {
+    const clientList = await clients.matchAll({ type: 'window' });
+    const scopePaths = clientList
+      .filter(client => client.visibilityState === 'visible')
+      .map(client => new URL(client.url).pathname);
+
+    return scopePaths;
   }
 }

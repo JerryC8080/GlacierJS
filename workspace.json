@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "projects": {
+    "build": "tools/build",
+    "core": "packages/core",
+    "sw": "packages/sw",
+    "window": "packages/window",
+    "plugin-assets-cache": "packages/plugin-assets-cache",
+    "plugin-collector": "packages/plugin-collector",
+    "plugin-precache": "packages/plugin-precache",
+    "plugin-remote-controller": "packages/plugin-remote-controller"
+  }
+}
