@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1653449168033" clover="3.2.0">
-  <project timestamp="1653449168033" name="All files">
+<coverage generated="1653449327447" clover="3.2.0">
+  <project timestamp="1653449327447" name="All files">
     <metrics statements="232" coveredstatements="219" conditionals="102" coveredconditionals="71" methods="62" coveredmethods="60" elements="396" coveredelements="350" complexity="0" loc="232" ncloc="232" packages="10" files="20" classes="20"/>
     <package name="core.src">
       <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <file name="index.ts" path="/root/workspace/jc-personal/GlacierJS/packages/core/src/index.ts">
+      <file name="index.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/index.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
@@ -16,19 +16,19 @@
     </package>
     <package name="core.src.const">
       <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-      <file name="event-name.ts" path="/root/workspace/jc-personal/GlacierJS/packages/core/src/const/event-name.ts">
+      <file name="event-name.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/const/event-name.ts">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="3" count="2" type="stmt"/>
       </file>
-      <file name="index.ts" path="/root/workspace/jc-personal/GlacierJS/packages/core/src/const/index.ts">
+      <file name="index.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/const/index.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
       </file>
     </package>
     <package name="core.src.lib">
       <metrics statements="112" coveredstatements="108" conditionals="48" coveredconditionals="39" methods="29" coveredmethods="27"/>
-      <file name="compose.ts" path="/root/workspace/jc-personal/GlacierJS/packages/core/src/lib/compose.ts">
+      <file name="compose.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/lib/compose.ts">
         <metrics statements="13" coveredstatements="13" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
         <line num="7" count="5" type="stmt"/>
         <line num="8" count="51" type="stmt"/>
@@ -44,7 +44,7 @@
         <line num="27" count="93" type="stmt"/>
         <line num="29" count="2" type="stmt"/>
       </file>
-      <file name="logger.ts" path="/root/workspace/jc-personal/GlacierJS/packages/core/src/lib/logger.ts">
+      <file name="logger.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/lib/logger.ts">
         <metrics statements="25" coveredstatements="23" conditionals="7" coveredconditionals="4" methods="9" coveredmethods="7"/>
         <line num="7" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="8" count="4" type="stmt"/>
@@ -72,7 +72,7 @@
         <line num="106" count="11" type="stmt"/>
         <line num="115" count="4" type="stmt"/>
       </file>
-      <file name="middleware-queue.ts" path="/root/workspace/jc-personal/GlacierJS/packages/core/src/lib/middleware-queue.ts">
+      <file name="middleware-queue.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/lib/middleware-queue.ts">
         <metrics statements="14" coveredstatements="14" conditionals="3" coveredconditionals="3" methods="4" coveredmethods="4"/>
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
@@ -89,7 +89,7 @@
         <line num="33" count="33" type="stmt"/>
         <line num="37" count="33" type="stmt"/>
       </file>
-      <file name="pluggable.ts" path="/root/workspace/jc-personal/GlacierJS/packages/core/src/lib/pluggable.ts">
+      <file name="pluggable.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/lib/pluggable.ts">
         <metrics statements="60" coveredstatements="58" conditionals="35" coveredconditionals="29" methods="13" coveredmethods="13"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
@@ -155,7 +155,7 @@
     </package>
     <package name="core.src.lib.interceptors">
       <metrics statements="7" coveredstatements="7" conditionals="1" coveredconditionals="1" methods="4" coveredmethods="4"/>
-      <file name="call-next-while-ignore.ts" path="/root/workspace/jc-personal/GlacierJS/packages/core/src/lib/interceptors/call-next-while-ignore.ts">
+      <file name="call-next-while-ignore.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/core/src/lib/interceptors/call-next-while-ignore.ts">
         <metrics statements="7" coveredstatements="7" conditionals="1" coveredconditionals="1" methods="4" coveredmethods="4"/>
         <line num="24" count="104" type="stmt"/>
         <line num="25" count="58" type="stmt"/>
@@ -168,7 +168,7 @@
     </package>
     <package name="package-template.src.lib">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <file name="hello-world.ts" path="/root/workspace/jc-personal/GlacierJS/packages/package-template/src/lib/hello-world.ts">
+      <file name="hello-world.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/package-template/src/lib/hello-world.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -176,7 +176,7 @@
     </package>
     <package name="sw.src.lib">
       <metrics statements="56" coveredstatements="50" conditionals="43" coveredconditionals="22" methods="19" coveredmethods="19"/>
-      <file name="glacier-sw.ts" path="/root/workspace/jc-personal/GlacierJS/packages/sw/src/lib/glacier-sw.ts">
+      <file name="glacier-sw.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/sw/src/lib/glacier-sw.ts">
         <metrics statements="54" coveredstatements="48" conditionals="43" coveredconditionals="22" methods="19" coveredmethods="19"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -233,7 +233,7 @@
         <line num="137" count="6" type="stmt"/>
         <line num="139" count="7" type="stmt"/>
       </file>
-      <file name="logger.ts" path="/root/workspace/jc-personal/GlacierJS/packages/sw/src/lib/logger.ts">
+      <file name="logger.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/sw/src/lib/logger.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -241,12 +241,12 @@
     </package>
     <package name="sw.src.type">
       <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-      <file name="index.ts" path="/root/workspace/jc-personal/GlacierJS/packages/sw/src/type/index.ts">
+      <file name="index.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/sw/src/type/index.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
       </file>
-      <file name="lifecycle.ts" path="/root/workspace/jc-personal/GlacierJS/packages/sw/src/type/lifecycle.ts">
+      <file name="lifecycle.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/sw/src/type/lifecycle.ts">
         <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="2" count="1" type="stmt"/>
@@ -255,14 +255,14 @@
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
       </file>
-      <file name="sw-plugin.ts" path="/root/workspace/jc-personal/GlacierJS/packages/sw/src/type/sw-plugin.ts">
+      <file name="sw-plugin.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/sw/src/type/sw-plugin.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
       </file>
     </package>
     <package name="window.src">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="index.ts" path="/root/workspace/jc-personal/GlacierJS/packages/window/src/index.ts">
+      <file name="index.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/index.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -270,7 +270,7 @@
     </package>
     <package name="window.src.lib">
       <metrics statements="29" coveredstatements="26" conditionals="4" coveredconditionals="3" methods="5" coveredmethods="5"/>
-      <file name="glacier-window.ts" path="/root/workspace/jc-personal/GlacierJS/packages/window/src/lib/glacier-window.ts">
+      <file name="glacier-window.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/lib/glacier-window.ts">
         <metrics statements="27" coveredstatements="24" conditionals="4" coveredconditionals="3" methods="5" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -300,7 +300,7 @@
         <line num="47" count="1" type="stmt"/>
         <line num="52" count="4" type="stmt"/>
       </file>
-      <file name="logger.ts" path="/root/workspace/jc-personal/GlacierJS/packages/window/src/lib/logger.ts">
+      <file name="logger.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/lib/logger.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -308,18 +308,18 @@
     </package>
     <package name="window.src.type">
       <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-      <file name="index.ts" path="/root/workspace/jc-personal/GlacierJS/packages/window/src/type/index.ts">
+      <file name="index.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/type/index.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
       </file>
-      <file name="lifecycle.ts" path="/root/workspace/jc-personal/GlacierJS/packages/window/src/type/lifecycle.ts">
+      <file name="lifecycle.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/type/lifecycle.ts">
         <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
       </file>
-      <file name="window-plugin.ts" path="/root/workspace/jc-personal/GlacierJS/packages/window/src/type/window-plugin.ts">
+      <file name="window-plugin.ts" path="/home/runner/work/GlacierJS/GlacierJS/packages/window/src/type/window-plugin.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="3" count="1" type="stmt"/>
       </file>
