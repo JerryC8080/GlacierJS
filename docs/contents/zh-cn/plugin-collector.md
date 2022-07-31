@@ -1,7 +1,23 @@
 # 数据收集
 
-**plugin-collector** 会收集 GlacierJS 运行期间一些事件。    
-你可以选择将这些事件进行持久化存储，已达到统计的目的。
+ServiceWorker 发布之后，我们需要保持对线上情况的把控。    
+对于一些必要的统计指标，我们可能需要进行监控。    
+你可以选择将这些事件上报到自有统计系统中，从而达到统计的目的。
+
+**plugin-collector** 内置了五个常见的数据事件：
+
+1. ServiceWorker 注册：[SW_REGISTER](https://jerryc8080.github.io/GlacierJS/api/enums/_glacierjs_plugin_collector.CollectedDataType.html#SW_REGISTER#SW_REGISTER)
+2. ServiceWorker 安装成功：[SW_INSTALLED](https://jerryc8080.github.io/GlacierJS/api/enums/_glacierjs_plugin_collector.CollectedDataType.html#SW_REGISTER#SW_INSTALLED)
+3. ServiceWorker 控制中：[SW_CONTROLLED](https://jerryc8080.github.io/GlacierJS/api/enums/_glacierjs_plugin_collector.CollectedDataType.html#SW_REGISTER#SW_CONTROLLED)
+4. 命中 onFetch 事件：[SW_FETCH](https://jerryc8080.github.io/GlacierJS/api/enums/_glacierjs_plugin_collector.CollectedDataType.html#SW_REGISTER#SW_FETCH)
+5. 命中浏览器缓存：[CACHE_HIT](https://jerryc8080.github.io/GlacierJS/api/enums/_glacierjs_plugin_collector.CollectedDataType.html#SW_REGISTER#CACHE_HIT) of [CacheFrom.Window](https://jerryc8080.github.io/GlacierJS/api/enums/plugin_assets_cache_src.CacheFrom.html#WINDOW)
+6. 命中 CacheAPI 缓存：[CACHE_HIT](https://jerryc8080.github.io/GlacierJS/api/enums/_glacierjs_plugin_collector.CollectedDataType.html#SW_REGISTER#CACHE_HIT) of [CacheFrom.SW](https://jerryc8080.github.io/GlacierJS/api/enums/plugin_assets_cache_src.CacheFrom.html#SW)
+
+基于以上数据的收集，我们就可以得到一些常见的通用指标：
+
+1. ServiceWorker 安装率 = SW_REGISTER / SW_INSTALLED
+2. ServiceWorker 控制率 = SW_REGISTER / SW_CONTROLLED
+3. ServiceWorker 缓存命中率 = SW_FETCH / CACHE_HIT (of CacheFrom.SW)
 
 ## 安装
 
@@ -112,12 +128,5 @@ glacierSW.use(new CollectorSW());
 > 需要注意的是，如果你需要监听缓存命中事件（CollectedDataType.CACHE_HIT），你必须先注册 `AssetsCacheSW`。    
 因为 `AssetsCacheSW` 要先收集到数据，`CollectorSW` 才能去使用它。
 
-## 统计
-
-基于以上数据的收集，我们可以得到一些简单的统计指标：
-
-1. ServiceWorker 安装率 = SW_REGISTER / SW_INSTALLED
-2. ServiceWorker 控制率 = SW_REGISTER / SW_CONTROLLED
-3. ServiceWorker 缓存命中率 = SW_FETCH / CACHE_HIT (just CacheFrom is SW)
 
 > 更多 API 参考：[@glacierjs/plugin-collector](https://jerryc8080.github.io/GlacierJS/api/modules/plugin_collector_src.html)
